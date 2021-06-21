@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/demensky/value-transformer/issues"
   },
-  "homepage": "https://github.com/demensky/value-transformer#readme"
+  "homepage": "https://github.com/demensky/value-transformer#readme",
+  "devDependencies": {
+    "prettier": "^2.3.1"
+  }
 }
