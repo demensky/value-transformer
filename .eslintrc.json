@@ -2,7 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {"project": ["./tsconfig.json"]},
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "import", "simple-import-sort"],
   "rules": {
     "for-direction": "error",
     "no-async-promise-executor": "error",
@@ -204,6 +204,16 @@
     "@typescript-eslint/no-throw-literal": "error",
     "@typescript-eslint/no-unused-expressions": "error",
     "@typescript-eslint/no-useless-constructor": "error",
-    "@typescript-eslint/require-await": "error"
+    "@typescript-eslint/require-await": "error",
+
+    "import/first": "error",
+    "import/no-duplicates": "error",
+    "import/newline-after-import": "error",
+    "import/no-default-export": "error",
+    "simple-import-sort/imports": [
+      "error",
+      {"groups": [["^\\u0000"], ["^"], ["^\\.\\."], ["^\\."]]}
+    ],
+    "simple-import-sort/exports": "error"
   }
 }
