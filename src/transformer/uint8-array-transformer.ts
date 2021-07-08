@@ -1,9 +1,9 @@
-import {OffsetCounter} from '../base/offset-counter';
+import type {OffsetCounter} from '../base/offset-counter';
 import {ValueTransformer} from '../base/value-transformer';
 
 export class Uint8ArrayTransformer extends ValueTransformer<Uint8Array> {
   public fromDataView(view: DataView, offset: OffsetCounter): Uint8Array {
-    return;
+
   }
 
   public fromLiteral(literal: unknown): Uint8Array {

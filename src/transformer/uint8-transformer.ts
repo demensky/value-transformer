@@ -1,5 +1,7 @@
-import {OffsetCounter} from '../base/offset-counter';
+import type {OffsetCounter} from '../base/offset-counter';
 import {ValueTransformer} from '../base/value-transformer';
+
+const ONE_BYTE_MASK = 0xff;
 
 export class Uint8Transformer extends ValueTransformer<number> {
   public fromDataView(view: DataView, offset: OffsetCounter): number {
@@ -15,6 +17,6 @@ export class Uint8Transformer extends ValueTransformer<number> {
   }
 
   public toLiteral(data: number): unknown {
-    return data & 0xff;
+    return data & ONE_BYTE_MASK;
   }
 }

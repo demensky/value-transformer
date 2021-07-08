@@ -1,4 +1,4 @@
-import {OffsetCounter} from './offset-counter';
+import type {OffsetCounter} from './offset-counter';
 
 export abstract class ValueTransformer<T> {
   public abstract fromDataView(view: DataView, offset: OffsetCounter): T;

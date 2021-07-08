@@ -5,15 +5,15 @@ const TRUE_COMPACT = 1;
 const FALSE_COMPACT = 0;
 
 export class BooleanTransformer extends ValueTransformer<boolean> {
-  public toLiteral(data: boolean): unknown {
-    return data;
+  public fromLiteral(_literal: unknown): boolean {
+    throw new Error('Not implemented');
   }
 
   public override toCompactLiteral(data: boolean): unknown {
     return data ? TRUE_COMPACT : FALSE_COMPACT;
   }
 
-  public fromLiteral(_literal: unknown): boolean {
-    throw new Error('Not implemented');
+  public toLiteral(data: boolean): unknown {
+    return data;
   }
 }

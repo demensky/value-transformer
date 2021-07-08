@@ -6,15 +6,15 @@ const INVALID_COMPACT = '?';
 const INVALID = 'Invalid Date';
 
 export class DateTransformer extends ValueTransformer<Date> {
-  public toLiteral(data: Date): unknown {
-    return isInvalidDate(data) ? INVALID : data.toISOString();
+  public fromLiteral(_literal: unknown): Date {
+    throw new Error('Not implemented');
   }
 
   public override toCompactLiteral(data: Date): unknown {
     return isInvalidDate(data) ? INVALID_COMPACT : data.getTime();
   }
 
-  public fromLiteral(_literal: unknown): Date {
-    throw new Error('Not implemented');
+  public toLiteral(data: Date): unknown {
+    return isInvalidDate(data) ? INVALID : data.toISOString();
   }
 }

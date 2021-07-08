@@ -1,4 +1,4 @@
-import {OffsetCounter} from '../base/offset-counter';
+import type {OffsetCounter} from '../base/offset-counter';
 
 export function resizableUintFromDataView(
   _view: DataView,
