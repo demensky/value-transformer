@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../base/value-transformer';
 
-export class ClassTransformer<T extends object> extends ValueTransformer<T> {
-  public toLiteral(_data: T): unknown {
+export class ClassTransformer<T> extends ValueTransformer<T> {
+  public fromLiteral(_literal: unknown): T {
     throw new Error('Not implemented');
   }
 
@@ -9,7 +9,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<T> {
     throw new Error('Not implemented');
   }
 
-  public fromLiteral(_literal: unknown): T {
+  public toLiteral(_data: T): unknown {
     throw new Error('Not implemented');
   }
 }

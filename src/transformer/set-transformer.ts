@@ -5,10 +5,8 @@ export class SetTransformer<T> extends ValueTransformer<Set<T>> {
     super();
   }
 
-  public toLiteral(data: ReadonlySet<T>): unknown {
-    return Array.from<T, unknown>(data, (item) =>
-      this._transformer.toLiteral(item),
-    );
+  public fromLiteral(_literal: unknown): Set<T> {
+    throw new Error('Not implemented');
   }
 
   public override toCompactLiteral(data: ReadonlySet<T>): unknown {
@@ -17,7 +15,9 @@ export class SetTransformer<T> extends ValueTransformer<Set<T>> {
     );
   }
 
-  public fromLiteral(_literal: unknown): Set<T> {
-    throw new Error('Not implemented');
+  public toLiteral(data: ReadonlySet<T>): unknown {
+    return Array.from<T, unknown>(data, (item) =>
+      this._transformer.toLiteral(item),
+    );
   }
 }

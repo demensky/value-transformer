@@ -5,11 +5,11 @@ export class OneOfTransformer<T> extends ValueTransformer<T> {
     super();
   }
 
-  public toLiteral(_data: T): unknown {
+  public fromLiteral(_literal: unknown): T {
     throw new Error('Not implemented');
   }
 
-  public fromLiteral(_literal: unknown): T {
+  public toLiteral(_data: T): unknown {
     throw new Error('Not implemented');
   }
 }

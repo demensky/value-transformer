@@ -8,14 +8,8 @@ export class MapTransformer<K, V> extends ValueTransformer<Map<K, V>> {
     super();
   }
 
-  public toLiteral(data: ReadonlyMap<K, V>): unknown {
-    return Array.from<readonly [K, V], readonly [unknown, unknown]>(
-      data.entries(),
-      ([key, value]) => [
-        this._keyTransformer.toLiteral(key),
-        this._valueTransformer.toLiteral(value),
-      ],
-    );
+  public fromLiteral(_literal: unknown): Map<K, V> {
+    throw new Error('Not implemented');
   }
 
   public override toCompactLiteral(data: ReadonlyMap<K, V>): unknown {
@@ -28,7 +22,13 @@ export class MapTransformer<K, V> extends ValueTransformer<Map<K, V>> {
     );
   }
 
-  public fromLiteral(_literal: unknown): Map<K, V> {
-    throw new Error('Not implemented');
+  public toLiteral(data: ReadonlyMap<K, V>): unknown {
+    return Array.from<readonly [K, V], readonly [unknown, unknown]>(
+      data.entries(),
+      ([key, value]) => [
+        this._keyTransformer.toLiteral(key),
+        this._valueTransformer.toLiteral(value),
+      ],
+    );
   }
 }

@@ -9,9 +9,8 @@ interface RegExpLiteral {
 type RegExpCompactLiteral = readonly [source: string, flags: string];
 
 export class RegExpTransformer extends ValueTransformer<RegExp> {
-  public toLiteral({source, flags}: RegExp): unknown {
-    const result: RegExpLiteral = {source, flags};
-    return result;
+  public fromLiteral(_literal: unknown): RegExp {
+    throw new Error('Not implemented');
   }
 
   public override toCompactLiteral({source, flags}: RegExp): unknown {
@@ -19,7 +18,8 @@ export class RegExpTransformer extends ValueTransformer<RegExp> {
     return result;
   }
 
-  public fromLiteral(_literal: unknown): RegExp {
-    throw new Error('Not implemented');
+  public toLiteral({source, flags}: RegExp): unknown {
+    const result: RegExpLiteral = {source, flags};
+    return result;
   }
 }

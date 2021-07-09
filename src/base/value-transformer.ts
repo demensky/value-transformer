@@ -7,9 +7,9 @@ export abstract class ValueTransformer<T> {
 
   public abstract toArrayBuffers(data: T): Iterable<ArrayBuffer>;
 
+  public abstract toLiteral(data: T): unknown;
+
   public toCompactLiteral(data: T): unknown {
     return this.toLiteral(data);
   }
-
-  public abstract toLiteral(data: T): unknown;
 }
