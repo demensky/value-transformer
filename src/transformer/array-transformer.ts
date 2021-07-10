@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../base/value-transformer';
 
 export class ArrayTransformer<T> extends ValueTransformer<readonly T[]> {
-  public constructor(private readonly _transformer: ValueTransformer<T>) {
+  public constructor(_transformer: ValueTransformer<T>) {
     super();
   }
 
