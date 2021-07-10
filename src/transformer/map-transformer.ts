@@ -8,6 +8,10 @@ export class MapTransformer<K, V> extends ValueTransformer<Map<K, V>> {
     super();
   }
 
+  public compatibleWith(_data: unknown): _data is Map<K, V> {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): Map<K, V> {
     throw new Error('Not implemented');
   }

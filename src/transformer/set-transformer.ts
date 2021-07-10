@@ -5,6 +5,10 @@ export class SetTransformer<T> extends ValueTransformer<Set<T>> {
     super();
   }
 
+  public compatibleWith(_data: unknown): _data is Set<T> {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): Set<T> {
     throw new Error('Not implemented');
   }

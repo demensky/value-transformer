@@ -5,6 +5,10 @@ export class ArrayTransformer<T> extends ValueTransformer<readonly T[]> {
     super();
   }
 
+  public compatibleWith(_data: unknown): _data is readonly T[] {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): T[] {
     throw new Error('Not implemented');
   }

@@ -9,6 +9,10 @@ interface RegExpLiteral {
 type RegExpCompactLiteral = readonly [source: string, flags: string];
 
 export class RegExpTransformer extends ValueTransformer<RegExp> {
+  public compatibleWith(_data: unknown): _data is RegExp {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): RegExp {
     throw new Error('Not implemented');
   }

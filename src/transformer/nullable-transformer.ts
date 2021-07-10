@@ -5,6 +5,10 @@ export class NullableTransformer<T> extends ValueTransformer<T | null> {
     super();
   }
 
+  public compatibleWith(_data: unknown): _data is T | null {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): T | null {
     throw new Error('Not implemented');
   }

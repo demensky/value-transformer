@@ -5,6 +5,10 @@ export class OneOfTransformer<T> extends ValueTransformer<T> {
     super();
   }
 
+  public compatibleWith(_data: unknown): _data is T {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): T {
     throw new Error('Not implemented');
   }

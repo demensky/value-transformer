@@ -6,6 +6,10 @@ const INVALID_COMPACT = '?';
 const INVALID = 'Invalid Date';
 
 export class DateTransformer extends ValueTransformer<Date> {
+  public compatibleWith(_data: unknown): _data is Date {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): Date {
     throw new Error('Not implemented');
   }

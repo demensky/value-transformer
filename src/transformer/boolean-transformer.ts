@@ -5,6 +5,10 @@ const TRUE_COMPACT = 1;
 const FALSE_COMPACT = 0;
 
 export class BooleanTransformer extends ValueTransformer<boolean> {
+  public compatibleWith(_data: unknown): _data is boolean {
+    throw new Error('Not implemented');
+  }
+
   public fromLiteral(_literal: unknown): boolean {
     throw new Error('Not implemented');
   }
