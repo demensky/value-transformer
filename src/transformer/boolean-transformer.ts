@@ -1,8 +1,11 @@
 import {ValueTransformer} from '../base/value-transformer';
+import {identity} from '../util/identity';
 
 const TRUE_COMPACT = 1;
 
 const FALSE_COMPACT = 0;
+
+type BooleanCompactLiteral = typeof FALSE_COMPACT | typeof TRUE_COMPACT;
 
 export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
   public compatibleWith(_data: unknown): _data is boolean {
@@ -14,7 +17,7 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
   }
 
   public override toCompactLiteral(data: boolean): unknown {
-    return data ? TRUE_COMPACT : FALSE_COMPACT;
+    return identity<BooleanCompactLiteral>(data ? TRUE_COMPACT : FALSE_COMPACT);
   }
 
   public toLiteral(data: boolean): unknown {
