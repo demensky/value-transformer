@@ -1,4 +1,5 @@
 import {ValueTransformer} from '../base/value-transformer';
+import {identity} from '../util/identity';
 
 interface RegExpLiteral {
   readonly source: string;
@@ -18,12 +19,10 @@ export class RegExpTransformer extends ValueTransformer<RegExp> {
   }
 
   public override toCompactLiteral({source, flags}: RegExp): unknown {
-    const result: RegExpCompactLiteral = [source, flags];
-    return result;
+    return identity<RegExpCompactLiteral>([source, flags]);
   }
 
   public toLiteral({source, flags}: RegExp): unknown {
-    const result: RegExpLiteral = {source, flags};
-    return result;
+    return identity<RegExpLiteral>({source, flags});
   }
 }
