@@ -5,7 +5,8 @@ const INVALID_COMPACT = '?';
 
 const INVALID = 'Invalid Date';
 
-export class DateTransformer extends ValueTransformer<Date> {
+// TODO ReadonlyDate
+export class DateTransformer extends ValueTransformer<Date, Date> {
   public compatibleWith(_data: unknown): _data is Date {
     throw new Error('Not implemented');
   }

@@ -1,26 +1,29 @@
 import {ValueTransformer} from '../base/value-transformer';
 
-export class SetTransformer<T> extends ValueTransformer<Set<T>> {
-  public constructor(private readonly _transformer: ValueTransformer<T>) {
+export class SetTransformer<I, O extends I> extends ValueTransformer<
+  ReadonlySet<I>,
+  Set<O>
+> {
+  public constructor(private readonly _transformer: ValueTransformer<I, O>) {
     super();
   }
 
-  public compatibleWith(_data: unknown): _data is Set<T> {
+  public compatibleWith(_data: unknown): _data is ReadonlySet<I> {
     throw new Error('Not implemented');
   }
 
-  public fromLiteral(_literal: unknown): Set<T> {
+  public fromLiteral(_literal: unknown): Set<O> {
     throw new Error('Not implemented');
   }
 
-  public override toCompactLiteral(data: ReadonlySet<T>): unknown {
-    return Array.from<T, unknown>(data, (item) =>
+  public override toCompactLiteral(data: ReadonlySet<I>): unknown {
+    return Array.from<I, unknown>(data, (item) =>
       this._transformer.toCompactLiteral(item),
     );
   }
 
-  public toLiteral(data: ReadonlySet<T>): unknown {
-    return Array.from<T, unknown>(data, (item) =>
+  public toLiteral(data: ReadonlySet<I>): unknown {
+    return Array.from<I, unknown>(data, (item) =>
       this._transformer.toLiteral(item),
     );
   }

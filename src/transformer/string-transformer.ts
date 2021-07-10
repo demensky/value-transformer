@@ -1,6 +1,6 @@
 import {ValueTransformer} from '../base/value-transformer';
 
-export class StringTransformer extends ValueTransformer<string> {
+export class StringTransformer extends ValueTransformer<string, string> {
   public compatibleWith(_data: unknown): _data is string {
     throw new Error('Not implemented');
   }

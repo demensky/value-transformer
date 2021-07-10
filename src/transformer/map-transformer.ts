@@ -1,23 +1,28 @@
 import {ValueTransformer} from '../base/value-transformer';
 
-export class MapTransformer<K, V> extends ValueTransformer<Map<K, V>> {
+export class MapTransformer<
+  KI,
+  KO extends KI,
+  VI,
+  VO extends VI,
+> extends ValueTransformer<ReadonlyMap<KI, VI>, Map<KO, VO>> {
   public constructor(
-    private readonly _keyTransformer: ValueTransformer<K>,
-    private readonly _valueTransformer: ValueTransformer<V>,
+    private readonly _keyTransformer: ValueTransformer<KI, KO>,
+    private readonly _valueTransformer: ValueTransformer<VI, VO>,
   ) {
     super();
   }
 
-  public compatibleWith(_data: unknown): _data is Map<K, V> {
+  public compatibleWith(_data: unknown): _data is ReadonlyMap<KI, VI> {
     throw new Error('Not implemented');
   }
 
-  public fromLiteral(_literal: unknown): Map<K, V> {
+  public fromLiteral(_literal: unknown): Map<KO, VO> {
     throw new Error('Not implemented');
   }
 
-  public override toCompactLiteral(data: ReadonlyMap<K, V>): unknown {
-    return Array.from<readonly [K, V], readonly [unknown, unknown]>(
+  public override toCompactLiteral(data: ReadonlyMap<KI, VI>): unknown {
+    return Array.from<readonly [KI, VI], readonly [unknown, unknown]>(
       data.entries(),
       ([key, value]) => [
         this._keyTransformer.toCompactLiteral(key),
@@ -26,8 +31,8 @@ export class MapTransformer<K, V> extends ValueTransformer<Map<K, V>> {
     );
   }
 
-  public toLiteral(data: ReadonlyMap<K, V>): unknown {
-    return Array.from<readonly [K, V], readonly [unknown, unknown]>(
+  public toLiteral(data: ReadonlyMap<KI, VI>): unknown {
+    return Array.from<readonly [KI, VI], readonly [unknown, unknown]>(
       data.entries(),
       ([key, value]) => [
         this._keyTransformer.toLiteral(key),

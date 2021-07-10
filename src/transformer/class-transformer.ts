@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../base/value-transformer';
 
-export class ClassTransformer<T> extends ValueTransformer<T> {
-  public compatibleWith(_data: unknown): _data is T {
+export class ClassTransformer<T> extends ValueTransformer<Readonly<T>, T> {
+  public compatibleWith(_data: unknown): _data is Readonly<T> {
     throw new Error('Not implemented');
   }
 
@@ -9,11 +9,11 @@ export class ClassTransformer<T> extends ValueTransformer<T> {
     throw new Error('Not implemented');
   }
 
-  public override toCompactLiteral(_data: T): unknown {
+  public override toCompactLiteral(_data: Readonly<T>): unknown {
     throw new Error('Not implemented');
   }
 
-  public toLiteral(_data: T): unknown {
+  public toLiteral(_data: Readonly<T>): unknown {
     throw new Error('Not implemented');
   }
 }

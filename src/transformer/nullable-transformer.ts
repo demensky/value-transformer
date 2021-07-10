@@ -1,23 +1,26 @@
 import {ValueTransformer} from '../base/value-transformer';
 
-export class NullableTransformer<T> extends ValueTransformer<T | null> {
-  public constructor(private readonly _transformer: ValueTransformer<T>) {
+export class NullableTransformer<I, O extends I> extends ValueTransformer<
+  I | null,
+  O | null
+> {
+  public constructor(private readonly _transformer: ValueTransformer<I, O>) {
     super();
   }
 
-  public compatibleWith(_data: unknown): _data is T | null {
+  public compatibleWith(_data: unknown): _data is I | null {
     throw new Error('Not implemented');
   }
 
-  public fromLiteral(_literal: unknown): T | null {
+  public fromLiteral(_literal: unknown): O | null {
     throw new Error('Not implemented');
   }
 
-  public override toCompactLiteral(data: T | null): unknown {
+  public override toCompactLiteral(data: I | null): unknown {
     return data === null ? null : this._transformer.toCompactLiteral(data);
   }
 
-  public toLiteral(data: T | null): unknown {
+  public toLiteral(data: I | null): unknown {
     return data === null ? null : this._transformer.toLiteral(data);
   }
 }
