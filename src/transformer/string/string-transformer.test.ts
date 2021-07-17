@@ -1,3 +1,7 @@
+import '../../jest/to-be-compact-transformation';
+import '../../jest/to-be-compatible-with';
+import '../../jest/to-be-transformation';
+
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 
 import {StringTransformer} from './string-transformer';
@@ -30,31 +34,29 @@ describe('StringTransformer', () => {
     transformer = new StringTransformer();
   });
 
-  describe('compatibleWith', () => {
-    test.each(INVALID_VALUES)('false %p', (data) => {
-      expect(transformer.compatibleWith(data)).toBe(false);
+  describe.each(INVALID_VALUES)('invalid %p', (data) => {
+    test('compatible', () => {
+      expect(transformer).not.toBeCompatibleWith(data);
     });
 
-    test.each(VALID_VALUES)('true %j', (data) => {
-      expect(transformer.compatibleWith(data)).toBe(true);
-    });
-  });
-
-  describe('fromLiteral', () => {
-    test.each(INVALID_VALUES)('%p', (data) => {
+    test('fromLiteral', () => {
       expect(() => {
         transformer.fromLiteral(data);
       }).toThrow(IncompatibleLiteralError);
     });
-
-    test.each(VALID_VALUES)('%j', (data) => {
-      expect(transformer.fromLiteral(data)).toBe(data);
-    });
   });
 
-  describe('toLiteral', () => {
-    test.each(VALID_VALUES)('%j', (data) => {
-      expect(transformer.toLiteral(data)).toBe(data);
+  describe.each(VALID_VALUES)('valid %p', (data) => {
+    test('compatible', () => {
+      expect(transformer).toBeCompatibleWith(data);
+    });
+
+    test('normal', () => {
+      expect(transformer).toBeTransformation(data, data);
+    });
+
+    test('compact', () => {
+      expect(transformer).toBeCompactTransformation(data, data);
     });
   });
 });
