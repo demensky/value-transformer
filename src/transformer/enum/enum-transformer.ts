@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer';
 
 export class EnumTransformer<V> extends ValueTransformer<V, V> {
   public compatibleWith(_data: unknown): _data is V {

@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer';
 
 export class NeverTransformer extends ValueTransformer<never, never> {
   public compatibleWith(_data: unknown): _data is never {

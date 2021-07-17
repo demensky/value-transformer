@@ -1,4 +1,4 @@
-import {IncompatibleLiteralError} from '../error/incompatible-literal-error';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 
 import {StringTransformer} from './string-transformer';
 

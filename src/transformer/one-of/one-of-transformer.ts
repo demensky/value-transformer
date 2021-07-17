@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer';
 
 export class OneOfTransformer<I, O extends I> extends ValueTransformer<I, O> {
   public constructor(_transformers: readonly ValueTransformer<I, O>[]) {

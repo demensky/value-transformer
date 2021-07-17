@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer';
 
 export class ClassTransformer<T> extends ValueTransformer<Readonly<T>, T> {
   public compatibleWith(_data: unknown): _data is Readonly<T> {

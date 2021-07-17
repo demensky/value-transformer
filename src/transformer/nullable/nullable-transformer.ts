@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer';
 
 export class NullableTransformer<I, O extends I> extends ValueTransformer<
   I | null,

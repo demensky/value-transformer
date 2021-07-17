@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer';
 
 export class ArrayTransformer<I, O extends I> extends ValueTransformer<
   readonly I[],

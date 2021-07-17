@@ -1,5 +1,5 @@
-import {ValueTransformer} from '../base/value-transformer';
-import {identity} from '../util/identity';
+import {ValueTransformer} from '../../base/value-transformer';
+import {identity} from '../../util/identity';
 
 const TRUE_COMPACT = 1;
 
