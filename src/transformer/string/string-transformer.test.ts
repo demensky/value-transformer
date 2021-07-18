@@ -23,7 +23,7 @@ describe('StringTransformer', () => {
       test('fromLiteral', () => {
         expect(() => {
           transformer.fromLiteral(data);
-        }).toThrow(IncompatibleLiteralError);
+        }).toThrow(new IncompatibleLiteralError('only strings are supported'));
       });
     },
   );

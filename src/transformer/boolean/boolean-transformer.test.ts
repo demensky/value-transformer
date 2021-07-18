@@ -23,7 +23,11 @@ describe('BooleanTransformer', () => {
       test('fromLiteral', () => {
         expect(() => {
           transformer.fromLiteral(value);
-        }).toThrow(IncompatibleLiteralError);
+        }).toThrow(
+          new IncompatibleLiteralError(
+            'supported values are true, false, 1, and 0',
+          ),
+        );
       });
     },
   );

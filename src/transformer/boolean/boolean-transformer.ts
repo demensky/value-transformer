@@ -23,7 +23,9 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
       return false;
     }
 
-    throw new IncompatibleLiteralError();
+    throw new IncompatibleLiteralError(
+      'supported values are true, false, 1, and 0',
+    );
   }
 
   public override toCompactLiteral(data: boolean): unknown {

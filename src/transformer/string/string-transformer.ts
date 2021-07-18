@@ -9,7 +9,7 @@ export class StringTransformer extends ValueTransformer<string, string> {
 
   public fromLiteral(literal: unknown): string {
     if (!isString(literal)) {
-      throw new IncompatibleLiteralError();
+      throw new IncompatibleLiteralError('only strings are supported');
     }
 
     return literal;
