@@ -2,7 +2,7 @@ import type {ValueTransformer} from '../../base/value-transformer';
 import {asMock} from '../mock/as-mock';
 import type {MockTransformer} from '../mock/mock-transformer';
 
-import {asNullable} from './as-nullable';
+import {NullableTransformer} from './nullable-transformer';
 
 describe('NullableTransformer', () => {
   let mockTransformer: MockTransformer<'data', 'data'>;
@@ -10,7 +10,7 @@ describe('NullableTransformer', () => {
 
   beforeEach(() => {
     mockTransformer = asMock(true, 'data', true, 'compactLiteral', 'literal');
-    transformer = asNullable(mockTransformer);
+    transformer = new NullableTransformer(mockTransformer);
   });
 
   describe('null value', () => {
