@@ -27,7 +27,6 @@
     "no-unreachable-loop": "error",
     "no-unsafe-finally": "error",
     "use-isnan": "error",
-    "complexity": ["error", {"max": 4}],
     "curly": "error",
     "default-case-last": "error",
     "eqeqeq": "error",
@@ -215,5 +214,13 @@
       {"groups": [["^\\u0000"], ["^"], ["^\\.\\."], ["^\\."]]}
     ],
     "simple-import-sort/exports": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts"],
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": "off"
+      }
+    }
+  ]
 }
