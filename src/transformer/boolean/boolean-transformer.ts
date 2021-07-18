@@ -9,6 +9,9 @@ const FALSE_COMPACT = 0;
 
 type BooleanCompactLiteral = typeof FALSE_COMPACT | typeof TRUE_COMPACT;
 
+/**
+ * @see {@link asBoolean} alias
+ */
 export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
   public compatibleWith(data: unknown): data is boolean {
     return isBoolean(data);
