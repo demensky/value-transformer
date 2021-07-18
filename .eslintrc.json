@@ -214,5 +214,13 @@
       {"groups": [["^\\u0000"], ["^"], ["^\\.\\."], ["^\\."]]}
     ],
     "simple-import-sort/exports": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts"],
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": "off"
+      }
+    }
+  ]
 }
