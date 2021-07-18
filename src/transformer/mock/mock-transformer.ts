@@ -1,55 +1,41 @@
 import {ValueTransformer} from '../../base/value-transformer';
 
-type UnknownParams = readonly unknown[];
-
 export class MockTransformer<I, O extends I> extends ValueTransformer<I, O> {
-  public readonly compatibleWithCalls: UnknownParams[] = [];
+  public override readonly compatibleWith: ValueTransformer<
+    I,
+    O
+  >['compatibleWith'];
 
-  public readonly fromLiteralCalls: UnknownParams[] = [];
+  public override readonly fromLiteral: ValueTransformer<I, O>['fromLiteral'];
 
-  public readonly internalDataCanBeVerifiedCalls: UnknownParams[] = [];
+  public override readonly internalDataCanBeVerified: ValueTransformer<
+    I,
+    O
+  >['internalDataCanBeVerified'];
 
-  public readonly toCompactLiteralCalls: UnknownParams[] = [];
+  public override readonly toCompactLiteral: ValueTransformer<
+    I,
+    O
+  >['toCompactLiteral'];
 
-  public readonly toLiteralCalls: UnknownParams[] = [];
+  public override readonly toLiteral: ValueTransformer<I, O>['toLiteral'];
 
   public constructor(
-    private readonly _compatibleWithResult: boolean,
-    private readonly _fromLiteralResult: O,
-    private readonly _internalDataCanBeVerifiedResult: boolean,
-    private readonly _toCompactLiteralResult: unknown,
-    private readonly _toLiteralResult: unknown,
+    compatibleWithResult: boolean,
+    fromLiteralResult: O,
+    internalDataCanBeVerifiedResult: boolean,
+    toCompactLiteralResult: unknown,
+    toLiteralResult: unknown,
   ) {
     super();
-  }
-
-  public compatibleWith(data: unknown): data is I {
-    this.compatibleWithCalls.push([data]);
-
-    return this._compatibleWithResult;
-  }
-
-  public fromLiteral(literal: unknown): O {
-    this.fromLiteralCalls.push([literal]);
-
-    return this._fromLiteralResult;
-  }
-
-  public override internalDataCanBeVerified(data: I): boolean {
-    this.internalDataCanBeVerifiedCalls.push([data]);
-
-    return this._internalDataCanBeVerifiedResult;
-  }
-
-  public override toCompactLiteral(data: I): unknown {
-    this.toCompactLiteralCalls.push([data]);
-
-    return this._toCompactLiteralResult;
-  }
-
-  public toLiteral(data: I): unknown {
-    this.toLiteralCalls.push([data]);
-
-    return this._toLiteralResult;
+    // It doesn't matter for the test.
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    this.compatibleWith = jest.fn(() => compatibleWithResult) as never;
+    this.fromLiteral = jest.fn(() => fromLiteralResult);
+    this.internalDataCanBeVerified = jest.fn(
+      () => internalDataCanBeVerifiedResult,
+    );
+    this.toCompactLiteral = jest.fn(() => toCompactLiteralResult);
+    this.toLiteral = jest.fn(() => toLiteralResult);
   }
 }
