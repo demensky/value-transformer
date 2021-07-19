@@ -18,12 +18,13 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
   }
 
   public fromLiteral(literal: unknown): boolean {
-    if (literal === TRUE_COMPACT || literal === true) {
-      return true;
-    }
-
-    if (literal === FALSE_COMPACT || literal === false) {
-      return false;
+    switch (literal) {
+      case TRUE_COMPACT:
+      case true:
+        return true;
+      case FALSE_COMPACT:
+      case false:
+        return false;
     }
 
     throw new IncompatibleLiteralError(
