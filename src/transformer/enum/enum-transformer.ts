@@ -1,15 +1,39 @@
 import {ValueTransformer} from '../../base/value-transformer';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import type {EnumDefinition} from '../../util/enum-definition';
+import type {EnumLike} from '../../util/enum-like';
+import {extractEnumMap} from '../../util/extract-enum-map';
 
-export class EnumTransformer<V> extends ValueTransformer<V, V> {
-  public compatibleWith(_data: unknown): _data is V {
-    throw new Error('Not implemented');
+function isInSet<T>(value: unknown, set: ReadonlySet<T>): value is T {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  return set.has(value as T);
+}
+
+export class EnumTransformer<
+  K extends string,
+  V extends EnumLike,
+> extends ValueTransformer<V, V> {
+  private readonly _values: ReadonlySet<V>;
+
+  public constructor(definition: EnumDefinition<K, V>) {
+    super();
+
+    this._values = new Set<V>(extractEnumMap<K, V>(definition).values());
   }
 
-  public fromLiteral(_literal: unknown): V {
-    throw new Error('Not implemented');
+  public compatibleWith(data: unknown): data is V {
+    return isInSet<V>(data, this._values);
   }
 
-  public toLiteral(_data: V): unknown {
-    throw new Error('Not implemented');
+  public fromLiteral(literal: unknown): V {
+    if (!isInSet<V>(literal, this._values)) {
+      throw new IncompatibleLiteralError();
+    }
+
+    return literal;
+  }
+
+  public toLiteral(data: V): unknown {
+    return data;
   }
 }
