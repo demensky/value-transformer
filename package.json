@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/demensky/value-transformer#readme",
   "devDependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.0.1",
     "@types/jest-diff": "^24.3.0",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
@@ -38,7 +38,7 @@
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest": "^27.0.4",
-    "jest-diff": "^26.6.2",
+    "jest-diff": "^27.1.0",
     "prettier": "^2.3.1",
     "rollup": "^2.56.3",
     "rollup-plugin-typescript2": "^0.30.0",

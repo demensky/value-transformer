@@ -1,4 +1,4 @@
-import diff from 'jest-diff';
+import {diff} from 'jest-diff';
 
 import type {ValueTransformer} from '../base/value-transformer';
 
