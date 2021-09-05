@@ -1,0 +1,9 @@
+/.idea/
+/src/
+/.editorconfig
+/.eslintrc.json
+/.gitignore
+/.prettierrc.json
+/jest.config.ts
+/rollup.config.ts
+/tsconfig*.json
