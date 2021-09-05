@@ -4,3 +4,7 @@ export {asNullable} from './transformer/nullable/as-nullable';
 export {NullableTransformer} from './transformer/nullable/nullable-transformer';
 export {asString} from './transformer/string/as-string';
 export {StringTransformer} from './transformer/string/string-transformer';
+export {asNever} from './transformer/never/as-never';
+export {NeverTransformer} from './transformer/never/never-transformer';
+export {DeserializationNeverError} from './error/deserialization-never-error';
+export {SerializationNeverError} from './error/serialization-never-error';
