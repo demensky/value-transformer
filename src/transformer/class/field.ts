@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+/// <reference types="reflect-metadata" />
 
 import type {ValueTransformer} from '../../base/value-transformer';
 import type {TypedPropertyDecorator} from '../../util/typed-property-decorator';

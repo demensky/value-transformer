@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import {asMock} from '../mock/as-mock';
 
 import {CLASS_TRANSFORMER_FIELD_TRANSFORMER} from './class-transformer-field-transformer';

@@ -1,6 +1,8 @@
 // TODO reduce eslint-disable
 /* eslint-disable @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/consistent-type-assertions */
 
+/// <reference types="reflect-metadata" />
+
 import {ValueTransformer} from '../../base/value-transformer';
 
 import {CLASS_TRANSFORMER_FIELD_TRANSFORMER} from './class-transformer-field-transformer';

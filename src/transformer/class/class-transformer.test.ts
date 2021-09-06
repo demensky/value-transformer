@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,@typescript-eslint/no-empty-interface,@typescript-eslint/no-redeclare */
 
+import 'reflect-metadata';
 import '../../jest/to-be-compact-transformation';
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
