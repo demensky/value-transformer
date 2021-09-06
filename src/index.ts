@@ -8,3 +8,6 @@ export {asNever} from './transformer/never/as-never';
 export {NeverTransformer} from './transformer/never/never-transformer';
 export {DeserializationNeverError} from './error/deserialization-never-error';
 export {SerializationNeverError} from './error/serialization-never-error';
+export {ClassTransformer} from './transformer/class/class-transformer';
+export {field} from './transformer/class/field';
+export {asClass} from './transformer/class/as-class';
