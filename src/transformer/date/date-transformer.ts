@@ -1,5 +1,5 @@
 import {ValueTransformer} from '../../base/value-transformer';
-import {isInvalidDate} from '../../util/is-invalid-date';
+import {isInvalidDate} from '../../util/guard/is-invalid-date';
 
 const INVALID_COMPACT = '?';
 

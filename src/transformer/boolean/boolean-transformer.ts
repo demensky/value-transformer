@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {isBoolean} from '../../util/guard/is-boolean';
 import {identity} from '../../util/identity';
-import {isBoolean} from '../../util/is-boolean';
 
 const TRUE_COMPACT = 1;
 

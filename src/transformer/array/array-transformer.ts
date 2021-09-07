@@ -4,7 +4,7 @@ import {compatibleWith} from '../../util/compatible-with';
 import {denseArrayLike} from '../../util/dense-array-like';
 import {every} from '../../util/every';
 import {fromLiteral} from '../../util/from-literal';
-import {isArray} from '../../util/is-array';
+import {isArray} from '../../util/guard/is-array';
 import {toCompactLiteral} from '../../util/to-compact-literal';
 import {toLiteral} from '../../util/to-literal';
 

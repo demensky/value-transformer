@@ -1,6 +1,6 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {isString} from '../../util/is-string';
+import {isString} from '../../util/guard/is-string';
 
 /**
  * @see {@link asString} alias
