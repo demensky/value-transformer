@@ -1,4 +1,14 @@
 import {ValueTransformer} from '../../base/value-transformer';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {compatibleWith} from '../../util/compatible-with';
+import {every} from '../../util/every';
+import {isArray} from '../../util/is-array';
+import {isEntry} from '../../util/is-entry';
+import {isMap} from '../../util/is-map';
+import {map} from '../../util/map';
+import {mapEntries} from '../../util/map-entries';
+import {toCompactLiteral} from '../../util/to-compact-literal';
+import {toLiteral} from '../../util/to-literal';
 
 export class MapTransformer<
   KI,
@@ -13,31 +23,52 @@ export class MapTransformer<
     super();
   }
 
-  public compatibleWith(_data: unknown): _data is ReadonlyMap<KI, VI> {
-    throw new Error('Not implemented');
+  public compatibleWith(data: unknown): data is ReadonlyMap<KI, VI> {
+    return (
+      isMap(data) &&
+      every<unknown>(data.keys(), compatibleWith<KI>(this._keyTransformer)) &&
+      every<unknown>(data.values(), compatibleWith<VI>(this._valueTransformer))
+    );
   }
 
-  public fromLiteral(_literal: unknown): Map<KO, VO> {
-    throw new Error('Not implemented');
+  public fromLiteral(literal: unknown): Map<KO, VO> {
+    if (!isArray(literal)) {
+      throw new IncompatibleLiteralError();
+    }
+
+    return new Map<KO, VO>(
+      map<unknown, readonly [KO, VO]>(literal, (item) => {
+        if (!isEntry(item)) {
+          throw new IncompatibleLiteralError();
+        }
+
+        const [key, value]: readonly [unknown, unknown] = item;
+
+        return [
+          this._keyTransformer.fromLiteral(key),
+          this._valueTransformer.fromLiteral(value),
+        ];
+      }),
+    );
   }
 
   public override toCompactLiteral(data: ReadonlyMap<KI, VI>): unknown {
-    return Array.from<readonly [KI, VI], readonly [unknown, unknown]>(
-      data.entries(),
-      ([key, value]) => [
-        this._keyTransformer.toCompactLiteral(key),
-        this._valueTransformer.toCompactLiteral(value),
-      ],
+    return Array.from<readonly [unknown, unknown]>(
+      mapEntries<KI, unknown, VI, unknown>(
+        data,
+        toCompactLiteral<KI>(this._keyTransformer),
+        toCompactLiteral<VI>(this._valueTransformer),
+      ),
     );
   }
 
   public toLiteral(data: ReadonlyMap<KI, VI>): unknown {
-    return Array.from<readonly [KI, VI], readonly [unknown, unknown]>(
-      data.entries(),
-      ([key, value]) => [
-        this._keyTransformer.toLiteral(key),
-        this._valueTransformer.toLiteral(value),
-      ],
+    return Array.from<readonly [unknown, unknown]>(
+      mapEntries<KI, unknown, VI, unknown>(
+        data,
+        toLiteral<KI>(this._keyTransformer),
+        toLiteral<VI>(this._valueTransformer),
+      ),
     );
   }
 }

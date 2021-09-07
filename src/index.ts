@@ -15,3 +15,5 @@ export {SetTransformer} from './transformer/set/set-transformer';
 export {asSet} from './transformer/set/as-set';
 export {ArrayTransformer} from './transformer/array/array-transformer';
 export {asArray} from './transformer/array/as-array';
+export {MapTransformer} from './transformer/map/map-transformer';
+export {asMap} from './transformer/map/as-map';
