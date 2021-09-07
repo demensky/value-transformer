@@ -1,4 +1,4 @@
-import type {ValueTransformer} from '../base/value-transformer';
+import type {ValueTransformer} from './value-transformer';
 
 export function toCompactLiteral<I>(
   transformer: ValueTransformer<I, I>,

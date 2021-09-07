@@ -1,14 +1,14 @@
+import {compatibleWith} from '../../base/compatible-with';
+import {toCompactLiteral} from '../../base/to-compact-literal';
+import {toLiteral} from '../../base/to-literal';
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {compatibleWith} from '../../util/compatible-with';
 import {every} from '../../util/every';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
 import {isMap} from '../../util/guard/is-map';
 import {map} from '../../util/map';
 import {mapEntries} from '../../util/map-entries';
-import {toCompactLiteral} from '../../util/to-compact-literal';
-import {toLiteral} from '../../util/to-literal';
 
 export class MapTransformer<
   KI,

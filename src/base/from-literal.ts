@@ -1,4 +1,4 @@
-import type {ValueTransformer} from '../base/value-transformer';
+import type {ValueTransformer} from './value-transformer';
 
 export function fromLiteral<O>(
   transformer: ValueTransformer<unknown, O>,

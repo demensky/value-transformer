@@ -1,13 +1,13 @@
+import {compatibleWith} from '../../base/compatible-with';
+import {fromLiteral} from '../../base/from-literal';
+import {toCompactLiteral} from '../../base/to-compact-literal';
+import {toLiteral} from '../../base/to-literal';
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {compatibleWith} from '../../util/compatible-with';
 import {every} from '../../util/every';
-import {fromLiteral} from '../../util/from-literal';
 import {isArray} from '../../util/guard/is-array';
 import {isSet} from '../../util/guard/is-set';
 import {map} from '../../util/map';
-import {toCompactLiteral} from '../../util/to-compact-literal';
-import {toLiteral} from '../../util/to-literal';
 
 // TODO tests
 export class SetTransformer<I, O extends I> extends ValueTransformer<
