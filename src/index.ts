@@ -13,3 +13,5 @@ export {field} from './transformer/class/field';
 export {asClass} from './transformer/class/as-class';
 export {SetTransformer} from './transformer/set/set-transformer';
 export {asSet} from './transformer/set/as-set';
+export {ArrayTransformer} from './transformer/array/array-transformer';
+export {asArray} from './transformer/array/as-array';
