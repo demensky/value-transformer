@@ -11,3 +11,5 @@ export {SerializationNeverError} from './error/serialization-never-error';
 export {ClassTransformer} from './transformer/class/class-transformer';
 export {field} from './transformer/class/field';
 export {asClass} from './transformer/class/as-class';
+export {SetTransformer} from './transformer/set/set-transformer';
+export {asSet} from './transformer/set/as-set';
