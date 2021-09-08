@@ -6,6 +6,12 @@ import {isString} from '../../util/guard/is-string';
  * @see {@link asString} alias
  */
 export class StringTransformer extends ValueTransformer<string, string> {
+  public static SINGLE = new StringTransformer();
+
+  private constructor() {
+    super();
+  }
+
   public compatibleWith(data: unknown): data is string {
     return isString(data);
   }
