@@ -1,7 +1,7 @@
 /// <reference types="reflect-metadata" />
 
 import type {ValueTransformer} from '../../base/value-transformer';
-import type {ExactPropertyDecorator} from '../../util/exact-property-decorator';
+import type {ExactPropertyDecorator} from '../../type/exact-property-decorator';
 
 import {CLASS_TRANSFORMER_FIELD_TRANSFORMER} from './class-transformer-field-transformer';
 import {CLASS_TRANSFORMER_KEYS} from './class-transformer-keys';

@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import type {EnumDefinition} from '../../util/enum-definition';
-import type {EnumLike} from '../../util/enum-like';
+import type {EnumDefinition} from '../../type/enum-definition';
+import type {EnumLike} from '../../type/enum-like';
 import {extractEnumMap} from '../../util/extract-enum-map';
 
 function isInSet<T>(value: unknown, set: ReadonlySet<T>): value is T {

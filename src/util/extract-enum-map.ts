@@ -1,5 +1,5 @@
-import type {EnumDefinition} from './enum-definition';
-import type {EnumLike} from './enum-like';
+import type {EnumDefinition} from '../type/enum-definition';
+import type {EnumLike} from '../type/enum-like';
 
 export function extractEnumMap<K extends string, V extends EnumLike>(
   definition: EnumDefinition<K, V>,

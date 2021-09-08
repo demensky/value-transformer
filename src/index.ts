@@ -17,3 +17,6 @@ export * from './transformer/set/as-set';
 export * from './transformer/set/set-transformer';
 export * from './transformer/string/as-string';
 export * from './transformer/string/string-transformer';
+export * from './type/enum-definition';
+export * from './type/enum-like';
+export * from './type/exact-property-decorator';
