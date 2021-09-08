@@ -1,14 +1,13 @@
-import type {ValueTransformer} from '../../base/value-transformer';
 import {DeserializationNeverError} from '../../error/deserialization-never-error';
 import {SerializationNeverError} from '../../error/serialization-never-error';
 
 import {NeverTransformer} from './never-transformer';
 
 describe('NeverTransformer', () => {
-  let transformer: ValueTransformer<never, never>;
+  let transformer: NeverTransformer;
 
-  beforeEach(() => {
-    transformer = new NeverTransformer();
+  beforeAll(() => {
+    transformer = NeverTransformer.SINGLE;
   });
 
   test('compatibleWith return false', () => {
