@@ -14,7 +14,7 @@ describe('BooleanTransformer', () => {
   });
 
   describe.each([null, undefined, 2, 3, [], {}] as const)(
-    'valid %p',
+    'invalid %p',
     (value) => {
       test('compatible', () => {
         expect(transformer).not.toBeCompatibleWith(value);

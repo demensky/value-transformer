@@ -4,7 +4,7 @@ describe('extractEnumMap', () => {
   test('empty enum return empty map', () => {
     enum EmptyEnum {}
 
-    expect(extractEnumMap(EmptyEnum)).toEqual(new Map());
+    expect(extractEnumMap(EmptyEnum)).toStrictEqual(new Map());
   });
 
   test('numeric enum', () => {
@@ -13,7 +13,7 @@ describe('extractEnumMap', () => {
       BAR = 1,
     }
 
-    expect(extractEnumMap(NumericEnum)).toEqual(
+    expect(extractEnumMap(NumericEnum)).toStrictEqual(
       new Map([
         ['FOO', 0],
         ['BAR', 1],
@@ -27,7 +27,7 @@ describe('extractEnumMap', () => {
       BAR = 'bar',
     }
 
-    expect(extractEnumMap(StringEnum)).toEqual(
+    expect(extractEnumMap(StringEnum)).toStrictEqual(
       new Map([
         ['FOO', 'foo'],
         ['BAR', 'bar'],
@@ -41,7 +41,7 @@ describe('extractEnumMap', () => {
       BAR = 'bar',
     }
 
-    expect(extractEnumMap(HeterogeneousEnum)).toEqual(
+    expect(extractEnumMap(HeterogeneousEnum)).toStrictEqual(
       new Map<string, number | string>([
         ['FOO', 0],
         ['BAR', 'bar'],

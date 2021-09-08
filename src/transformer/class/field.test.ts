@@ -19,7 +19,7 @@ describe('ClassTransformer @field decorator', () => {
 
     expect(
       Reflect.getOwnMetadata(CLASS_TRANSFORMER_KEYS, Tmp.prototype),
-    ).toEqual(['a', 'b']);
+    ).toStrictEqual(['a', 'b']);
 
     expect(
       Reflect.getOwnMetadata(
@@ -52,7 +52,7 @@ describe('ClassTransformer @field decorator', () => {
 
     expect(
       Reflect.getOwnMetadata(CLASS_TRANSFORMER_KEYS, TmpRecipient.prototype),
-    ).toEqual(['a', 'b']);
+    ).toStrictEqual(['a', 'b']);
 
     expect(
       Reflect.getOwnMetadata(
