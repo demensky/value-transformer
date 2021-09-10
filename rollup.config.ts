@@ -1,4 +1,4 @@
-import {RollupOptions} from 'rollup';
+import type {RollupOptions} from 'rollup';
 import typescript from 'rollup-plugin-typescript2';
 
 const config: readonly RollupOptions[] = [
