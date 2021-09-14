@@ -1,17 +1,56 @@
 import {ValueTransformer} from '../../base/value-transformer';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {isNumber} from '../../util/guard/is-number';
 
-const ONE_BYTE_MASK = 0xff;
+const NAN_LITERAL_VALUE = 'NaN';
+
+const POSITIVE_INFINITY_LITERAL_VALUE = 'Infinity';
+
+const NEGATIVE_INFINITY_LITERAL_VALUE = '-Infinity';
 
 export class NumberTransformer extends ValueTransformer<number, number> {
-  public compatibleWith(_data: unknown): _data is number {
-    throw new Error('Not implemented');
+  public static readonly SINGLE = new NumberTransformer();
+
+  private constructor() {
+    super();
   }
 
-  public fromLiteral(_literal: unknown): number {
-    throw new Error('Not implemented');
+  public compatibleWith(data: unknown): data is number {
+    return isNumber(data);
+  }
+
+  public fromLiteral(literal: unknown): number {
+    switch (literal) {
+      case NAN_LITERAL_VALUE:
+        return NaN;
+      case POSITIVE_INFINITY_LITERAL_VALUE:
+        return Infinity;
+      case NEGATIVE_INFINITY_LITERAL_VALUE:
+        return -Infinity;
+    }
+
+    if (!isNumber(literal)) {
+      throw new IncompatibleLiteralError(
+        "only 'NaN', 'Infinity', '-Infinity' & numbers are supported",
+      );
+    }
+
+    return literal;
   }
 
   public toLiteral(data: number): unknown {
-    return data & ONE_BYTE_MASK;
+    if (Number.isNaN(data)) {
+      return NAN_LITERAL_VALUE;
+    }
+
+    if (data === Infinity) {
+      return POSITIVE_INFINITY_LITERAL_VALUE;
+    }
+
+    if (data === -Infinity) {
+      return NEGATIVE_INFINITY_LITERAL_VALUE;
+    }
+
+    return data;
   }
 }

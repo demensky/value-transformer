@@ -1,5 +1,5 @@
-import type {NumberTransformer} from './number-transformer';
+import {NumberTransformer} from './number-transformer';
 
 export function asNumber(): NumberTransformer {
-  throw new Error('Not implemented');
+  return NumberTransformer.SINGLE;
 }
