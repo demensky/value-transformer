@@ -10,7 +10,7 @@ export class NullableTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public compatibleWith(data: unknown): data is I | null {
-    return isNull(data) ? true : this._transformer.compatibleWith(data);
+    return isNull(data) || this._transformer.compatibleWith(data);
   }
 
   public fromLiteral(literal: unknown): O | null {
