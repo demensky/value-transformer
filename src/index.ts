@@ -13,6 +13,8 @@ export * from './transformer/never/as-never';
 export * from './transformer/never/never-transformer';
 export * from './transformer/nullable/as-nullable';
 export * from './transformer/nullable/nullable-transformer';
+export * from './transformer/number/as-number';
+export * from './transformer/number/number-transformer';
 export * from './transformer/set/as-set';
 export * from './transformer/set/set-transformer';
 export * from './transformer/string/as-string';
