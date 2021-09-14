@@ -7,7 +7,7 @@ describe('NeverTransformer', () => {
   let transformer: NeverTransformer;
 
   beforeAll(() => {
-    transformer = NeverTransformer.SINGLE;
+    transformer = new NeverTransformer();
   });
 
   test('compatibleWith return false', () => {

@@ -9,9 +9,7 @@ const POSITIVE_INFINITY_LITERAL_VALUE = 'Infinity';
 const NEGATIVE_INFINITY_LITERAL_VALUE = '-Infinity';
 
 export class NumberTransformer extends ValueTransformer<number, number> {
-  public static readonly SINGLE = new NumberTransformer();
-
-  private constructor() {
+  public constructor() {
     super();
   }
 

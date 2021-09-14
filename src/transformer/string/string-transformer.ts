@@ -6,9 +6,7 @@ import {isString} from '../../util/guard/is-string';
  * @see {@link asString} alias
  */
 export class StringTransformer extends ValueTransformer<string, string> {
-  public static SINGLE = new StringTransformer();
-
-  private constructor() {
+  public constructor() {
     super();
   }
 

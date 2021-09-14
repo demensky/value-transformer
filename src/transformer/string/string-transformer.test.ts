@@ -10,7 +10,7 @@ describe('StringTransformer', () => {
   let transformer: StringTransformer;
 
   beforeAll(() => {
-    transformer = StringTransformer.SINGLE;
+    transformer = new StringTransformer();
   });
 
   describe.each([null, undefined, 0, 1, [], false, true])(
