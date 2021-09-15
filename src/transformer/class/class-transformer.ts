@@ -5,6 +5,7 @@
 
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {isArray} from '../../util/guard/is-array';
 import {isObject} from '../../util/guard/is-object';
 
 import {CLASS_TRANSFORMER_FIELD_TRANSFORMER} from './class-transformer-field-transformer';
@@ -77,7 +78,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
       throw new IncompatibleLiteralError();
     }
 
-    if (Array.isArray(literal)) {
+    if (isArray(literal)) {
       if (literal.length !== fields.length) {
         throw new Error('Incorrect count of fields'); // TODO separate error
       }
