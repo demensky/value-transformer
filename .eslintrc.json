@@ -81,7 +81,10 @@
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/await-thenable": "error",
     "@typescript-eslint/ban-ts-comment": "error",
-    "@typescript-eslint/ban-types": "error",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {"types": {"object": false}, "extendDefaults": true}
+    ],
     "@typescript-eslint/class-literal-property-style": "error",
     "@typescript-eslint/consistent-indexed-object-style": "error",
     "@typescript-eslint/consistent-type-assertions": [

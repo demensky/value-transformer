@@ -15,8 +15,11 @@ class FieldInfo<K extends string, I, O extends I> {
   ) {}
 }
 
-export class ClassTransformer<T> extends ValueTransformer<Readonly<T>, T> {
-  public static fromConstructor<T>(
+export class ClassTransformer<T extends object> extends ValueTransformer<
+  Readonly<T>,
+  T
+> {
+  public static fromConstructor<T extends object>(
     constructor: new (...args: never) => T,
   ): ClassTransformer<T> {
     return new ClassTransformer<T>(constructor);
