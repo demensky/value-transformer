@@ -7,6 +7,8 @@ export * from './transformer/boolean/boolean-transformer';
 export * from './transformer/class/as-class';
 export * from './transformer/class/class-transformer';
 export * from './transformer/class/field';
+export * from './transformer/date/as-date';
+export * from './transformer/date/date-transformer';
 export * from './transformer/map/as-map';
 export * from './transformer/map/map-transformer';
 export * from './transformer/never/as-never';
