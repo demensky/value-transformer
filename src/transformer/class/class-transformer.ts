@@ -4,6 +4,8 @@
 /// <reference types="reflect-metadata" />
 
 import {ValueTransformer} from '../../base/value-transformer';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {isObject} from '../../util/guard/is-object';
 
 import {CLASS_TRANSFORMER_FIELD_TRANSFORMER} from './class-transformer-field-transformer';
 import {CLASS_TRANSFORMER_KEYS} from './class-transformer-keys';
@@ -71,6 +73,10 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     const fields = this._getFieldsInfo();
     const instance: T = Object.create(this._constructor.prototype);
 
+    if (!isObject(literal)) {
+      throw new IncompatibleLiteralError();
+    }
+
     if (Array.isArray(literal)) {
       if (literal.length !== fields.length) {
         throw new Error('Incorrect count of fields'); // TODO separate error
@@ -83,7 +89,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
 
         instance[key] = transformer.fromLiteral(literal[i]);
       }
-    } else if (typeof literal === 'object' && literal !== null) {
+    } else {
       for (const {key, transformer} of fields) {
         instance[key] = transformer.fromLiteral(
           (literal as Record<string, unknown>)[key],
