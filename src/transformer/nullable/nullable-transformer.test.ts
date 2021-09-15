@@ -9,7 +9,7 @@ describe('NullableTransformer', () => {
   let transformer: ValueTransformer<'data' | null, 'data' | null>;
 
   beforeEach(() => {
-    mockTransformer = asMock(true, 'data', true, 'compactLiteral', 'literal');
+    mockTransformer = asMock(true, 'data', 'compactLiteral', 'literal');
     transformer = new NullableTransformer(mockTransformer);
   });
 

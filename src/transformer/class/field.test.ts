@@ -8,8 +8,8 @@ import {field} from './field';
 
 describe('ClassTransformer @field decorator', () => {
   test('just class', () => {
-    const transformerA = asMock(true, null, true, null, null);
-    const transformerB = asMock(true, null, true, null, null);
+    const transformerA = asMock(true, null, null, null);
+    const transformerB = asMock(true, null, null, null);
 
     class Tmp {
       @field(transformerA) public a: unknown;
@@ -39,8 +39,8 @@ describe('ClassTransformer @field decorator', () => {
   });
 
   test('class extend class', () => {
-    const transformerA = asMock(true, null, true, null, null);
-    const transformerB = asMock(true, null, true, null, null);
+    const transformerA = asMock(true, null, null, null);
+    const transformerB = asMock(true, null, null, null);
 
     abstract class TmpSuper {
       @field(transformerA) public a: unknown;

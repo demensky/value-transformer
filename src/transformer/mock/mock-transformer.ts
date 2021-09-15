@@ -8,11 +8,6 @@ export class MockTransformer<I, O extends I> extends ValueTransformer<I, O> {
 
   public override readonly fromLiteral: ValueTransformer<I, O>['fromLiteral'];
 
-  public override readonly internalDataCanBeVerified: ValueTransformer<
-    I,
-    O
-  >['internalDataCanBeVerified'];
-
   public override readonly toCompactLiteral: ValueTransformer<
     I,
     O
@@ -23,7 +18,6 @@ export class MockTransformer<I, O extends I> extends ValueTransformer<I, O> {
   public constructor(
     compatibleWithResult: boolean,
     fromLiteralResult: O,
-    internalDataCanBeVerifiedResult: boolean,
     toCompactLiteralResult: unknown,
     toLiteralResult: unknown,
   ) {
@@ -32,9 +26,6 @@ export class MockTransformer<I, O extends I> extends ValueTransformer<I, O> {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     this.compatibleWith = jest.fn(() => compatibleWithResult) as never;
     this.fromLiteral = jest.fn(() => fromLiteralResult);
-    this.internalDataCanBeVerified = jest.fn(
-      () => internalDataCanBeVerifiedResult,
-    );
     this.toCompactLiteral = jest.fn(() => toCompactLiteralResult);
     this.toLiteral = jest.fn(() => toLiteralResult);
   }

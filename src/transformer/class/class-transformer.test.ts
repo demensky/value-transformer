@@ -60,20 +60,8 @@ describe('ClassTransformer', () => {
     let transformerB: MockTransformer<unknown, unknown>;
 
     beforeEach(() => {
-      transformerA = asMock(
-        true,
-        'a data',
-        true,
-        'a compactLiteral',
-        'a literal',
-      );
-      transformerB = asMock(
-        true,
-        'b data',
-        true,
-        'b compactLiteral',
-        'b literal',
-      );
+      transformerA = asMock(true, 'a data', 'a compactLiteral', 'a literal');
+      transformerB = asMock(true, 'b data', 'b compactLiteral', 'b literal');
 
       class TmpClass {
         @field(transformerA) public a: unknown = 'a data';
@@ -116,20 +104,8 @@ describe('ClassTransformer', () => {
     let data: Tmp;
 
     beforeEach(() => {
-      transformerA = asMock(
-        true,
-        'a data',
-        true,
-        'a compactLiteral',
-        'a literal',
-      );
-      transformerC = asMock(
-        true,
-        'c data',
-        true,
-        'c compactLiteral',
-        'c literal',
-      );
+      transformerA = asMock(true, 'a data', 'a compactLiteral', 'a literal');
+      transformerC = asMock(true, 'c data', 'c compactLiteral', 'c literal');
 
       class TmpClass {
         @field(transformerA) public a: unknown = 'a data';
