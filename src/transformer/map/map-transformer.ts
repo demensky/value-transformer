@@ -38,7 +38,7 @@ export class MapTransformer<
 
     return new Map<KO, VO>(
       map<unknown, readonly [KO, VO]>(literal, (item) => {
-        if (!isEntry(item)) {
+        if (!isArray(item) || !isEntry(item)) {
           throw new IncompatibleLiteralError();
         }
 
