@@ -2,7 +2,12 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {"project": ["./tsconfig.json"]},
-  "plugins": ["@typescript-eslint", "import", "simple-import-sort"],
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "simple-import-sort",
+    "unused-imports"
+  ],
   "reportUnusedDisableDirectives": true,
   "rules": {
     "for-direction": "error",
@@ -221,7 +226,8 @@
       "error",
       {"groups": [["^\\u0000"], ["^"], ["^\\.\\."], ["^\\."]]}
     ],
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "error",
+    "unused-imports/no-unused-imports": "error"
   },
   "overrides": [
     {
