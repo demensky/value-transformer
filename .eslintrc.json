@@ -3,6 +3,7 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {"project": ["./tsconfig.json"]},
   "plugins": ["@typescript-eslint", "import", "simple-import-sort"],
+  "reportUnusedDisableDirectives": true,
   "rules": {
     "for-direction": "error",
     "no-async-promise-executor": "error",
