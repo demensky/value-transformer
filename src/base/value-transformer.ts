@@ -1,4 +1,9 @@
-export abstract class ValueTransformer<I, O extends I> {
+import type {ValueTransformerInput} from './value-transformer-input';
+import type {ValueTransformerOutput} from './value-transformer-output';
+
+export abstract class ValueTransformer<I, O extends I>
+  implements ValueTransformerInput<I>, ValueTransformerOutput<O>
+{
   public abstract compatibleWith(data: unknown): data is I;
 
   public abstract fromLiteral(literal: unknown): O;
