@@ -8,6 +8,10 @@ const POSITIVE_INFINITY_LITERAL_VALUE = 'Infinity';
 
 const NEGATIVE_INFINITY_LITERAL_VALUE = '-Infinity';
 
+/**
+ * Handles a primitive number (including `NaN`, `Infinity` and `-Infinity`).
+ * @see {@link asNumber} alias
+ */
 export class NumberTransformer extends ValueTransformer<number, number> {
   public constructor() {
     super();
