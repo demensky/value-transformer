@@ -7,6 +7,10 @@ import {isNumberOrString} from '../../util/guard/is-number-or-string';
 const INVALID = 'Invalid Date';
 
 // TODO ReadonlyDate
+/**
+ * Handles a {@link Date} object (including "Invalid Date").
+ * @see {@link asDate} alias
+ */
 export class DateTransformer extends ValueTransformer<Date, Date> {
   public constructor() {
     super();
