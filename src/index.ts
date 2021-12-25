@@ -5,6 +5,8 @@ export * from './error/no-compatible-transformer-error';
 export * from './error/serialization-never-error';
 export * from './transformer/array/array-transformer';
 export * from './transformer/array/as-array';
+export * from './transformer/big-int/as-big-int';
+export * from './transformer/big-int/big-int-transformer';
 export * from './transformer/boolean/as-boolean';
 export * from './transformer/boolean/boolean-transformer';
 export * from './transformer/class/as-class';
