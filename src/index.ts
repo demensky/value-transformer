@@ -22,8 +22,6 @@ export * from './transformer/number/as-number';
 export * from './transformer/number/number-transformer';
 export * from './transformer/one-of/as-one-of';
 export * from './transformer/one-of/one-of-transformer';
-export * from './transformer/one-of/one-of-transformer-compact-literal';
-export * from './transformer/one-of/one-of-transformer-literal';
 export * from './transformer/one-of/one-of-transformer-transformers';
 export * from './transformer/set/as-set';
 export * from './transformer/set/set-transformer';

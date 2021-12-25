@@ -6,10 +6,17 @@ import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
 import {isNumber} from '../../util/guard/is-number';
 import {isObject} from '../../util/guard/is-object';
+import {identity} from '../../util/identity';
 
-import type {OneOfTransformerCompactLiteral} from './one-of-transformer-compact-literal';
-import type {OneOfTransformerLiteral} from './one-of-transformer-literal';
 import type {OneOfTransformerTransformers} from './one-of-transformer-transformers';
+
+type OneOfCompactLiteral = readonly [is: number, value: unknown];
+
+interface OneOfLiteral {
+  readonly is: number;
+
+  readonly value: unknown;
+}
 
 const ENTRY_VALUE_INDEX = 1;
 
@@ -59,9 +66,7 @@ export class OneOfTransformer<
 
       [is, value] = literal;
     } else {
-      const objectLike: Partial<
-        Record<keyof OneOfTransformerLiteral, unknown>
-      > = literal;
+      const objectLike: Partial<Record<keyof OneOfLiteral, unknown>> = literal;
 
       is = objectLike.is;
       value = objectLike.value;
@@ -81,17 +86,18 @@ export class OneOfTransformer<
     return transformer.fromLiteral(value);
   }
 
-  public override toCompactLiteral(
-    data: I[number],
-  ): OneOfTransformerCompactLiteral {
+  public override toCompactLiteral(data: I[number]): unknown {
     const [is, transformer] = this._findTransformerEntry(data);
 
-    return [is, transformer.toCompactLiteral(data)];
+    return identity<OneOfCompactLiteral>([
+      is,
+      transformer.toCompactLiteral(data),
+    ]);
   }
 
-  public toLiteral(data: I[number]): OneOfTransformerLiteral {
+  public toLiteral(data: I[number]): unknown {
     const [is, transformer] = this._findTransformerEntry(data);
 
-    return {is, value: transformer.toLiteral(data)};
+    return identity<OneOfLiteral>({is, value: transformer.toLiteral(data)});
   }
 }
