@@ -1,4 +1,3 @@
-import '../../jest/to-be-compact-transformation';
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
@@ -41,11 +40,7 @@ describe('BooleanTransformer', () => {
     });
 
     test('normal', () => {
-      expect(transformer).toBeTransformation(value, value);
-    });
-
-    test('compact', () => {
-      expect(transformer).toBeCompactTransformation(value, compactLiteral);
+      expect(transformer).toBeTransformation(value, value, compactLiteral);
     });
   });
 });

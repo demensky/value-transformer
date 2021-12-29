@@ -1,4 +1,3 @@
-import '../../jest/to-be-compact-transformation';
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
@@ -41,10 +40,6 @@ describe('StringTransformer', () => {
 
     test('normal', () => {
       expect(transformer).toBeTransformation(data, data);
-    });
-
-    test('compact', () => {
-      expect(transformer).toBeCompactTransformation(data, data);
     });
   });
 });

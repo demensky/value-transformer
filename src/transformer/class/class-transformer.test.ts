@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-extraneous-class,@typescript-eslint/no-empty-interface,@typescript-eslint/no-redeclare */
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 
 import 'reflect-metadata';
-import '../../jest/to-be-compact-transformation';
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
 import {asMock} from '../mock/as-mock';
-import type {MockTransformer} from '../mock/mock-transformer';
 import {asNullable} from '../nullable/as-nullable';
 
 import {ClassTransformer} from './class-transformer';
@@ -27,119 +25,60 @@ describe('ClassTransformer', () => {
     expect(ClassTransformer.fromConstructor(Tmp)).toBeCompatibleWith(new Tmp());
   });
 
-  describe('empty class', () => {
-    interface Tmp {}
+  test('empty class', () => {
+    class Tmp {}
 
-    let Tmp: new () => Tmp;
-    let transformer: ClassTransformer<Tmp>;
-
-    beforeEach(() => {
-      Tmp = class {};
-
-      transformer = ClassTransformer.fromConstructor(Tmp);
-    });
-
-    test('normal', () => {
-      expect(transformer).toBeTransformation(new Tmp(), {});
-    });
-
-    test('compact', () => {
-      expect(transformer).toBeCompactTransformation(new Tmp(), []);
-    });
+    expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
+      new Tmp(),
+      {},
+      [],
+    );
   });
 
-  describe('class with fields', () => {
-    interface Tmp {
-      a: unknown;
-      b: unknown;
+  test('class with fields', () => {
+    class Tmp {
+      @field(asMock(true, 'a data', 'a compactLiteral', 'a literal'))
+      public a: unknown = 'a data';
+
+      @field(asMock(true, 'b data', 'b compactLiteral', 'b literal'))
+      public b: unknown = 'b data';
     }
 
-    let Tmp: new () => Tmp;
-    let transformer: ClassTransformer<Tmp>;
-    let transformerA: MockTransformer<unknown, unknown>;
-    let transformerB: MockTransformer<unknown, unknown>;
-
-    beforeEach(() => {
-      transformerA = asMock(true, 'a data', 'a compactLiteral', 'a literal');
-      transformerB = asMock(true, 'b data', 'b compactLiteral', 'b literal');
-
-      class TmpClass {
-        @field(transformerA) public a: unknown = 'a data';
-
-        @field(transformerB) public b: unknown = 'b data';
-      }
-
-      Tmp = TmpClass;
-      transformer = ClassTransformer.fromConstructor(Tmp);
-    });
-
-    test('normal', () => {
-      expect(transformer).toBeTransformation(new Tmp(), {
-        a: 'a literal',
-        b: 'b literal',
-      });
-    });
-
-    test('compact', () => {
-      expect(transformer).toBeCompactTransformation(new Tmp(), [
-        'a compactLiteral',
-        'b compactLiteral',
-      ]);
-    });
+    expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
+      new Tmp(),
+      {a: 'a literal', b: 'b literal'},
+      ['a compactLiteral', 'b compactLiteral'],
+    );
   });
 
-  describe('recursive class', () => {
-    interface Tmp {
-      a: unknown;
-      b: Tmp | null;
-      c: unknown;
+  test('recursive class', () => {
+    class Tmp {
+      @field(asMock(true, 'a data', 'a compactLiteral', 'a literal'))
+      public a: unknown = 'a data';
+
+      @field(asNullable(ClassTransformer.fromConstructor(Tmp)))
+      public b: Tmp | null;
+
+      @field(asMock(true, 'c data', 'c compactLiteral', 'c literal'))
+      public c: unknown = 'c data';
+
+      public constructor(b: Tmp['b']) {
+        this.b = b;
+      }
     }
 
-    let transformerA: MockTransformer<unknown, unknown>;
-    let transformerC: MockTransformer<unknown, unknown>;
-
-    let Tmp: new (b: Tmp['b']) => Tmp;
-    let transformer: ClassTransformer<Tmp>;
-
-    let data: Tmp;
-
-    beforeEach(() => {
-      transformerA = asMock(true, 'a data', 'a compactLiteral', 'a literal');
-      transformerC = asMock(true, 'c data', 'c compactLiteral', 'c literal');
-
-      class TmpClass {
-        @field(transformerA) public a: unknown = 'a data';
-
-        @field(asNullable(ClassTransformer.fromConstructor(TmpClass)))
-        public b: TmpClass | null;
-
-        @field(transformerC) public c: unknown = 'c data';
-
-        public constructor(b: TmpClass['b']) {
-          this.b = b;
-        }
-      }
-
-      Tmp = TmpClass;
-      transformer = ClassTransformer.fromConstructor(Tmp);
-
-      data = new Tmp(new Tmp(null));
-    });
-
-    test('normal', () => {
-      expect(transformer).toBeTransformation(data, {
+    expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
+      new Tmp(new Tmp(null)),
+      {
         a: 'a literal',
         b: {a: 'a literal', b: null, c: 'c literal'},
         c: 'c literal',
-      });
-    });
-
-    test('compact', () => {
-      expect(transformer).toBeCompactTransformation(data, [
+      },
+      [
         'a compactLiteral',
         ['a compactLiteral', null, 'c compactLiteral'],
         'c compactLiteral',
-      ]);
-    });
+      ],
+    );
   });
 });
