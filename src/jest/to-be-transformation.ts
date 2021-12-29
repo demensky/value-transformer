@@ -1,6 +1,7 @@
 import {diff} from 'jest-diff';
 
 import type {ValueTransformer} from '../base/value-transformer';
+import type {ValueTransformerInput} from '../base/value-transformer-input';
 
 function failMessage(
   {isNot, promise, utils, expand}: jest.MatcherContext,
@@ -104,9 +105,9 @@ expect.extend({
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       toBeTransformation(
-        data: unknown,
+        data: T extends ValueTransformerInput<infer I> ? I : never,
         literal: unknown,
         compactLiteral?: unknown,
       ): R;
