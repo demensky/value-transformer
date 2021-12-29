@@ -255,6 +255,13 @@
         "jest/prefer-todo": "error",
         "jest/require-top-level-describe": "error"
       }
+    },
+    {
+      "files": ["src/jest/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-namespace": "off"
+      }
     }
+
   ]
 }
