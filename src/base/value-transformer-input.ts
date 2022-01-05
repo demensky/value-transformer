@@ -1,7 +1,7 @@
-export interface ValueTransformerInput<R> {
-  compatibleWith(data: unknown): data is R;
+export interface ValueTransformerInput<I> {
+  compatibleWith(data: unknown): data is I;
 
-  toLiteral(data: R): unknown;
+  toLiteral(data: I): unknown;
 
-  toCompactLiteral(data: R): unknown;
+  toCompactLiteral(data: I): unknown;
 }

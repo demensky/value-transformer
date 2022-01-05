@@ -1,3 +1,3 @@
-export interface ValueTransformerOutput<W> {
-  fromLiteral(literal: unknown): W;
+export interface ValueTransformerOutput<O> {
+  fromLiteral(literal: unknown): O;
 }
