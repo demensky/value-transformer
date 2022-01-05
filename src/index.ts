@@ -1,3 +1,4 @@
+export * from './base/value-transformer';
 export * from './base/value-transformer-input';
 export * from './base/value-transformer-output';
 export * from './error/deserialization-never-error';
