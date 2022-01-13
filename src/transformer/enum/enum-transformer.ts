@@ -2,7 +2,7 @@ import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import type {EnumDefinition} from '../../type/enum-definition';
 import type {EnumLike} from '../../type/enum-like';
-import {extractEnumMap} from '../../util/extract-enum-map';
+import {extractEnumValues} from '../../util/extract-enum-values';
 
 function isInSet<T>(value: unknown, set: ReadonlySet<T>): value is T {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -18,7 +18,7 @@ export class EnumTransformer<
   public constructor(definition: EnumDefinition<K, V>) {
     super();
 
-    this._values = new Set<V>(extractEnumMap<K, V>(definition).values());
+    this._values = extractEnumValues<K, V>(definition);
   }
 
   public compatibleWith(data: unknown): data is V {

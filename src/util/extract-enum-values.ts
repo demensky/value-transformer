@@ -1,9 +1,9 @@
 import type {EnumDefinition} from '../type/enum-definition';
 import type {EnumLike} from '../type/enum-like';
 
-export function extractEnumMap<K extends string, V extends EnumLike>(
+export function extractEnumValues<K extends string, V extends EnumLike>(
   definition: EnumDefinition<K, V>,
-): Map<K, V> {
+): Set<V> {
   const result = new Map<string, V>(Object.entries<V>(definition));
 
   for (const key in definition) {
@@ -12,6 +12,5 @@ export function extractEnumMap<K extends string, V extends EnumLike>(
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return result as Map<K, V>;
+  return new Set<V>(result.values());
 }
