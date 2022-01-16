@@ -33,10 +33,14 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public override toCompactLiteral(data: ReadonlySet<I>): unknown {
+    console.assert(isSet(data));
+
     return Array.from<I, unknown>(data, toCompactLiteral<I>(this._transformer));
   }
 
   public toLiteral(data: ReadonlySet<I>): unknown {
+    console.assert(isSet(data));
+
     return Array.from<I, unknown>(data, toLiteral<I>(this._transformer));
   }
 }

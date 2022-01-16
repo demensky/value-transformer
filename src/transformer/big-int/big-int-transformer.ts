@@ -28,6 +28,8 @@ export class BigIntTransformer extends ValueTransformer<bigint, bigint> {
   }
 
   public toLiteral(data: bigint): unknown {
+    console.assert(isBigInt(data));
+
     return data.toString();
   }
 }

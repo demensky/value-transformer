@@ -102,12 +102,16 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
   }
 
   public override toCompactLiteral(data: Readonly<T>): unknown {
+    console.assert(data instanceof this._constructor);
+
     return this._getFieldsInfo().map<unknown>(({key, transformer}) =>
       transformer.toCompactLiteral(data[key]),
     );
   }
 
   public toLiteral(data: Readonly<T>): unknown {
+    console.assert(data instanceof this._constructor);
+
     const fields = this._getFieldsInfo();
     const literal: Record<string, unknown> = {};
 

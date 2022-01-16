@@ -1,3 +1,4 @@
+import strip from '@rollup/plugin-strip';
 import type {RollupOptions} from 'rollup';
 import typescript from 'rollup-plugin-typescript2';
 
@@ -12,6 +13,25 @@ const config: readonly RollupOptions[] = [
       },
       {
         file: 'dist/index.cjs',
+        format: 'commonjs',
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      typescript({tsconfig: './tsconfig.build.json'}),
+      strip({include: ['**/*.ts']}),
+    ],
+  },
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'dist/index.dev.mjs',
+        format: 'module',
+        sourcemap: true,
+      },
+      {
+        file: 'dist/index.dev.cjs',
         format: 'commonjs',
         sourcemap: true,
       },

@@ -30,6 +30,8 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public override toCompactLiteral(data: readonly I[]): unknown {
+    console.assert(isArray(data));
+
     return Array.from<I, unknown>(
       denseArrayLike<I>(data),
       toCompactLiteral<I>(this._transformer),
@@ -37,6 +39,8 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public toLiteral(data: readonly I[]): unknown {
+    console.assert(isArray(data));
+
     return Array.from<I, unknown>(
       denseArrayLike<I>(data),
       toLiteral<I>(this._transformer),

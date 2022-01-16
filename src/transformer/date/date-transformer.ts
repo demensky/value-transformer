@@ -39,10 +39,14 @@ export class DateTransformer extends ValueTransformer<Date, Date> {
   }
 
   public override toCompactLiteral(data: Date): unknown {
+    console.assert(isDate(data));
+
     return isInvalidDate(data) ? INVALID : data.getTime();
   }
 
   public toLiteral(data: Date): unknown {
+    console.assert(isDate(data));
+
     return isInvalidDate(data) ? INVALID : data.toISOString();
   }
 }

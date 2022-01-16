@@ -41,6 +41,8 @@ export class NumberTransformer extends ValueTransformer<number, number> {
   }
 
   public toLiteral(data: number): unknown {
+    console.assert(isNumber(data));
+
     if (Number.isNaN(data)) {
       return NAN_LITERAL_VALUE;
     }

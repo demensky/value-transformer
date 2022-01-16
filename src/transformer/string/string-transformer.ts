@@ -23,6 +23,8 @@ export class StringTransformer extends ValueTransformer<string, string> {
   }
 
   public toLiteral(data: string): unknown {
+    console.assert(isString(data));
+
     return data;
   }
 }

@@ -53,6 +53,8 @@ export class MapTransformer<
   }
 
   public override toCompactLiteral(data: ReadonlyMap<KI, VI>): unknown {
+    console.assert(isMap(data));
+
     return Array.from<readonly [unknown, unknown]>(
       mapEntries<KI, unknown, VI, unknown>(
         data,
@@ -63,6 +65,8 @@ export class MapTransformer<
   }
 
   public toLiteral(data: ReadonlyMap<KI, VI>): unknown {
+    console.assert(isMap(data));
+
     return Array.from<readonly [unknown, unknown]>(
       mapEntries<KI, unknown, VI, unknown>(
         data,
