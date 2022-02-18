@@ -1,5 +1,6 @@
 import strip from '@rollup/plugin-strip';
 import type {RollupOptions} from 'rollup';
+import dts from 'rollup-plugin-dts';
 import typescript from 'rollup-plugin-typescript2';
 
 const config: readonly RollupOptions[] = [
@@ -37,6 +38,11 @@ const config: readonly RollupOptions[] = [
       },
     ],
     plugins: [typescript({tsconfig: './tsconfig.build.json'})],
+  },
+  {
+    input: 'src/index.ts',
+    output: [{file: 'dist/index.d.ts', format: 'es'}],
+    plugins: [dts()],
   },
 ];
 
