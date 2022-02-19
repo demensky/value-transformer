@@ -30,6 +30,9 @@
     "url": "https://github.com/demensky/value-transformer/issues"
   },
   "homepage": "https://github.com/demensky/value-transformer#readme",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@rollup/plugin-strip": "^2.1.0",
     "@types/jest": "^27.0.3",
