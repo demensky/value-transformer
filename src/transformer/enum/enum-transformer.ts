@@ -9,16 +9,18 @@ function isInSet<T>(value: unknown, set: ReadonlySet<T>): value is T {
   return set.has(value as T);
 }
 
-export class EnumTransformer<
-  K extends string,
-  V extends EnumLike,
-> extends ValueTransformer<V, V> {
-  private readonly _values: ReadonlySet<V>;
+export class EnumTransformer<V extends EnumLike> extends ValueTransformer<
+  V,
+  V
+> {
+  public static fromDefinition<K extends string, V extends EnumLike>(
+    definition: EnumDefinition<K, V>,
+  ): EnumTransformer<V> {
+    return new EnumTransformer<V>(extractEnumValues<K, V>(definition));
+  }
 
-  public constructor(definition: EnumDefinition<K, V>) {
+  private constructor(private readonly _values: ReadonlySet<V>) {
     super();
-
-    this._values = extractEnumValues<K, V>(definition);
   }
 
   public compatibleWith(data: unknown): data is V {
@@ -34,6 +36,8 @@ export class EnumTransformer<
   }
 
   public toLiteral(data: V): unknown {
+    console.assert(isInSet<V>(data, this._values));
+
     return data;
   }
 }
