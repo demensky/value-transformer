@@ -1,3 +1,10 @@
+import {
+  matcherHint,
+  printExpected,
+  printReceived,
+  stringify,
+} from 'jest-matcher-utils';
+
 import type {ValueTransformer} from '../base/value-transformer';
 
 expect.extend({
@@ -13,15 +20,15 @@ expect.extend({
       pass,
       message: () =>
         [
-          this.utils.matcherHint('toBeCompatibleWith', 'transformer', 'data', {
+          matcherHint('toBeCompatibleWith', 'transformer', 'data', {
             comment: 'transformer.compatibleWith(data)',
             isNot: this.isNot,
           }),
           '',
-          `Data: ${this.utils.stringify(data)}`,
+          `Data: ${stringify(data)}`,
           '',
-          `Expected: ${this.utils.printExpected(!this.isNot)}`,
-          `Received: ${this.utils.printReceived(this.isNot)}`,
+          `Expected: ${printExpected(!this.isNot)}`,
+          `Received: ${printReceived(this.isNot)}`,
         ].join('\n'),
     };
   },

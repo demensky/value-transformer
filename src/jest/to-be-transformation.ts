@@ -1,15 +1,16 @@
 import {diff} from 'jest-diff';
+import {matcherHint} from 'jest-matcher-utils';
 
 import type {ValueTransformer} from '../base/value-transformer';
 import type {ValueTransformerInput} from '../base/value-transformer-input';
 
 function failMessage(
-  {isNot, promise, utils, expand}: jest.MatcherContext,
+  {isNot, promise, expand}: jest.MatcherContext,
   comment: string,
   expected: unknown,
   received: unknown,
 ): string {
-  const hint = utils.matcherHint(
+  const hint = matcherHint(
     'toBeTransformation',
     'transformer',
     'data, literal, compactLiteral',
@@ -94,7 +95,7 @@ expect.extend({
     return {
       pass: true,
       message: () =>
-        this.utils.matcherHint('toBeTransformation', 'transformer', 'data', {
+        matcherHint('toBeTransformation', 'transformer', 'data', {
           comment: 'toLiteral -> literal -> fromLiteral',
           isNot,
           promise,

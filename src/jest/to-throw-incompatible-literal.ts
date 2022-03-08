@@ -1,3 +1,6 @@
+import type {MatcherHintOptions} from 'jest-matcher-utils';
+import {matcherHint, printReceived} from 'jest-matcher-utils';
+
 import type {ValueTransformer} from '../base/value-transformer';
 import {IncompatibleLiteralError} from '../error/incompatible-literal-error';
 
@@ -7,12 +10,12 @@ expect.extend({
     transformer: ValueTransformer<T, T>,
     literal: T,
   ): jest.CustomMatcherResult {
-    const options: jest.MatcherHintOptions = {
+    const options: MatcherHintOptions = {
       comment: 'transformer.fromLiteral(literal)',
       isNot: this.isNot,
     };
 
-    const hint: string = this.utils.matcherHint(
+    const hint: string = matcherHint(
       'toThrowIncompatibleLiteral',
       'transformer',
       'literal',
@@ -42,7 +45,7 @@ expect.extend({
             hint,
             '',
             `Expected error: not [${IncompatibleLiteralError.name}]`,
-            `Received error: ${this.utils.printReceived(result)}`,
+            `Received error: ${printReceived(result)}`,
           ].join('\n');
         };
       } else {
@@ -53,7 +56,7 @@ expect.extend({
             hint,
             '',
             `Expected error: [${IncompatibleLiteralError.name}]`,
-            `Received error: ${this.utils.printReceived(result)}`,
+            `Received error: ${printReceived(result)}`,
           ].join('\n');
         };
       }
@@ -65,7 +68,7 @@ expect.extend({
           hint,
           '',
           `Expected error: [${IncompatibleLiteralError.name}]`,
-          `Received data: ${this.utils.printReceived(result)}`,
+          `Received data: ${printReceived(result)}`,
         ].join('\n');
       };
     }
