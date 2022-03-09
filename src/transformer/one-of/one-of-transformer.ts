@@ -2,6 +2,7 @@ import {ValueTransformer} from '../../base/value-transformer';
 import type {ValueTransformerInput} from '../../base/value-transformer-input';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import {NoCompatibleTransformerError} from '../../error/no-compatible-transformer-error';
+import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
 import {isNumber} from '../../util/guard/is-number';
@@ -66,10 +67,8 @@ export class OneOfTransformer<
 
       [is, value] = literal;
     } else {
-      const objectLike: Partial<Record<keyof OneOfLiteral, unknown>> = literal;
-
-      is = objectLike.is;
-      value = objectLike.value;
+      is = identity<UnverifiedObject<OneOfLiteral>>(literal).is;
+      value = identity<UnverifiedObject<OneOfLiteral>>(literal).value;
     }
 
     if (!isNumber(is) || !Number.isInteger(is)) {

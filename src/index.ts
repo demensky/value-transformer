@@ -26,6 +26,8 @@ export * from './transformer/number/number-transformer';
 export * from './transformer/one-of/as-one-of';
 export * from './transformer/one-of/one-of-transformer';
 export * from './transformer/one-of/one-of-transformer-transformers';
+export * from './transformer/reg-exp/as-reg-exp';
+export * from './transformer/reg-exp/reg-exp-transformer';
 export * from './transformer/set/as-set';
 export * from './transformer/set/set-transformer';
 export * from './transformer/string/as-string';
