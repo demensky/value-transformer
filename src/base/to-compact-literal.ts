@@ -1,7 +1,7 @@
-import type {ValueTransformer} from './value-transformer';
+import type {ValueTransformerInput} from './value-transformer-input';
 
 export function toCompactLiteral<I>(
-  transformer: ValueTransformer<I, I>,
+  transformer: ValueTransformerInput<I>,
 ): (data: I) => unknown {
   return (data) => transformer.toCompactLiteral(data);
 }
