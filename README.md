@@ -6,10 +6,10 @@ change without backwards compatibility.
 Validation, serialization and deserialization using a single entity. Symmetric
 serialization and deserialization. No implicit transformers.
 
-Supports: [`string`](#asstring), [`boolean`](#asboolean), [`number`](#asnumber),
-[`bigint`](#asbigint), [`null`](#asnullable), [`Date`](#asdate),
-[`Array`](#asarray), [`Map`](#asmap), [`Set`](#asset), [`RegExp`](#asregexp),
-[`never`](#asnever) and [custom classes](#asclass).
+Supports: [`string`](#asstring), [`boolean`](#asboolean),
+[`number`](#asfloat64number), [`bigint`](#asbigint), [`null`](#asnullable),
+[`Date`](#asdate), [`Array`](#asarray), [`Map`](#asmap), [`Set`](#asset),
+[`RegExp`](#asregexp), [`never`](#asnever) and [custom classes](#asclass).
 
 ## Features of transformers
 
@@ -122,7 +122,7 @@ a string of numbers.
 Implements a transfer of [`boolean`][boolean] value. In compact mode, `true` is
 represented as `1` and `false` is represented as `0`.
 
-### `asNumber`
+### `asFloat64Number`
 
 TODO
 
