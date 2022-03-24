@@ -262,6 +262,5 @@
         "@typescript-eslint/no-namespace": "off"
       }
     }
-
   ]
 }
