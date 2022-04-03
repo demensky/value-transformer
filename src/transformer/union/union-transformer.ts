@@ -9,11 +9,11 @@ import {isNumber} from '../../util/guard/is-number';
 import {isObject} from '../../util/guard/is-object';
 import {identity} from '../../util/identity';
 
-import type {OneOfTransformerTransformers} from './one-of-transformer-transformers';
+import type {UnionTransformerTransformers} from './union-transformer-transformers';
 
-type OneOfCompactLiteral = readonly [is: number, value: unknown];
+type UnionCompactLiteral = readonly [is: number, value: unknown];
 
-interface OneOfLiteral {
+interface UnionLiteral {
   readonly is: number;
 
   readonly value: unknown;
@@ -22,12 +22,12 @@ interface OneOfLiteral {
 const ENTRY_VALUE_INDEX = 1;
 
 // TODO intersection checking
-export class OneOfTransformer<
+export class UnionTransformer<
   I extends readonly unknown[],
   O extends I,
 > extends ValueTransformer<I[number], O[number]> {
   public constructor(
-    private readonly _transformers: OneOfTransformerTransformers<I, O>,
+    private readonly _transformers: UnionTransformerTransformers<I, O>,
   ) {
     super();
   }
@@ -67,8 +67,8 @@ export class OneOfTransformer<
 
       [is, value] = literal;
     } else {
-      is = identity<UnverifiedObject<OneOfLiteral>>(literal).is;
-      value = identity<UnverifiedObject<OneOfLiteral>>(literal).value;
+      is = identity<UnverifiedObject<UnionLiteral>>(literal).is;
+      value = identity<UnverifiedObject<UnionLiteral>>(literal).value;
     }
 
     if (!isNumber(is) || !Number.isInteger(is)) {
@@ -88,7 +88,7 @@ export class OneOfTransformer<
   public override toCompactLiteral(data: I[number]): unknown {
     const [is, transformer] = this._findTransformerEntry(data);
 
-    return identity<OneOfCompactLiteral>([
+    return identity<UnionCompactLiteral>([
       is,
       transformer.toCompactLiteral(data),
     ]);
@@ -97,6 +97,6 @@ export class OneOfTransformer<
   public toLiteral(data: I[number]): unknown {
     const [is, transformer] = this._findTransformerEntry(data);
 
-    return identity<OneOfLiteral>({is, value: transformer.toLiteral(data)});
+    return identity<UnionLiteral>({is, value: transformer.toLiteral(data)});
   }
 }

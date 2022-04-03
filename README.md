@@ -21,7 +21,7 @@ Supports: [`string`](#asstring), [`boolean`](#asboolean),
 ### `compatibleWith`
 
 This method verifies that data can potentially be serialized by this
-transformer. Used by [the `asOneOf` transformer](#asoneof).
+transformer. Used by [the `asUnion` transformer](#asunion).
 
 ### `fromLiteral`
 
@@ -85,7 +85,7 @@ This method serializes the data into a **compact** JSON-like literal (to be
 passed to [the `fromLiteral` method](#fromliteral)).
 
 Compact mode is only implemented by [`asBoolean`](#asboolean),
-[`asClass`](#asclass), [`asDate`](#asdate), [`asOneOf`](#asoneof) and
+[`asClass`](#asclass), [`asDate`](#asdate), [`asUnion`](#asunion) and
 [`asRegExp`](#asregexp). Others simply return a result equivalent to
 [`toLiteral`](#toliteral) and call [`toCompactLiteral`](#tocompactliteral) on
 child transformers.
@@ -205,7 +205,7 @@ TODO
 
 TODO
 
-### `asOneOf`
+### `asUnion`
 
 TODO
 

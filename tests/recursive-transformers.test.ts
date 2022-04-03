@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import '../src/jest/to-be-transformation';
 
-import {asArray, asClass, asNullable, asOneOf, field} from '../src';
+import {asArray, asClass, asNullable, asUnion, field} from '../src';
 import {asMock} from '../src/transformer/mock/as-mock';
 
 describe('recursive transformers', () => {
@@ -72,7 +72,7 @@ describe('recursive transformers', () => {
     }
 
     class Container {
-      @field(asOneOf([asClass(Container), asClass(User)]))
+      @field(asUnion([asClass(Container), asClass(User)]))
       public readonly child: Container | User;
 
       public constructor(b: Container['child']) {

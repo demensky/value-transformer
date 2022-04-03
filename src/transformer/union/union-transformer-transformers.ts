@@ -1,7 +1,7 @@
 import type {ValueTransformerInput} from '../../base/value-transformer-input';
 import type {ValueTransformerOutput} from '../../base/value-transformer-output';
 
-export type OneOfTransformerTransformers<
+export type UnionTransformerTransformers<
   I extends readonly unknown[],
   O extends I,
 > = {
