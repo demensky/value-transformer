@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import type {ValueTransformerInput} from '../../base/value-transformer-input';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {NoCompatibleTransformerError} from '../../error/no-compatible-transformer-error';
+import {TransformerNotFoundError} from '../../error/transformer-not-found-error';
 import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
@@ -43,7 +43,7 @@ export class UnionTransformer<
       return entry;
     }
 
-    throw new NoCompatibleTransformerError();
+    throw new TransformerNotFoundError();
   }
 
   public compatibleWith(data: unknown): data is I[number] {
@@ -79,7 +79,7 @@ export class UnionTransformer<
       this._transformers[is];
 
     if (transformer === undefined) {
-      throw new IncompatibleLiteralError();
+      throw new TransformerNotFoundError();
     }
 
     return transformer.fromLiteral(value);
