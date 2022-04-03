@@ -1,11 +1,13 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
 import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
 import {isObject} from '../../util/guard/is-object';
 import {isRegExp} from '../../util/guard/is-reg-exp';
 import {isString} from '../../util/guard/is-string';
+import {isValidUnicode} from '../../util/guard/is-valid-unicode';
 import {identity} from '../../util/identity';
 
 interface RegExpLiteral {
@@ -51,12 +53,32 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
   public override toCompactLiteral(data: RegExp): unknown {
     console.assert(isRegExp(data));
 
-    return identity<RegExpCompactLiteral>([data.source, data.flags]);
+    const {flags, source}: RegExp = data;
+
+    if (!isValidUnicode(source)) {
+      throw new InvalidUnicodeError('source');
+    }
+
+    if (!isValidUnicode(flags)) {
+      throw new InvalidUnicodeError('flags');
+    }
+
+    return identity<RegExpCompactLiteral>([source, flags]);
   }
 
   public toLiteral(data: RegExp): unknown {
     console.assert(isRegExp(data));
 
-    return identity<RegExpLiteral>({source: data.source, flags: data.flags});
+    const {flags, source}: RegExp = data;
+
+    if (!isValidUnicode(source)) {
+      throw new InvalidUnicodeError('source');
+    }
+
+    if (!isValidUnicode(flags)) {
+      throw new InvalidUnicodeError('flags');
+    }
+
+    return identity<RegExpLiteral>({source, flags});
   }
 }

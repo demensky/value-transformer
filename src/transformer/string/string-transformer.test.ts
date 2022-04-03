@@ -2,6 +2,7 @@ import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
 
 import {StringTransformer} from './string-transformer';
 
@@ -27,19 +28,26 @@ describe('StringTransformer', () => {
     },
   );
 
-  describe.each([
-    '',
-    '\0', // \u0000
-    '\r\n',
-    'foo',
-    '\ud83d', // broken unicode
-  ])('valid %p', (data) => {
-    test('compatible', () => {
-      expect(transformer).toBeCompatibleWith(data);
-    });
+  test('empty string', () => {
+    expect(transformer).toBeTransformation('', '', '');
+  });
 
-    test('normal', () => {
-      expect(transformer).toBeTransformation(data, data);
-    });
+  test('simple string', () => {
+    expect(transformer).toBeTransformation('foo', 'foo', 'foo');
+  });
+
+  test('broken unicode', () => {
+    expect(() => {
+      transformer.toLiteral('\ud83d');
+    }).toThrow(InvalidUnicodeError);
+  });
+
+  // \u0000
+  test('null', () => {
+    expect(transformer).toBeTransformation('\0', '\0', '\0');
+  });
+
+  test('break line', () => {
+    expect(transformer).toBeTransformation('\r\n', '\r\n', '\r\n');
   });
 });
