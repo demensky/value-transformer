@@ -10,9 +10,9 @@ const NEGATIVE_INFINITY_LITERAL_VALUE = '-Infinity';
 
 /**
  * Handles a primitive number (including `NaN`, `Infinity` and `-Infinity`).
- * @see {@link asFloat64Number} alias
+ * @see {@link asFloat64} alias
  */
-export class Float64NumberTransformer extends ValueTransformer<number, number> {
+export class Float64Transformer extends ValueTransformer<number, number> {
   public constructor() {
     super();
   }
