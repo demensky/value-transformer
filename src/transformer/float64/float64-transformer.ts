@@ -8,8 +8,10 @@ const POSITIVE_INFINITY_LITERAL_VALUE = 'Infinity';
 
 const NEGATIVE_INFINITY_LITERAL_VALUE = '-Infinity';
 
+const NEGATIVE_ZERO_LITERAL_VALUE = '-0';
+
 /**
- * Handles a primitive number (including `NaN`, `Infinity` and `-Infinity`).
+ * Handles a primitive number (including `NaN`, `Infinity`, `-Infinity`, `-0`).
  * @see {@link asFloat64} alias
  */
 export class Float64Transformer extends ValueTransformer<number, number> {
@@ -29,11 +31,13 @@ export class Float64Transformer extends ValueTransformer<number, number> {
         return Infinity;
       case NEGATIVE_INFINITY_LITERAL_VALUE:
         return -Infinity;
+      case NEGATIVE_ZERO_LITERAL_VALUE:
+        return -0;
     }
 
     if (!isNumber(literal)) {
       throw new IncompatibleLiteralError(
-        "only 'NaN', 'Infinity', '-Infinity' & numbers are supported",
+        "only 'NaN', 'Infinity', '-Infinity', '-0' & numbers are supported",
       );
     }
 
@@ -53,6 +57,10 @@ export class Float64Transformer extends ValueTransformer<number, number> {
 
     if (data === -Infinity) {
       return NEGATIVE_INFINITY_LITERAL_VALUE;
+    }
+
+    if (Object.is(data, -0)) {
+      return NEGATIVE_ZERO_LITERAL_VALUE;
     }
 
     return data;
