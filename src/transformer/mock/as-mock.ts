@@ -1,12 +1,12 @@
 import {MockTransformer} from './mock-transformer';
 
-export function asMock<I, O extends I>(
+export function asMock<T>(
   compatibleWith: boolean,
-  fromLiteral: O,
+  fromLiteral: T,
   toCompactLiteral: unknown,
   toLiteral: unknown,
-): MockTransformer<I, O> {
-  return new MockTransformer<I, O>(
+): MockTransformer<T> {
+  return new MockTransformer<T>(
     compatibleWith,
     fromLiteral,
     toCompactLiteral,

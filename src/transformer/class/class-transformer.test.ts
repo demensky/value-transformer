@@ -36,17 +36,15 @@ describe('ClassTransformer', () => {
 
   test('class with fields', () => {
     class Tmp {
-      @field(asMock(true, 'a data', 'a compactLiteral', 'a literal'))
-      public a: unknown = 'a data';
+      @field(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
 
-      @field(asMock(true, 'b data', 'b compactLiteral', 'b literal'))
-      public b: unknown = 'b data';
+      @field(asMock(true, 'b-d', 'b-c', 'b-l')) public b = 'b-d';
     }
 
     expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
       new Tmp(),
-      {a: 'a literal', b: 'b literal'},
-      ['a compactLiteral', 'b compactLiteral'],
+      {a: 'a-l', b: 'b-l'},
+      ['a-c', 'b-c'],
     );
   });
 });

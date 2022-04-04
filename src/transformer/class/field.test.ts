@@ -8,8 +8,8 @@ import {CLASS_TRANSFORMER_KEYS} from './class-transformer-keys';
 import {field} from './field';
 
 describe('ClassTransformer @field decorator', () => {
-  let transformerA: MockTransformer<unknown, unknown>;
-  let transformerB: MockTransformer<unknown, unknown>;
+  let transformerA: MockTransformer<unknown>;
+  let transformerB: MockTransformer<unknown>;
 
   beforeEach(() => {
     transformerA = asMock(true, null, null, null);

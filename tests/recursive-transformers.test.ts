@@ -7,13 +7,11 @@ import {asMock} from '../src/transformer/mock/as-mock';
 describe('recursive transformers', () => {
   test('self-used class in nullable field', () => {
     class Tmp {
-      @field(asMock(true, 'a data', 'a compactLiteral', 'a literal'))
-      public a: unknown = 'a data';
+      @field(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
 
       @field(asNullable(asClass(Tmp))) public b: Tmp | null;
 
-      @field(asMock(true, 'c data', 'c compactLiteral', 'c literal'))
-      public c: unknown = 'c data';
+      @field(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
 
       public constructor(b: Tmp['b']) {
         this.b = b;
@@ -22,28 +20,18 @@ describe('recursive transformers', () => {
 
     expect(asClass(Tmp)).toBeTransformation(
       new Tmp(new Tmp(null)),
-      {
-        a: 'a literal',
-        b: {a: 'a literal', b: null, c: 'c literal'},
-        c: 'c literal',
-      },
-      [
-        'a compactLiteral',
-        ['a compactLiteral', null, 'c compactLiteral'],
-        'c compactLiteral',
-      ],
+      {a: 'a-l', b: {a: 'a-l', b: null, c: 'c-l'}, c: 'c-l'},
+      ['a-c', ['a-c', null, 'c-c'], 'c-c'],
     );
   });
 
   test('self-used class in field with array', () => {
     class Tmp {
-      @field(asMock(true, 'a data', 'a compactLiteral', 'a literal'))
-      public a: unknown = 'a data';
+      @field(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
 
       @field(asArray(asClass(Tmp))) public b: readonly Tmp[];
 
-      @field(asMock(true, 'c data', 'c compactLiteral', 'c literal'))
-      public c: unknown = 'c data';
+      @field(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
 
       public constructor(b: Tmp['b']) {
         this.b = b;
@@ -52,23 +40,15 @@ describe('recursive transformers', () => {
 
     expect(asClass(Tmp)).toBeTransformation(
       new Tmp([new Tmp([])]),
-      {
-        a: 'a literal',
-        b: [{a: 'a literal', b: [], c: 'c literal'}],
-        c: 'c literal',
-      },
-      [
-        'a compactLiteral',
-        [['a compactLiteral', [], 'c compactLiteral']],
-        'c compactLiteral',
-      ],
+      {a: 'a-l', b: [{a: 'a-l', b: [], c: 'c-l'}], c: 'c-l'},
+      ['a-c', [['a-c', [], 'c-c']], 'c-c'],
     );
   });
 
   test('self-used class in field with union', () => {
     class User {
-      @field(asMock(true, 'name data', 'name compactLiteral', 'name literal'))
-      public name: unknown = 'name data';
+      @field(asMock(true, 'name-d', 'name-c', 'name-l'))
+      public name = 'name-d';
     }
 
     class Container {
@@ -82,8 +62,8 @@ describe('recursive transformers', () => {
 
     expect(asClass(Container)).toBeTransformation(
       new Container(new Container(new User())),
-      {child: {is: 0, value: {child: {is: 1, value: {name: 'name literal'}}}}},
-      [[0, [[1, ['name compactLiteral']]]]],
+      {child: {is: 0, value: {child: {is: 1, value: {name: 'name-l'}}}}},
+      [[0, [[1, ['name-c']]]]],
     );
   });
 });

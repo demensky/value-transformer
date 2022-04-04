@@ -5,8 +5,8 @@ import type {MockTransformer} from '../mock/mock-transformer';
 import {NullableTransformer} from './nullable-transformer';
 
 describe('NullableTransformer', () => {
-  let mockTransformer: MockTransformer<'data', 'data'>;
-  let transformer: ValueTransformer<'data' | null, 'data' | null>;
+  let mockTransformer: MockTransformer<string>;
+  let transformer: ValueTransformer<string | null, string | null>;
 
   beforeEach(() => {
     mockTransformer = asMock(true, 'data', 'compactLiteral', 'literal');
