@@ -122,40 +122,46 @@ describe('BigIntTransformer', () => {
 
   describe('transformation', () => {
     test('zero', () => {
-      expect(transformer).toBeTransformation(0n, '0');
+      expect(transformer).toBeTransformation(0n, '0', '0');
       expect(transformer.fromLiteral('-0')).toBe(0n);
     });
 
     test('positive', () => {
-      expect(transformer).toBeTransformation(1n, '1');
-      expect(transformer).toBeTransformation(42n, '42');
+      expect(transformer).toBeTransformation(1n, '1', '1');
+      expect(transformer).toBeTransformation(42n, '42', '42');
       expect(transformer).toBeTransformation(
         9007199254740991n,
+        '9007199254740991',
         '9007199254740991',
       );
       expect(transformer).toBeTransformation(
         18446744073709551615n,
         '18446744073709551615',
+        '18446744073709551615',
       );
       expect(transformer).toBeTransformation(
         340282366920938463463374607431768211455n,
+        '340282366920938463463374607431768211455',
         '340282366920938463463374607431768211455',
       );
     });
 
     test('negative', () => {
-      expect(transformer).toBeTransformation(-1n, '-1');
-      expect(transformer).toBeTransformation(-42n, '-42');
+      expect(transformer).toBeTransformation(-1n, '-1', '-1');
+      expect(transformer).toBeTransformation(-42n, '-42', '-42');
       expect(transformer).toBeTransformation(
         -9007199254740991n,
+        '-9007199254740991',
         '-9007199254740991',
       );
       expect(transformer).toBeTransformation(
         -18446744073709551615n,
         '-18446744073709551615',
+        '-18446744073709551615',
       );
       expect(transformer).toBeTransformation(
         -340282366920938463463374607431768211455n,
+        '-340282366920938463463374607431768211455',
         '-340282366920938463463374607431768211455',
       );
     });

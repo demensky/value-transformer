@@ -28,7 +28,7 @@ expect.extend({
     transformer: ValueTransformer<T, T>,
     data: T,
     literal: unknown,
-    compactLiteral: unknown = literal,
+    compactLiteral: unknown,
   ): jest.CustomMatcherResult {
     const {isNot, promise} = this;
 
@@ -110,7 +110,7 @@ declare global {
       toBeTransformation(
         data: T extends ValueTransformerInput<infer I> ? I : never,
         literal: unknown,
-        compactLiteral?: unknown,
+        compactLiteral: unknown,
       ): R;
     }
   }
