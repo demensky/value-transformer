@@ -4,22 +4,27 @@ import {matcherHint} from 'jest-matcher-utils';
 import type {ValueTransformer} from '../base/value-transformer';
 import type {ValueTransformerInput} from '../base/value-transformer-input';
 
-function failMessage(
+function failResult(
   {isNot, promise, expand}: jest.MatcherContext,
   comment: string,
   expected: unknown,
   received: unknown,
-): string {
-  const hint = matcherHint(
-    'toBeTransformation',
-    'transformer',
-    'data, literal, compactLiteral',
-    {comment, isNot, promise},
-  );
+): jest.CustomMatcherResult {
+  return {
+    pass: false,
+    message: () => {
+      const hint = matcherHint(
+        'toBeTransformation',
+        'transformer',
+        'data, literal, compact',
+        {comment, isNot, promise},
+      );
 
-  const diffText: string = diff(expected, received, {expand}) ?? 'unknown';
+      const diffText: string = diff(expected, received, {expand}) ?? 'unknown';
 
-  return `${hint}\n\n${diffText}`;
+      return `${hint}\n\n${diffText}`;
+    },
+  };
 }
 
 expect.extend({
@@ -28,78 +33,44 @@ expect.extend({
     transformer: ValueTransformer<T, T>,
     data: T,
     literal: unknown,
-    compactLiteral: unknown,
+    compact: unknown,
   ): jest.CustomMatcherResult {
-    const {isNot, promise} = this;
+    const returnerLiteral: unknown = transformer.toLiteral(data);
 
-    const newLiteral: unknown = transformer.toLiteral(data);
+    if (!this.equals(literal, returnerLiteral, [], true)) {
+      const comment = 'transformer.toLiteral(data) -> literal';
 
-    if (!this.equals(literal, newLiteral, [], true)) {
-      return {
-        pass: false,
-        message: () =>
-          failMessage(
-            this,
-            'transformer.toLiteral(data) -> literal',
-            literal,
-            newLiteral,
-          ),
-      };
+      return failResult(this, comment, literal, returnerLiteral);
     }
 
-    const newCompactLiteral: unknown = transformer.toCompactLiteral(data);
+    const returnerCompact: unknown = transformer.toCompactLiteral(data);
 
-    if (!this.equals(compactLiteral, newCompactLiteral, [], true)) {
-      return {
-        pass: false,
-        message: () =>
-          failMessage(
-            this,
-            'transformer.toCompactLiteral(data) -> compactLiteral',
-            compactLiteral,
-            newCompactLiteral,
-          ),
-      };
+    if (!this.equals(compact, returnerCompact, [], true)) {
+      const comment = 'transformer.toCompactLiteral(data) -> compactLiteral';
+
+      return failResult(this, comment, compact, returnerCompact);
     }
 
-    const newData: T = transformer.fromLiteral(literal);
+    const returnerData: T = transformer.fromLiteral(literal);
 
-    if (!this.equals(data, newData, [], true)) {
-      return {
-        pass: false,
-        message: () =>
-          failMessage(
-            this,
-            'fromLiteral.fromLiteral(literal) -> data',
-            data,
-            newData,
-          ),
-      };
+    if (!this.equals(data, returnerData, [], true)) {
+      const comment = 'transformer.fromLiteral(literal) -> data';
+
+      return failResult(this, comment, data, returnerData);
     }
 
-    const newCompactData: T = transformer.fromLiteral(compactLiteral);
+    const returnerCompactData: T = transformer.fromLiteral(compact);
 
-    if (!this.equals(data, newCompactData, [], true)) {
-      return {
-        pass: false,
-        message: () =>
-          failMessage(
-            this,
-            'transformer.fromLiteral(compactLiteral) -> data',
-            data,
-            newCompactData,
-          ),
-      };
+    if (!this.equals(data, returnerCompactData, [], true)) {
+      const comment = 'transformer.fromLiteral(compactLiteral) -> data';
+
+      return failResult(this, comment, data, returnerCompactData);
     }
 
     return {
       pass: true,
       message: () =>
-        matcherHint('toBeTransformation', 'transformer', 'data', {
-          comment: 'toLiteral -> literal -> fromLiteral',
-          isNot,
-          promise,
-        }),
+        matcherHint('toBeTransformation', 'transformer', 'data', this),
     };
   },
 });
@@ -110,7 +81,7 @@ declare global {
       toBeTransformation(
         data: T extends ValueTransformerInput<infer I> ? I : never,
         literal: unknown,
-        compactLiteral: unknown,
+        compact: unknown,
       ): R;
     }
   }
