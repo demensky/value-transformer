@@ -13,7 +13,6 @@ describe('isDecimalIntString', () => {
   });
 
   test('minus and decimal digits', () => {
-    expect(isDecimalIntString('-0')).toBe(true);
     expect(isDecimalIntString('-1')).toBe(true);
     expect(isDecimalIntString('-42')).toBe(true);
     expect(isDecimalIntString('-9007199254740991')).toBe(true);
@@ -21,6 +20,15 @@ describe('isDecimalIntString', () => {
     expect(isDecimalIntString('-340282366920938463463374607431768211455')).toBe(
       true,
     );
+  });
+
+  test('minus zero', () => {
+    expect(isDecimalIntString('-0')).toBe(false);
+  });
+
+  test('decimal digits have extra zero', () => {
+    expect(isDecimalIntString('01')).toBe(false);
+    expect(isDecimalIntString('000042')).toBe(false);
   });
 
   test('empty string', () => {

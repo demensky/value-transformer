@@ -123,7 +123,6 @@ describe('BigIntTransformer', () => {
   describe('transformation', () => {
     test('zero', () => {
       expect(transformer).toBeTransformation(0n, '0', '0');
-      expect(transformer.fromLiteral('-0')).toBe(0n);
     });
 
     test('positive', () => {
