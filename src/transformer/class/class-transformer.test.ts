@@ -28,20 +28,22 @@ describe('ClassTransformer', () => {
       new Tmp(),
       {},
       [],
+      [],
     );
   });
 
   test('class with fields', () => {
     class Tmp {
-      @transform(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
+      @transform(asMock(true, 'a-d', 'a-c', 'a-l', [0x0a])) public a = 'a-d';
 
-      @transform(asMock(true, 'b-d', 'b-c', 'b-l')) public b = 'b-d';
+      @transform(asMock(true, 'b-d', 'b-c', 'b-l', [0x0b])) public b = 'b-d';
     }
 
     expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
       new Tmp(),
       {a: 'a-l', b: 'b-l'},
       ['a-c', 'b-c'],
+      [0x0a, 0x0b],
     );
   });
 });

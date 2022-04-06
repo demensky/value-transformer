@@ -1,5 +1,9 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {dateDecoder} from '../../representation/date/date-decoder';
+import {dateEncode} from '../../representation/date/date-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import {isDate} from '../../util/guard/is-date';
 import {isInvalidDate} from '../../util/guard/is-invalid-date';
 import {isNumberOrString} from '../../util/guard/is-number-or-string';
@@ -18,6 +22,16 @@ export class DateTransformer extends ValueTransformer<Date, Date> {
 
   public compatibleWith(data: unknown): data is Date {
     return isDate(data);
+  }
+
+  public decoder(): DecoderGenerator<Date> {
+    return dateDecoder();
+  }
+
+  public encode(data: Date): IterableEncoding {
+    console.assert(isDate(data));
+
+    return dateEncode(data);
   }
 
   public fromLiteral(literal: unknown): Date {

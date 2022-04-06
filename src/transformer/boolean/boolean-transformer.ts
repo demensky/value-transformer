@@ -1,5 +1,9 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {booleanDecoder} from '../../representation/boolean/boolean-decoder';
+import {booleanEncode} from '../../representation/boolean/boolean-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import {isBoolean} from '../../util/guard/is-boolean';
 import {identity} from '../../util/identity';
 
@@ -19,6 +23,16 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
 
   public compatibleWith(data: unknown): data is boolean {
     return isBoolean(data);
+  }
+
+  public decoder(): DecoderGenerator<boolean> {
+    return booleanDecoder();
+  }
+
+  public encode(data: boolean): IterableEncoding {
+    console.assert(isBoolean(data));
+
+    return booleanEncode(data);
   }
 
   public fromLiteral(literal: unknown): boolean {

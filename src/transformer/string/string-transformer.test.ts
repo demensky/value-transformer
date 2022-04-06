@@ -1,9 +1,6 @@
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
-
 import {StringTransformer} from './string-transformer';
 
 describe('StringTransformer', () => {
@@ -13,41 +10,30 @@ describe('StringTransformer', () => {
     transformer = new StringTransformer();
   });
 
-  describe.each([null, undefined, 0, 1, [], false, true])(
-    'invalid %p',
-    (data) => {
-      test('compatible', () => {
-        expect(transformer).not.toBeCompatibleWith(data);
-      });
-
-      test('fromLiteral', () => {
-        expect(() => {
-          transformer.fromLiteral(data);
-        }).toThrow(new IncompatibleLiteralError('only strings are supported'));
-      });
-    },
-  );
-
   test('empty string', () => {
-    expect(transformer).toBeTransformation('', '', '');
+    expect(transformer).toBeTransformation('', '', '', [0x00]);
   });
 
   test('simple string', () => {
-    expect(transformer).toBeTransformation('foo', 'foo', 'foo');
-  });
-
-  test('broken unicode', () => {
-    expect(() => {
-      transformer.toLiteral('\ud83d');
-    }).toThrow(InvalidUnicodeError);
+    expect(transformer).toBeTransformation(
+      'foo',
+      'foo',
+      'foo',
+      [0x03, 0x66, 0x6f, 0x6f],
+    );
   });
 
   // \u0000
   test('null', () => {
-    expect(transformer).toBeTransformation('\0', '\0', '\0');
+    expect(transformer).toBeTransformation('\0', '\0', '\0', [0x01, 0x00]);
   });
 
   test('break line', () => {
-    expect(transformer).toBeTransformation('\r\n', '\r\n', '\r\n');
+    expect(transformer).toBeTransformation(
+      '\r\n',
+      '\r\n',
+      '\r\n',
+      [0x02, 0x0d, 0x0a],
+    );
   });
 });

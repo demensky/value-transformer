@@ -6,11 +6,11 @@ import {asMock} from '../src/transformer/mock/as-mock';
 describe('recursive transformers', () => {
   test('self-used class in nullable field', () => {
     class Tmp {
-      @transform(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
+      @transform(asMock(true, 'a-d', 'a-c', 'a-l', [0x0a])) public a = 'a-d';
 
       @transform(asNullable(asClass(Tmp))) public b: Tmp | null;
 
-      @transform(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
+      @transform(asMock(true, 'c-d', 'c-c', 'c-l', [0x0c])) public c = 'c-d';
 
       public constructor(b: Tmp['b']) {
         this.b = b;
@@ -21,16 +21,17 @@ describe('recursive transformers', () => {
       new Tmp(new Tmp(null)),
       {a: 'a-l', b: {a: 'a-l', b: null, c: 'c-l'}, c: 'c-l'},
       ['a-c', ['a-c', null, 'c-c'], 'c-c'],
+      [0x0a, 0x01, 0x0a, 0x00, 0x0c, 0x0c],
     );
   });
 
   test('self-used class in field with array', () => {
     class Tmp {
-      @transform(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
+      @transform(asMock(true, 'a-d', 'a-c', 'a-l', [0x0a])) public a = 'a-d';
 
       @transform(asArray(asClass(Tmp))) public b: readonly Tmp[];
 
-      @transform(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
+      @transform(asMock(true, 'c-d', 'c-c', 'c-l', [0x0c])) public c = 'c-d';
 
       public constructor(b: Tmp['b']) {
         this.b = b;
@@ -41,12 +42,13 @@ describe('recursive transformers', () => {
       new Tmp([new Tmp([])]),
       {a: 'a-l', b: [{a: 'a-l', b: [], c: 'c-l'}], c: 'c-l'},
       ['a-c', [['a-c', [], 'c-c']], 'c-c'],
+      [0x0a, 0x01, 0x0a, 0x00, 0x0c, 0x0c],
     );
   });
 
   test('self-used class in field with union', () => {
     class User {
-      @transform(asMock(true, 'name-d', 'name-c', 'name-l'))
+      @transform(asMock(true, 'name-d', 'name-c', 'name-l', [0x0a]))
       public name = 'name-d';
     }
 
@@ -63,6 +65,7 @@ describe('recursive transformers', () => {
       new Container(new Container(new User())),
       {child: {is: 0, value: {child: {is: 1, value: {name: 'name-l'}}}}},
       [[0, [[1, ['name-c']]]]],
+      [0x00, 0x01, 0x0a],
     );
   });
 });

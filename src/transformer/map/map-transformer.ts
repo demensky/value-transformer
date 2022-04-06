@@ -1,8 +1,14 @@
 import {compatibleWith} from '../../base/compatible-with';
 import {toCompactLiteral} from '../../base/to-compact-literal';
 import {toLiteral} from '../../base/to-literal';
+import {transformerDecoder} from '../../base/transformer-decoder';
+import {transformerEncode} from '../../base/transformer-encode';
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {mapDecoder} from '../../representation/map/map-decoder';
+import {mapEncode} from '../../representation/map/map-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import {every} from '../../util/every';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
@@ -28,6 +34,23 @@ export class MapTransformer<
       isMap(data) &&
       every<unknown>(data.keys(), compatibleWith<KI>(this._keyTransformer)) &&
       every<unknown>(data.values(), compatibleWith<VI>(this._valueTransformer))
+    );
+  }
+
+  public decoder(): DecoderGenerator<Map<KO, VO>> {
+    return mapDecoder<KO, VO>(
+      transformerDecoder<KO>(this._keyTransformer),
+      transformerDecoder<VO>(this._valueTransformer),
+    );
+  }
+
+  public encode(data: ReadonlyMap<KI, VI>): IterableEncoding {
+    console.assert(isMap(data));
+
+    return mapEncode<KI, VI>(
+      data,
+      transformerEncode<KI>(this._keyTransformer),
+      transformerEncode<VI>(this._valueTransformer),
     );
   }
 

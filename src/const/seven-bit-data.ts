@@ -1,0 +1,1 @@
+export const SEVEN_BIT_PAYLOAD = 0b01111111;

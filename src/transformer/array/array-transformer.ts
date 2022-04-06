@@ -2,8 +2,14 @@ import {compatibleWith} from '../../base/compatible-with';
 import {fromLiteral} from '../../base/from-literal';
 import {toCompactLiteral} from '../../base/to-compact-literal';
 import {toLiteral} from '../../base/to-literal';
+import {transformerDecoder} from '../../base/transformer-decoder';
+import {transformerEncode} from '../../base/transformer-encode';
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {arrayDecoder} from '../../representation/array/array-decoder';
+import {arrayEncode} from '../../representation/array/array-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import {denseArrayLike} from '../../util/dense-array-like';
 import {every} from '../../util/every';
 import {isArray} from '../../util/guard/is-array';
@@ -19,6 +25,16 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
 
   public compatibleWith(data: unknown): data is readonly I[] {
     return isArray(data) && every(data, compatibleWith<I>(this._transformer));
+  }
+
+  public decoder(): DecoderGenerator<O[]> {
+    return arrayDecoder<O>(transformerDecoder<O>(this._transformer));
+  }
+
+  public encode(data: readonly I[]): IterableEncoding {
+    console.assert(isArray(data));
+
+    return arrayEncode<I>(data, transformerEncode<I>(this._transformer));
   }
 
   public fromLiteral(literal: unknown): O[] {

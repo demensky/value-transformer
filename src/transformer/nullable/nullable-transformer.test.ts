@@ -9,7 +9,7 @@ describe('NullableTransformer', () => {
   let transformer: ValueTransformer<string | null, string | null>;
 
   beforeEach(() => {
-    mockTransformer = asMock(true, 'data', 'compactLiteral', 'literal');
+    mockTransformer = asMock(true, 'a-d', 'a-c', 'a-l', [0x0a]);
     transformer = new NullableTransformer(mockTransformer);
   });
 
@@ -43,19 +43,19 @@ describe('NullableTransformer', () => {
     });
 
     test('fromLiteral', () => {
-      expect(transformer.fromLiteral('param')).toBe('data');
+      expect(transformer.fromLiteral('param')).toBe('a-d');
       expect(mockTransformer.fromLiteral).toHaveBeenCalledTimes(1);
       expect(mockTransformer.fromLiteral).toHaveBeenCalledWith('param');
     });
 
     test('toCompactLiteral', () => {
-      expect(transformer.toCompactLiteral('data')).toBe('compactLiteral');
+      expect(transformer.toCompactLiteral('data')).toBe('a-c');
       expect(mockTransformer.toCompactLiteral).toHaveBeenCalledTimes(1);
       expect(mockTransformer.toCompactLiteral).toHaveBeenCalledWith('data');
     });
 
     test('toLiteral', () => {
-      expect(transformer.toLiteral('data')).toBe('literal');
+      expect(transformer.toLiteral('data')).toBe('a-l');
       expect(mockTransformer.toLiteral).toHaveBeenCalledTimes(1);
       expect(mockTransformer.toLiteral).toHaveBeenCalledWith('data');
     });

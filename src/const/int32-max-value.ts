@@ -1,0 +1,1 @@
+export const INT32_MAX_VALUE = 2147483647;

@@ -1,5 +1,9 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {float64Decoder} from '../../representation/float64/float64-decoder';
+import {float64Encode} from '../../representation/float64/float64-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import {isNumber} from '../../util/guard/is-number';
 
 const NAN_LITERAL_VALUE = 'NaN';
@@ -21,6 +25,16 @@ export class Float64Transformer extends ValueTransformer<number, number> {
 
   public compatibleWith(data: unknown): data is number {
     return isNumber(data);
+  }
+
+  public decoder(): DecoderGenerator<number> {
+    return float64Decoder();
+  }
+
+  public encode(data: number): IterableEncoding {
+    console.assert(isNumber(data));
+
+    return float64Encode(data);
   }
 
   public fromLiteral(literal: unknown): number {

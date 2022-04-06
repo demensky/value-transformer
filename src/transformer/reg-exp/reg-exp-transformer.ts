@@ -1,6 +1,10 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
+import {regExpDecoder} from '../../representation/reg-exp/reg-exp-decoder';
+import {regExpEncode} from '../../representation/reg-exp/reg-exp-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
@@ -22,6 +26,16 @@ type RegExpCompactLiteral = readonly [source: string, flags: string];
 export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
   public compatibleWith(data: unknown): data is RegExp {
     return isRegExp(data);
+  }
+
+  public decoder(): DecoderGenerator<RegExp> {
+    return regExpDecoder();
+  }
+
+  public encode(data: RegExp): IterableEncoding {
+    console.assert(isRegExp(data));
+
+    return regExpEncode(data);
   }
 
   public fromLiteral(literal: unknown): RegExp {

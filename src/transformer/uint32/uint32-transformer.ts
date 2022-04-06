@@ -1,0 +1,45 @@
+import {ValueTransformer} from '../../base/value-transformer';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {uint32Decoder} from '../../representation/uint32/uint32-decoder';
+import {uint32Encode} from '../../representation/uint32/uint32-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
+import {isNumber} from '../../util/guard/is-number';
+import {isUint32} from '../../util/guard/is-uint32';
+
+/**
+ * @see {@link asUint32} alias
+ */
+export class Uint32Transformer extends ValueTransformer<number, number> {
+  public constructor() {
+    super();
+  }
+
+  public override compatibleWith(data: unknown): data is number {
+    return isNumber(data) && isUint32(data);
+  }
+
+  public decoder(): DecoderGenerator<number> {
+    return uint32Decoder();
+  }
+
+  public encode(data: number): IterableEncoding {
+    console.assert(isUint32(data));
+
+    return uint32Encode(data);
+  }
+
+  public fromLiteral(literal: unknown): number {
+    if (!isNumber(literal) || !isUint32(literal)) {
+      throw new IncompatibleLiteralError();
+    }
+
+    return literal;
+  }
+
+  public override toLiteral(data: number): unknown {
+    console.assert(isUint32(data));
+
+    return data;
+  }
+}

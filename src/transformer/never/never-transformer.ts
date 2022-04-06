@@ -15,6 +15,14 @@ export class NeverTransformer extends ValueTransformer<never, never> {
     return false;
   }
 
+  public decoder(): never {
+    throw new NeverTransformerError();
+  }
+
+  public encode(): never {
+    throw new NeverTransformerError();
+  }
+
   public fromLiteral(): never {
     throw new NeverTransformerError();
   }

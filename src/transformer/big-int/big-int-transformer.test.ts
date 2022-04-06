@@ -122,46 +122,59 @@ describe('BigIntTransformer', () => {
 
   describe('transformation', () => {
     test('zero', () => {
-      expect(transformer).toBeTransformation(0n, '0', '0');
+      expect(transformer).toBeTransformation(0n, '0', '0', [0x00]);
     });
 
     test('positive', () => {
-      expect(transformer).toBeTransformation(1n, '1', '1');
-      expect(transformer).toBeTransformation(42n, '42', '42');
+      expect(transformer).toBeTransformation(1n, '1', '1', [0x01]);
+      expect(transformer).toBeTransformation(42n, '42', '42', [0x2a]);
       expect(transformer).toBeTransformation(
         9007199254740991n,
         '9007199254740991',
         '9007199254740991',
+        [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x0f],
       );
+
       expect(transformer).toBeTransformation(
         18446744073709551615n,
         '18446744073709551615',
         '18446744073709551615',
+        [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x01],
       );
       expect(transformer).toBeTransformation(
         340282366920938463463374607431768211455n,
         '340282366920938463463374607431768211455',
         '340282366920938463463374607431768211455',
+        [
+          0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+          0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x03,
+        ],
       );
     });
 
     test('negative', () => {
-      expect(transformer).toBeTransformation(-1n, '-1', '-1');
-      expect(transformer).toBeTransformation(-42n, '-42', '-42');
+      expect(transformer).toBeTransformation(-1n, '-1', '-1', [0x7f]);
+      expect(transformer).toBeTransformation(-42n, '-42', '-42', [0x56]);
       expect(transformer).toBeTransformation(
         -9007199254740991n,
         '-9007199254740991',
         '-9007199254740991',
+        [0x81, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x70],
       );
       expect(transformer).toBeTransformation(
         -18446744073709551615n,
         '-18446744073709551615',
         '-18446744073709551615',
+        [0x81, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x7e],
       );
       expect(transformer).toBeTransformation(
         -340282366920938463463374607431768211455n,
         '-340282366920938463463374607431768211455',
         '-340282366920938463463374607431768211455',
+        [
+          0x81, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
+          0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x7c,
+        ],
       );
     });
   });

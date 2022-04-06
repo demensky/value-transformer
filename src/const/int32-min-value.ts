@@ -1,0 +1,1 @@
+export const INT32_MIN_VALUE = -2147483648;

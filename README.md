@@ -67,6 +67,14 @@ abstract class [`ValueTransformer`][value-transformer].
 
 Check compatibility with the type.
 
+### `decoder()`
+
+TODO doc
+
+### `encode(data)`
+
+TODO doc
+
 ### `fromLiteral(literal)`
 
 Strictly check the literal for validity and deserialize it into data.
@@ -87,6 +95,12 @@ Serialize the passed data into a compact JSON-like literal.
 | ----------- | -------------------- | ------------- |
 | `asBoolean` | [`boolean`][boolean] | `asBoolean()` |
 | `asFloat64` | [`number`][number]   | `asFloat64()` |
+| `asInt8`    | [`number`][number]   | `asInt8()`    |
+| `asInt16`   | [`number`][number]   | `asInt16()`   |
+| `asInt32`   | [`number`][number]   | `asInt32()`   |
+| `asUint8`   | [`number`][number]   | `asUint8()`   |
+| `asUint16`  | [`number`][number]   | `asUint16()`  |
+| `asUint32`  | [`number`][number]   | `asUint32()`  |
 | `asBigInt`  | [`bigint`][bigint]   | `asBigInt()`  |
 | `asString`  | [`string`][string]   | `asString()`  |
 | `asDate`    | [`Date`][date]       | `asDate()`    |

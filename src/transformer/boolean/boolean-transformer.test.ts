@@ -22,12 +22,12 @@ describe('BooleanTransformer', () => {
   describe('valid', () => {
     test('false', () => {
       expect(transformer).toBeCompatibleWith(false);
-      expect(transformer).toBeTransformation(false, false, 0);
+      expect(transformer).toBeTransformation(false, false, 0, [0x00]);
     });
 
     test('true', () => {
       expect(transformer).toBeCompatibleWith(true);
-      expect(transformer).toBeTransformation(true, true, 1);
+      expect(transformer).toBeTransformation(true, true, 1, [0x01]);
     });
   });
 });

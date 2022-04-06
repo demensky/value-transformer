@@ -9,8 +9,8 @@ describe('ClassTransformer @transform decorator', () => {
   let transformerB: MockTransformer<unknown>;
 
   beforeEach(() => {
-    transformerA = asMock(true, null, null, null);
-    transformerB = asMock(true, null, null, null);
+    transformerA = asMock(true, null, null, null, []);
+    transformerB = asMock(true, null, null, null, []);
   });
 
   describe('just class', () => {

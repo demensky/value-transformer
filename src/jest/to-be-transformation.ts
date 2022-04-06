@@ -1,8 +1,26 @@
+/* istanbul ignore file */
+
 import {diff} from 'jest-diff';
 import {matcherHint} from 'jest-matcher-utils';
 
 import type {ValueTransformer} from '../base/value-transformer';
 import type {ValueTransformerInput} from '../base/value-transformer-input';
+import {SyncBufferDeserializer} from '../buffer-deserializer/sync-buffer-deserializer';
+
+function concatToUint8(views: ArrayBufferView[]): Uint8Array {
+  const result = new Uint8Array(
+    views.reduce<number>((previous, {byteLength}) => previous + byteLength, 0),
+  );
+
+  let offset = 0;
+
+  for (const {buffer, byteLength, byteOffset} of views) {
+    result.set(new Uint8Array(buffer, byteOffset, byteLength), offset);
+    offset += byteLength;
+  }
+
+  return result;
+}
 
 function failResult(
   {isNot, promise, expand}: jest.MatcherContext,
@@ -16,7 +34,7 @@ function failResult(
       const hint = matcherHint(
         'toBeTransformation',
         'transformer',
-        'data, literal, compact',
+        'data, literal, compact, elements',
         {comment, isNot, promise},
       );
 
@@ -34,7 +52,10 @@ expect.extend({
     data: T,
     literal: unknown,
     compact: unknown,
+    elements: readonly number[],
   ): jest.CustomMatcherResult {
+    const view = new Uint8Array(elements);
+
     const returnerLiteral: unknown = transformer.toLiteral(data);
 
     if (!this.equals(literal, returnerLiteral, [], true)) {
@@ -49,6 +70,16 @@ expect.extend({
       const comment = 'transformer.toCompactLiteral(data) -> compactLiteral';
 
       return failResult(this, comment, compact, returnerCompact);
+    }
+
+    const generatedView: Uint8Array = concatToUint8([
+      ...transformer.encode(data),
+    ]);
+
+    if (!this.equals(view, generatedView, [], true)) {
+      const comment = 'transformer.toBufferViews(data) -> views';
+
+      return failResult(this, comment, view, generatedView);
     }
 
     const returnerData: T = transformer.fromLiteral(literal);
@@ -67,6 +98,16 @@ expect.extend({
       return failResult(this, comment, data, returnerCompactData);
     }
 
+    const decodedData: T = SyncBufferDeserializer.from([view]).finalRead(
+      transformer.decoder(),
+    );
+
+    if (!this.equals(data, decodedData, [], true)) {
+      const comment = 'transformer.decoder() -> view decoder generator';
+
+      return failResult(this, comment, data, decodedData);
+    }
+
     return {
       pass: true,
       message: () =>
@@ -82,6 +123,7 @@ declare global {
         data: T extends ValueTransformerInput<infer I> ? I : never,
         literal: unknown,
         compact: unknown,
+        elements: readonly number[],
       ): R;
     }
   }

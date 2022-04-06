@@ -3,6 +3,10 @@ import type {ValueTransformerInput} from '../../base/value-transformer-input';
 import type {ValueTransformerOutput} from '../../base/value-transformer-output';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error';
+import {uintDecoder} from '../../representation/uint/uint-decoder';
+import {uintEncode} from '../../representation/uint/uint-encode';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isEntry} from '../../util/guard/is-entry';
@@ -69,6 +73,17 @@ export class UnionTransformer<
     return this._transformers.some((transformer) =>
       transformer.compatibleWith(data),
     );
+  }
+
+  public *decoder(): DecoderGenerator<O[number]> {
+    return yield* this._findOutputByIs(yield* uintDecoder()).decoder();
+  }
+
+  public *encode(data: I[number]): IterableEncoding {
+    const [is, transformer]: InputEntry<I[number]> = this._findInputEntry(data);
+
+    yield* uintEncode(is);
+    yield* transformer.encode(data);
   }
 
   public fromLiteral(literal: unknown): O[number] {

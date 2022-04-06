@@ -1,5 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {IterableEncoding} from '../../type/iterable-encoding';
 import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isObject} from '../../util/guard/is-object';
@@ -41,6 +43,25 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
 
   public compatibleWith(data: unknown): data is Readonly<T> {
     return data instanceof this._constructor;
+  }
+
+  public *decoder(): DecoderGenerator<T> {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const instance: T = Object.create(this._constructor.prototype as T) as T;
+
+    for (const [key, transformer] of this._getFieldsInfo()) {
+      instance[key] = yield* transformer.decoder();
+    }
+
+    return instance;
+  }
+
+  public *encode(data: Readonly<T>): IterableEncoding {
+    console.assert(data instanceof this._constructor);
+
+    for (const [key, transformer] of this._getFieldsInfo()) {
+      yield* transformer.encode(data[key]);
+    }
   }
 
   public fromLiteral(literal: unknown): T {

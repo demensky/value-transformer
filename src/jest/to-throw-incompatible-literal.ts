@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import type {MatcherHintOptions} from 'jest-matcher-utils';
 import {matcherHint, printReceived} from 'jest-matcher-utils';
 
