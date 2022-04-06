@@ -197,7 +197,11 @@ console.log(transformer.toCompactLiteral(data));
 ["demensky", null]
 ```
 
-### `asEnum`
+### `asEnumFloat64`
+
+TODO
+
+### `asEnumString`
 
 TODO
 
