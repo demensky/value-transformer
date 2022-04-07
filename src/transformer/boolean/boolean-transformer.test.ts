@@ -12,35 +12,22 @@ describe('BooleanTransformer', () => {
     transformer = new BooleanTransformer();
   });
 
-  describe.each([null, undefined, 2, 3, [], {}] as const)(
-    'invalid %p',
-    (value) => {
-      test('compatible', () => {
-        expect(transformer).not.toBeCompatibleWith(value);
-      });
+  test('invalid', () => {
+    expect(transformer).not.toBeCompatibleWith(42);
+    expect(() => {
+      transformer.fromLiteral(42);
+    }).toThrow(IncompatibleLiteralError);
+  });
 
-      test('fromLiteral', () => {
-        expect(() => {
-          transformer.fromLiteral(value);
-        }).toThrow(
-          new IncompatibleLiteralError(
-            'supported values are true, false, 1, and 0',
-          ),
-        );
-      });
-    },
-  );
-
-  describe.each([
-    [true, 1],
-    [false, 0],
-  ])('valid %p', (value, compactLiteral) => {
-    test('compatible', () => {
-      expect(transformer).toBeCompatibleWith(value);
+  describe('valid', () => {
+    test('false', () => {
+      expect(transformer).toBeCompatibleWith(false);
+      expect(transformer).toBeTransformation(false, false, 0);
     });
 
-    test('normal', () => {
-      expect(transformer).toBeTransformation(value, value, compactLiteral);
+    test('true', () => {
+      expect(transformer).toBeCompatibleWith(true);
+      expect(transformer).toBeTransformation(true, true, 1);
     });
   });
 });
