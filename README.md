@@ -6,221 +6,314 @@ change without backwards compatibility.
 Validation, serialization and deserialization using a single entity. Symmetric
 serialization and deserialization. No implicit transformers.
 
-Supports: [`string`](#asstring), [`boolean`](#asboolean),
-[`number`](#asfloat64), [`bigint`](#asbigint), [`null`](#asnullable),
-[`Date`](#asdate), [`Array`](#asarray), [`Map`](#asmap), [`Set`](#asset),
-[`RegExp`](#asregexp), [`never`](#asnever) and [custom classes](#asclass).
-
-## Features of transformers
-
-- Check compatibility with the type.
-- Validate a literal for correctness and deserialize it to data.
-- Serialize data into a JSON-like literal.
-- Serialize data into a compact JSON-like literal.
-
-### `compatibleWith`
-
-This method verifies that data can potentially be serialized by this
-transformer. Used by [the `asUnion` transformer](#asunion).
-
-### `fromLiteral`
-
-This method attempts to deserialize a JSON-like literal (serialized using
-[the `toLiteral` method](#toliteral) or
-[the `toCompactLiteral` method](#tocompactliteral)) into data. The literal is
-carefully checked for consistency within each transformer.
-
-Throws an `IncompatibleLiteralError` if an incompatible literal is passed.
+## Example
 
 ```ts
-const transformer = asMap(asBoolean(), asDate());
+export class VectorPictureDto {
+  @transform(asString())
+  public readonly url: string;
 
-const expandedLiteral = [
-  [false, '1970-01-01T00:00:00.000Z'],
-  [true, '2000-01-01T00:00:00.000Z'],
-];
-
-const compactLiteral = [
-  [0, 0],
-  [1, 946684800000],
-];
-
-console.log(transformer.fromLiteral(expandedLiteral));
-console.log(transformer.fromLiteral(compactLiteral));
-```
-
-```
-Map(2) {
-  false => 1970-01-01T00:00:00.000Z,
-  true => 2000-01-01T00:00:00.000Z
-}
-```
-
-### `toLiteral`
-
-This method serializes the data to an **expanded** JSON-like literal (to be
-passed to [the `fromLiteral` method](#fromliteral)).
-
-```ts
-const transformer = asMap(asBoolean(), asDate());
-
-const data = new Map([
-  [false, new Date(0)],
-  [true, new Date(Date.UTC(2000, 0, 1))],
-]);
-
-console.log(transformer.toLiteral(data));
-```
-
-```json
-[
-  [false, "1970-01-01T00:00:00.000Z"],
-  [true, "2000-01-01T00:00:00.000Z"]
-]
-```
-
-### `toCompactLiteral`
-
-This method serializes the data into a **compact** JSON-like literal (to be
-passed to [the `fromLiteral` method](#fromliteral)).
-
-Compact mode is only implemented by [`asBoolean`](#asboolean),
-[`asClass`](#asclass), [`asDate`](#asdate), [`asUnion`](#asunion) and
-[`asRegExp`](#asregexp). Others simply return a result equivalent to
-[`toLiteral`](#toliteral) and call [`toCompactLiteral`](#tocompactliteral) on
-child transformers.
-
-```ts
-const transformer = asMap(asBoolean(), asDate());
-
-const data = new Map([
-  [false, new Date(0)],
-  [true, new Date(Date.UTC(2000, 0, 1))],
-]);
-
-console.log(transformer.toCompactLiteral(data));
-```
-
-```json
-[
-  [0, 0],
-  [1, 946684800000]
-]
-```
-
-## Transformers
-
-All transformer classes have an alias function for better usability.
-
-### `asBigInt`
-
-Implements a transfer of any [`bigint`][bigint] value. The literal is stored as
-a string of numbers.
-
-### `asBoolean`
-
-Implements a transfer of [`boolean`][boolean] value. In compact mode, `true` is
-represented as `1` and `false` is represented as `0`.
-
-### `asFloat64`
-
-TODO
-
-### `asString`
-
-TODO
-
-### `asArray`
-
-Implements a transfer of [`Array`][array] instance. **Requires** a child
-transformer. **Sparse** arrays are not supported.
-
-An always empty array can be declared like this: `asArray(asNever())`.
-
-### `asDate`
-
-Implements a transfer of [`Date`][date] instance. The literal is stored as an
-ISO 8601 string, in the compact mode it is number of milliseconds.
-`"Invalid Date"` is also successfully transferred.
-
-### `asMap`
-
-TODO
-
-### `asRegExp`
-
-TODO
-
-### `asSet`
-
-TODO
-
-### `asNullable`
-
-TODO
-
-### `asClass`
-
-Implements a transfer of target class instances.
-
-All fields marked with [the `@transform` decorator][field] will be serialized
-and deserialized. Field order is important when using
-[compact mode](#tocompactliteral). During deserialization, the constructor of
-the target class is not called, an instance is created using
-[`Object.create`][object-create].
-
-```ts
-class UserDto {
-  @transform(asString()) public readonly nickname: string;
-
-  @transform(asNullable(asString())) public readonly name: string | null;
-
-  public constructor(nickname: UserDto['nickname'], name: UserDto['name']) {
-    this.nickname = nickname;
-    this.name = name;
+  public constructor(url: VectorPictureDto['url']) {
+    this.url = url;
   }
 }
 
-const data = new UserDto('demensky', null);
+export class BitmapPictureDto {
+  @transform(asMap(asString(), asString()))
+  public readonly urls: ReadonlyMap<string, string>;
 
-const transformer = asClass(UserDto);
+  public constructor(urls: BitmapPictureDto['urls']) {
+    this.urls = urls;
+  }
+}
 
-console.log(transformer.toLiteral(data));
-console.log(transformer.toCompactLiteral(data));
+export class PictureDto {
+  @transform(asDate())
+  public readonly createAt: Date;
+
+  @transform(asFloat64())
+  public readonly rating: number;
+
+  @transform(asSet(asString()))
+  public readonly tags: ReadonlySet<string>;
+
+  @transform(asUnion([asClass(BitmapPictureDto), asClass(VectorPictureDto)]))
+  public readonly type: BitmapPictureDto | VectorPictureDto;
+
+  public constructor(
+    createAt: PictureDto['createAt'],
+    rating: PictureDto['rating'],
+    tags: PictureDto['tags'],
+    type: PictureDto['type'],
+  ) {
+    this.createAt = createAt;
+    this.rating = rating;
+    this.tags = tags;
+    this.type = type;
+  }
+}
+
+const transformer = asClass(PictureDto);
 ```
 
-```json
-{"nickname": "demensky", "name": null}
-```
+## API
 
-```json
-["demensky", null]
-```
+[All transformers](#transformers) implement the methods (listed below) in the
+abstract class [`ValueTransformer`][value-transformer].
 
-### `asEnumFloat64`
+### `compatibleWith(data)`
 
-TODO
+Check compatibility with the type.
 
-### `asEnumString`
+### `fromLiteral(literal)`
 
-TODO
+Strictly check the literal for validity and deserialize it into data.
 
-### `asUuidString`
+### `toLiteral(data)`
 
-TODO
+Serialize the passed data into a JSON-like literal.
 
-### `asUnion`
+### `toCompactLiteral(data)`
 
-TODO
+Serialize the passed data into a compact JSON-like literal.
+
+## Transformers
+
+### Simple transformers
+
+| Name        | Type                 | Usage example |
+| ----------- | -------------------- | ------------- |
+| `asBoolean` | [`boolean`][boolean] | `asBoolean()` |
+| `asFloat64` | [`number`][number]   | `asFloat64()` |
+| `asBigInt`  | [`bigint`][bigint]   | `asBigInt()`  |
+| `asString`  | [`string`][string]   | `asString()`  |
+| `asDate`    | [`Date`][date]       | `asDate()`    |
+| `asRegExp`  | [`RegExp`][regexp]   | `asRegExp()`  |
+
+### Collection transformers
+
+| Name      | Type             | Usage example                   |
+| --------- | ---------------- | ------------------------------- |
+| `asArray` | [`Array`][array] | `asArray(asString())`           |
+| `asSet`   | [`Set`][set]     | `asSet(asString())`             |
+| `asMap`   | [`Map`][map]     | `asMap(asString(), asString())` |
 
 ### `asNever`
 
-TODO
+Blocks any transformations.
+
+<details>
+<summary>Usage</summary>
+
+The value can only be `null`:
+
+```ts
+const transformer = asNullable(asNever());
+```
+
+Ensuring that the [collection](#collection-transformers) is empty:
+
+```ts
+const transformer = asArray(asNever());
+```
+
+```ts
+const transformer = asSet(asNever());
+```
+
+```ts
+const transformer = asMap(asNever(), asNever());
+```
+
+As a stub when updating variants in [`asUnion`](#asunion):
+
+```ts
+// version 1
+const transformer = asUnion([
+  asClass(MediaDto), // actual in version 1
+  asClass(BinaryFileDto), // index is 1
+]);
+```
+
+```ts
+// version 2
+const transformer = asUnion([
+  asNever(), // unactual in version 2
+  asClass(BinaryFileDto), // index still 1
+  asClass(VideoDto),
+  asClass(AudioDto),
+]);
+```
+
+</details>
+
+### `asUnion`
+
+Combines several transformers. The first transformer passed
+[`compatibleWith`](#compatiblewithdata) is used for serialization.
+
+<details>
+<summary>Usage</summary>
+
+String or number:
+
+```ts
+const transformer = asUnion([asString(), asFloat64()]);
+```
+
+String or array of strings:
+
+```ts
+const transformer = asUnion([asString(), asArray(asString())]);
+```
+
+Classes:
+
+```ts
+const transformer = asUnion([
+  asClass(LandscapeDto),
+  asClass(PortraitDto),
+  asClass(UnderWaterDto),
+]);
+```
+
+</details>
+
+### `asNullable`
+
+The value may be `null`.
+
+<details>
+<summary>Usage</summary>
+
+**Only** `null`:
+
+```ts
+const transformer = asNullable(asNever());
+```
+
+String or `null`:
+
+```ts
+const transformer = asNullable(asString());
+```
+
+</details>
+
+### `asClass`
+
+Transforms the fields of the passed [class][class] that have the
+[`@transform`](#transform) [decorator][decorators].
+
+<details>
+<summary>Usage</summary>
+
+Empty class
+
+```ts
+class Foo {}
+
+const transformer = asClass(Foo);
+```
+
+</details>
+
+#### `@transform`
+
+The decorator adds the passed transformer to the metadata which is later used by
+the [`asClass`](#asclass) transformer.
+
+<details>
+<summary>Usage</summary>
+
+```ts
+import {asClass} from './as-class';
+
+class UserDto {
+  @transform(asString())
+  public readonly nickname: string;
+
+  public constructor(nickname: UserDto['nickname']) {
+    this.nickname = nickname;
+  }
+}
+
+const transformer = asClass(UserDto);
+```
+
+</details>
+
+### `asEnumFloat64`
+
+Transformation of [numeric enum][numeric-enum].
+
+<details>
+<summary>Usage</summary>
+
+```ts
+enum Direction {
+  UP = 0,
+  DOWN = 1,
+  LEFT = 2,
+  RIGHT = 3,
+}
+
+const transformer = asEnumFloat64(UserDto);
+```
+
+</details>
+
+### `asEnumString`
+
+Transformation of [string enum][string-enum].
+
+<details>
+<summary>Usage</summary>
+
+```ts
+enum Direction {
+  UP = 'up',
+  DOWN = 'down',
+  LEFT = 'left',
+  RIGHT = 'right',
+}
+
+const transformer = asEnumString(UserDto);
+```
+
+</details>
+
+### `asUuidString`
+
+Transformation of [UUID][uuid] string.
+
+<details>
+<summary>Usage</summary>
+
+```ts
+type UserId = UuidString & {readonly __userId: unique symbol};
+
+const transformer = asUuidString<UserId>();
+```
+
+</details>
 
 [array]: https://mdn.io/array
 [bigint]: https://mdn.io/bigint
+[set]: https://mdn.io/set
+[map]: https://mdn.io/map
 [boolean]: https://mdn.io/boolean
+[number]: https://mdn.io/number
+[string]: https://mdn.io/string
 [date]: https://mdn.io/date
-[object-create]: https://mdn.io/object.create
+[regexp]: https://mdn.io/regexp
+[class]:
+  https://www.typescriptlang.org/docs/handbook/2/classes.html#handbook-content
+[decorators]:
+  https://www.typescriptlang.org/docs/handbook/decorators.html#decorators
+[numeric-enum]:
+  https://www.typescriptlang.org/docs/handbook/enums.html#numeric-enums
+[string-enum]:
+  https://www.typescriptlang.org/docs/handbook/enums.html#string-enums
+[uuid]: https://datatracker.ietf.org/doc/html/rfc4122
 [value-transformer]: ./src/base/value-transformer.ts
-[field]: src/transformer/class/decorator/transform.ts
