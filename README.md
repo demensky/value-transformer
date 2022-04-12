@@ -3,8 +3,10 @@
 **Warning!** This library is at an early stage of development. The API may
 change without backwards compatibility.
 
-Validation, serialization and deserialization using a single entity. Symmetric
-serialization and deserialization. No implicit transformers.
+This library allows you to serialize/deserialize complex data using
+[transformers](#transformers). There is no need to interact with the raw
+representation: the signature of JSON literals and `ArrayBuffer`s is
+encapsulated.
 
 ## Example
 

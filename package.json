@@ -1,7 +1,7 @@
 {
   "name": "value-transformer",
   "version": "0.4.1",
-  "description": "Validation, serialization and deserialization using a single entity. Symmetric serialization and deserialization. No implicit transformers.",
+  "description": "This library allows you to serialize/deserialize complex data using transformers. There is no need to interact with the raw representation: the signature of JSON literals and ArrayBuffers is encapsulated.\n",
   "type": "module",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.cjs",
