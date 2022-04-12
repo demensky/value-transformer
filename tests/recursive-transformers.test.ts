@@ -1,17 +1,16 @@
-import 'reflect-metadata';
 import '../src/jest/to-be-transformation';
 
-import {asArray, asClass, asNullable, asUnion, field} from '../src';
+import {asArray, asClass, asNullable, asUnion, transform} from '../src';
 import {asMock} from '../src/transformer/mock/as-mock';
 
 describe('recursive transformers', () => {
   test('self-used class in nullable field', () => {
     class Tmp {
-      @field(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
+      @transform(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
 
-      @field(asNullable(asClass(Tmp))) public b: Tmp | null;
+      @transform(asNullable(asClass(Tmp))) public b: Tmp | null;
 
-      @field(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
+      @transform(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
 
       public constructor(b: Tmp['b']) {
         this.b = b;
@@ -27,11 +26,11 @@ describe('recursive transformers', () => {
 
   test('self-used class in field with array', () => {
     class Tmp {
-      @field(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
+      @transform(asMock(true, 'a-d', 'a-c', 'a-l')) public a = 'a-d';
 
-      @field(asArray(asClass(Tmp))) public b: readonly Tmp[];
+      @transform(asArray(asClass(Tmp))) public b: readonly Tmp[];
 
-      @field(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
+      @transform(asMock(true, 'c-d', 'c-c', 'c-l')) public c = 'c-d';
 
       public constructor(b: Tmp['b']) {
         this.b = b;
@@ -47,12 +46,12 @@ describe('recursive transformers', () => {
 
   test('self-used class in field with union', () => {
     class User {
-      @field(asMock(true, 'name-d', 'name-c', 'name-l'))
+      @transform(asMock(true, 'name-d', 'name-c', 'name-l'))
       public name = 'name-d';
     }
 
     class Container {
-      @field(asUnion([asClass(Container), asClass(User)]))
+      @transform(asUnion([asClass(Container), asClass(User)]))
       public readonly child: Container | User;
 
       public constructor(b: Container['child']) {

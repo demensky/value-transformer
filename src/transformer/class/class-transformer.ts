@@ -1,22 +1,12 @@
-// TODO reduce eslint-disable
-/* eslint-disable @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/consistent-type-assertions */
-
-/// <reference types="reflect-metadata" />
-
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import type {UnverifiedObject} from '../../type/unverified-object';
 import {isArray} from '../../util/guard/is-array';
 import {isObject} from '../../util/guard/is-object';
+import {identity} from '../../util/identity';
 
-import {CLASS_TRANSFORMER_FIELD_TRANSFORMER} from './class-transformer-field-transformer';
-import {CLASS_TRANSFORMER_KEYS} from './class-transformer-keys';
-
-class FieldInfo<K extends string, I, O extends I> {
-  public constructor(
-    public readonly key: K,
-    public readonly transformer: ValueTransformer<I, O>,
-  ) {}
-}
+import {extractTransformableFields} from './decorator/extract-transformable-fields';
+import type {OneOfTransformableField} from './decorator/one-of-transformable-field';
 
 export class ClassTransformer<T extends object> extends ValueTransformer<
   Readonly<T>,
@@ -28,8 +18,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     return new ClassTransformer<T>(constructor);
   }
 
-  private _fieldsInfo: readonly FieldInfo<string & keyof T, any, any>[] | null =
-    null;
+  private _fieldsInfo: readonly OneOfTransformableField<T>[] | null = null;
 
   private constructor(
     private readonly _constructor: new (...args: never) => T,
@@ -37,33 +26,17 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     super();
   }
 
-  private _getFieldsInfo(): readonly FieldInfo<string & keyof T, any, any>[] {
+  private _getFieldsInfo(): readonly OneOfTransformableField<T>[] {
     if (this._fieldsInfo !== null) {
       return this._fieldsInfo;
     }
 
-    const {prototype} = this._constructor;
+    this._fieldsInfo = [
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      ...extractTransformableFields<T>(this._constructor.prototype as T),
+    ];
 
-    const keys: readonly (string & keyof T)[] =
-      Reflect.getOwnMetadata(CLASS_TRANSFORMER_KEYS, prototype) ?? [];
-
-    const fieldsInfo: FieldInfo<string & keyof T, any, any>[] = keys.map<
-      FieldInfo<string & keyof T, any, any>
-    >(
-      (key) =>
-        new FieldInfo<string & keyof T, any, any>(
-          key,
-          Reflect.getMetadata(
-            CLASS_TRANSFORMER_FIELD_TRANSFORMER,
-            prototype,
-            key,
-          ),
-        ),
-    );
-
-    this._fieldsInfo = fieldsInfo;
-
-    return fieldsInfo;
+    return this._fieldsInfo;
   }
 
   public compatibleWith(data: unknown): data is Readonly<T> {
@@ -72,7 +45,8 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
 
   public fromLiteral(literal: unknown): T {
     const fields = this._getFieldsInfo();
-    const instance: T = Object.create(this._constructor.prototype);
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const instance: T = Object.create(this._constructor.prototype as T) as T;
 
     if (!isObject(literal)) {
       throw new IncompatibleLiteralError();
@@ -80,20 +54,16 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
 
     if (isArray(literal)) {
       if (literal.length !== fields.length) {
-        throw new Error('Incorrect count of fields'); // TODO separate error
+        throw new IncompatibleLiteralError();
       }
 
-      for (let i = 0; i < fields.length; i++) {
-        const {key, transformer}: FieldInfo<string & keyof T, any, any> =
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          fields[i]!;
-
-        instance[key] = transformer.fromLiteral(literal[i]);
+      for (const [index, [key, transformer]] of fields.entries()) {
+        instance[key] = transformer.fromLiteral(literal[index]);
       }
     } else {
-      for (const {key, transformer} of fields) {
+      for (const [key, transformer] of fields) {
         instance[key] = transformer.fromLiteral(
-          (literal as Record<string, unknown>)[key],
+          identity<UnverifiedObject<T>>(literal)[key],
         );
       }
     }
@@ -104,7 +74,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
   public override toCompactLiteral(data: Readonly<T>): unknown {
     console.assert(data instanceof this._constructor);
 
-    return this._getFieldsInfo().map<unknown>(({key, transformer}) =>
+    return this._getFieldsInfo().map<unknown>(([key, transformer]) =>
       transformer.toCompactLiteral(data[key]),
     );
   }
@@ -113,9 +83,9 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     console.assert(data instanceof this._constructor);
 
     const fields = this._getFieldsInfo();
-    const literal: Record<string, unknown> = {};
+    const literal: Partial<Record<keyof T, unknown>> = {};
 
-    for (const {key, transformer} of fields) {
+    for (const [key, transformer] of fields) {
       literal[key] = transformer.toLiteral(data[key]);
     }
 

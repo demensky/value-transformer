@@ -237,6 +237,7 @@
       "files": ["*.test.ts"],
       "plugins": ["jest"],
       "rules": {
+        "@typescript-eslint/no-extraneous-class": "off",
         "@typescript-eslint/no-magic-numbers": "off",
         "jest/consistent-test-it": [
           "error",

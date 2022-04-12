@@ -163,17 +163,17 @@ TODO
 
 Implements a transfer of target class instances.
 
-All fields marked with [the `@field` decorator][field] will be serialized and
-deserialized. Field order is important when using
+All fields marked with [the `@transform` decorator][field] will be serialized
+and deserialized. Field order is important when using
 [compact mode](#tocompactliteral). During deserialization, the constructor of
 the target class is not called, an instance is created using
 [`Object.create`][object-create].
 
 ```ts
 class UserDto {
-  @field(asString()) public readonly nickname: string;
+  @transform(asString()) public readonly nickname: string;
 
-  @field(asNullable(asString())) public readonly name: string | null;
+  @transform(asNullable(asString())) public readonly name: string | null;
 
   public constructor(nickname: UserDto['nickname'], name: UserDto['name']) {
     this.nickname = nickname;
@@ -223,4 +223,4 @@ TODO
 [date]: https://mdn.io/date
 [object-create]: https://mdn.io/object.create
 [value-transformer]: ./src/base/value-transformer.ts
-[field]: ./src/transformer/class/field.ts
+[field]: src/transformer/class/decorator/transform.ts

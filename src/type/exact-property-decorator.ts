@@ -1,8 +1,6 @@
-type Exact<A, B, R> = A | B extends B ? (A | B extends A ? R : never) : never;
+import type {KeysWithExactType} from './keys-with-exact-type';
 
-type ExactTypeKeys<T, V> = {[K in keyof T]: Exact<T[K], V, K>}[keyof T];
-
-export type ExactPropertyDecorator<V, K extends string | symbol> = <T>(
-  target: T,
-  propertyKey: ExactTypeKeys<T, V> & K,
+export type TransformableFieldDecorator<I, O extends I> = <T extends object>(
+  prototype: T,
+  key: KeysWithExactType<T, I> | KeysWithExactType<T, O>,
 ) => void;
