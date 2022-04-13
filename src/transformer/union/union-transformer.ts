@@ -1,5 +1,6 @@
 import {ValueTransformer} from '../../base/value-transformer';
 import type {ValueTransformerInput} from '../../base/value-transformer-input';
+import type {ValueTransformerOutput} from '../../base/value-transformer-output';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error';
 import type {UnverifiedObject} from '../../type/unverified-object';
@@ -21,6 +22,11 @@ interface UnionLiteral {
 
 const ENTRY_VALUE_INDEX = 1;
 
+type InputEntry<I> = readonly [
+  is: number,
+  transformer: ValueTransformerInput<I>,
+];
+
 // TODO intersection checking
 export class UnionTransformer<
   I extends readonly unknown[],
@@ -32,9 +38,7 @@ export class UnionTransformer<
     super();
   }
 
-  private _findTransformerEntry(
-    data: I[number],
-  ): readonly [is: number, transformer: ValueTransformerInput<I[number]>] {
+  private _findInputEntry(data: I[number]): InputEntry<I[number]> {
     for (const entry of this._transformers.entries()) {
       if (!entry[ENTRY_VALUE_INDEX].compatibleWith(data)) {
         continue;
@@ -44,6 +48,21 @@ export class UnionTransformer<
     }
 
     throw new TransformerNotFoundError();
+  }
+
+  private _findOutputByIs(is: number): ValueTransformerOutput<O[number]> {
+    if (is >= this._transformers.length) {
+      throw new TransformerNotFoundError();
+    }
+
+    const transformer: ValueTransformerOutput<O[number]> | undefined =
+      this._transformers[is];
+
+    if (transformer === undefined) {
+      throw new TransformerNotFoundError();
+    }
+
+    return transformer;
   }
 
   public compatibleWith(data: unknown): data is I[number] {
@@ -71,22 +90,15 @@ export class UnionTransformer<
       value = identity<UnverifiedObject<UnionLiteral>>(literal).value;
     }
 
-    if (!isNumber(is) || !Number.isInteger(is)) {
+    if (!isNumber(is) || !Number.isSafeInteger(is)) {
       throw new IncompatibleLiteralError();
     }
 
-    const transformer: ValueTransformer<I[number], O[number]> | undefined =
-      this._transformers[is];
-
-    if (transformer === undefined) {
-      throw new TransformerNotFoundError();
-    }
-
-    return transformer.fromLiteral(value);
+    return this._findOutputByIs(is).fromLiteral(value);
   }
 
   public override toCompactLiteral(data: I[number]): unknown {
-    const [is, transformer] = this._findTransformerEntry(data);
+    const [is, transformer]: InputEntry<I[number]> = this._findInputEntry(data);
 
     return identity<UnionCompactLiteral>([
       is,
@@ -95,7 +107,7 @@ export class UnionTransformer<
   }
 
   public toLiteral(data: I[number]): unknown {
-    const [is, transformer] = this._findTransformerEntry(data);
+    const [is, transformer]: InputEntry<I[number]> = this._findInputEntry(data);
 
     return identity<UnionLiteral>({is, value: transformer.toLiteral(data)});
   }
