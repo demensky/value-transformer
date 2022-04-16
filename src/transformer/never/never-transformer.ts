@@ -1,6 +1,5 @@
 import {ValueTransformer} from '../../base/value-transformer';
-import {DeserializationNeverError} from '../../error/deserialization-never-error';
-import {SerializationNeverError} from '../../error/serialization-never-error';
+import {NeverTransformerError} from '../../error/never-transformer-error';
 
 /**
  * Handles no value (any attempt to serialize or deserialize will throw an
@@ -16,11 +15,11 @@ export class NeverTransformer extends ValueTransformer<never, never> {
     return false;
   }
 
-  public fromLiteral(_literal: unknown): never {
-    throw new DeserializationNeverError();
+  public fromLiteral(): never {
+    throw new NeverTransformerError();
   }
 
-  public toLiteral(_data: never): unknown {
-    throw new SerializationNeverError();
+  public toLiteral(): never {
+    throw new NeverTransformerError();
   }
 }

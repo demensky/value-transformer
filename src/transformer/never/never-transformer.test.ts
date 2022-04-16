@@ -1,10 +1,10 @@
-import {DeserializationNeverError} from '../../error/deserialization-never-error';
-import {SerializationNeverError} from '../../error/serialization-never-error';
+import type {ValueTransformer} from '../../base/value-transformer';
+import {NeverTransformerError} from '../../error/never-transformer-error';
 
 import {NeverTransformer} from './never-transformer';
 
 describe('NeverTransformer', () => {
-  let transformer: NeverTransformer;
+  let transformer: ValueTransformer<unknown, unknown>;
 
   beforeAll(() => {
     transformer = new NeverTransformer();
@@ -17,13 +17,12 @@ describe('NeverTransformer', () => {
   test('fromLiteral throw error', () => {
     expect(() => {
       transformer.fromLiteral(null);
-    }).toThrow(DeserializationNeverError);
+    }).toThrow(NeverTransformerError);
   });
 
   test('toLiteral throw error', () => {
     expect(() => {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      transformer.toLiteral(null as never);
-    }).toThrow(SerializationNeverError);
+      transformer.toLiteral(null);
+    }).toThrow(NeverTransformerError);
   });
 });
