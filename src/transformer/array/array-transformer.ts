@@ -1,9 +1,9 @@
 import {compatibleWith} from '../../base/compatible-with';
+import {decoder} from '../../base/decoder';
+import {encode} from '../../base/encode';
 import {fromLiteral} from '../../base/from-literal';
 import {toCompactLiteral} from '../../base/to-compact-literal';
 import {toLiteral} from '../../base/to-literal';
-import {transformerDecoder} from '../../base/transformer-decoder';
-import {transformerEncode} from '../../base/transformer-encode';
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import {arrayDecoder} from '../../representation/array/array-decoder';
@@ -28,13 +28,13 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public decoder(): DecoderGenerator<O[]> {
-    return arrayDecoder<O>(transformerDecoder<O>(this._transformer));
+    return arrayDecoder<O>(decoder<O>(this._transformer));
   }
 
   public encode(data: readonly I[]): IterableEncoding {
     console.assert(isArray(data));
 
-    return arrayEncode<I>(data, transformerEncode<I>(this._transformer));
+    return arrayEncode<I>(data, encode<I>(this._transformer));
   }
 
   public fromLiteral(literal: unknown): O[] {

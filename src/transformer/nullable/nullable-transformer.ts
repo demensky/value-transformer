@@ -1,5 +1,5 @@
-import {transformerDecoder} from '../../base/transformer-decoder';
-import {transformerEncode} from '../../base/transformer-encode';
+import {decoder} from '../../base/decoder';
+import {encode} from '../../base/encode';
 import {ValueTransformer} from '../../base/value-transformer';
 import {nullableDecoder} from '../../representation/nullable/nullable-decoder';
 import {nullableEncode} from '../../representation/nullable/nullable-encode';
@@ -20,11 +20,11 @@ export class NullableTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public decoder(): DecoderGenerator<O | null> {
-    return nullableDecoder<O>(transformerDecoder<O>(this._transformer));
+    return nullableDecoder<O>(decoder<O>(this._transformer));
   }
 
   public encode(data: I | null): IterableEncoding {
-    return nullableEncode<I>(data, transformerEncode<I>(this._transformer));
+    return nullableEncode<I>(data, encode<I>(this._transformer));
   }
 
   public fromLiteral(literal: unknown): O | null {

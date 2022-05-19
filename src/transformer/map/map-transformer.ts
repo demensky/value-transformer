@@ -1,8 +1,8 @@
 import {compatibleWith} from '../../base/compatible-with';
+import {decoder} from '../../base/decoder';
+import {encode} from '../../base/encode';
 import {toCompactLiteral} from '../../base/to-compact-literal';
 import {toLiteral} from '../../base/to-literal';
-import {transformerDecoder} from '../../base/transformer-decoder';
-import {transformerEncode} from '../../base/transformer-encode';
 import {ValueTransformer} from '../../base/value-transformer';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
 import {mapDecoder} from '../../representation/map/map-decoder';
@@ -39,8 +39,8 @@ export class MapTransformer<
 
   public decoder(): DecoderGenerator<Map<KO, VO>> {
     return mapDecoder<KO, VO>(
-      transformerDecoder<KO>(this._keyTransformer),
-      transformerDecoder<VO>(this._valueTransformer),
+      decoder<KO>(this._keyTransformer),
+      decoder<VO>(this._valueTransformer),
     );
   }
 
@@ -49,8 +49,8 @@ export class MapTransformer<
 
     return mapEncode<KI, VI>(
       data,
-      transformerEncode<KI>(this._keyTransformer),
-      transformerEncode<VI>(this._valueTransformer),
+      encode<KI>(this._keyTransformer),
+      encode<VI>(this._valueTransformer),
     );
   }
 
