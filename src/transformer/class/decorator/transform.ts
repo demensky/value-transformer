@@ -1,5 +1,5 @@
 import type {ValueTransformer} from '../../../base/value-transformer';
-import type {TransformableFieldDecorator} from '../../../type/exact-property-decorator';
+import type {TransformableFieldDecorator} from '../../../type/transformable-field-decorator';
 
 import {defineTransformableField} from './define-transformable-field';
 
