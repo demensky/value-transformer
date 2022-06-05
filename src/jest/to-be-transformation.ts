@@ -1,8 +1,8 @@
 import {diff} from 'jest-diff';
 import {matcherHint} from 'jest-matcher-utils';
 
-import type {ValueTransformer} from '../base/value-transformer';
-import type {ValueTransformerInput} from '../base/value-transformer-input';
+import type {ValueTransformer} from '../base/value-transformer.js';
+import type {ValueTransformerInput} from '../base/value-transformer-input.js';
 
 function failResult(
   {isNot, promise, expand}: jest.MatcherContext,

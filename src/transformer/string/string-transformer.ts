@@ -1,8 +1,8 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
-import {isString} from '../../util/guard/is-string';
-import {isValidUnicode} from '../../util/guard/is-valid-unicode';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
+import {isString} from '../../util/guard/is-string.js';
+import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
 
 /**
  * @see {@link asString} alias

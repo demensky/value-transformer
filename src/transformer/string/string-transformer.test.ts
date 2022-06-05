@@ -1,10 +1,10 @@
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 
-import {StringTransformer} from './string-transformer';
+import {StringTransformer} from './string-transformer.js';
 
 describe('StringTransformer', () => {
   let transformer: StringTransformer;

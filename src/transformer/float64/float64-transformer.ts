@@ -1,6 +1,6 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {isNumber} from '../../util/guard/is-number';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {isNumber} from '../../util/guard/is-number.js';
 
 const NAN_LITERAL_VALUE = 'NaN';
 

@@ -1,5 +1,5 @@
-import type {ValueTransformerInput} from '../../base/value-transformer-input';
-import type {ValueTransformerOutput} from '../../base/value-transformer-output';
+import type {ValueTransformerInput} from '../../base/value-transformer-input.js';
+import type {ValueTransformerOutput} from '../../base/value-transformer-output.js';
 
 export type UnionTransformerTransformers<
   I extends readonly unknown[],

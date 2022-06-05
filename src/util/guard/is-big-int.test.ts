@@ -1,4 +1,4 @@
-import {isBigInt} from './is-big-int';
+import {isBigInt} from './is-big-int.js';
 
 describe('isBigInt', () => {
   test('boolean', () => {

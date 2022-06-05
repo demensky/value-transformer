@@ -1,14 +1,14 @@
-import {compatibleWith} from '../../base/compatible-with';
-import {toCompactLiteral} from '../../base/to-compact-literal';
-import {toLiteral} from '../../base/to-literal';
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {every} from '../../util/every';
-import {isArray} from '../../util/guard/is-array';
-import {isEntry} from '../../util/guard/is-entry';
-import {isMap} from '../../util/guard/is-map';
-import {map} from '../../util/map';
-import {mapEntries} from '../../util/map-entries';
+import {compatibleWith} from '../../base/compatible-with.js';
+import {toCompactLiteral} from '../../base/to-compact-literal.js';
+import {toLiteral} from '../../base/to-literal.js';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {every} from '../../util/every.js';
+import {isArray} from '../../util/guard/is-array.js';
+import {isEntry} from '../../util/guard/is-entry.js';
+import {isMap} from '../../util/guard/is-map.js';
+import {map} from '../../util/map.js';
+import {mapEntries} from '../../util/map-entries.js';
 
 export class MapTransformer<
   KI,

@@ -1,12 +1,12 @@
-import {compatibleWith} from '../../base/compatible-with';
-import {fromLiteral} from '../../base/from-literal';
-import {toCompactLiteral} from '../../base/to-compact-literal';
-import {toLiteral} from '../../base/to-literal';
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {denseArrayLike} from '../../util/dense-array-like';
-import {every} from '../../util/every';
-import {isArray} from '../../util/guard/is-array';
+import {compatibleWith} from '../../base/compatible-with.js';
+import {fromLiteral} from '../../base/from-literal.js';
+import {toCompactLiteral} from '../../base/to-compact-literal.js';
+import {toLiteral} from '../../base/to-literal.js';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {denseArrayLike} from '../../util/dense-array-like.js';
+import {every} from '../../util/every.js';
+import {isArray} from '../../util/guard/is-array.js';
 
 // TODO tests
 export class ArrayTransformer<I, O extends I> extends ValueTransformer<

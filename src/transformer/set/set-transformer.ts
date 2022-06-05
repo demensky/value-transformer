@@ -1,13 +1,13 @@
-import {compatibleWith} from '../../base/compatible-with';
-import {fromLiteral} from '../../base/from-literal';
-import {toCompactLiteral} from '../../base/to-compact-literal';
-import {toLiteral} from '../../base/to-literal';
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {every} from '../../util/every';
-import {isArray} from '../../util/guard/is-array';
-import {isSet} from '../../util/guard/is-set';
-import {map} from '../../util/map';
+import {compatibleWith} from '../../base/compatible-with.js';
+import {fromLiteral} from '../../base/from-literal.js';
+import {toCompactLiteral} from '../../base/to-compact-literal.js';
+import {toLiteral} from '../../base/to-literal.js';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {every} from '../../util/every.js';
+import {isArray} from '../../util/guard/is-array.js';
+import {isSet} from '../../util/guard/is-set.js';
+import {map} from '../../util/map.js';
 
 // TODO tests
 export class SetTransformer<I, O extends I> extends ValueTransformer<

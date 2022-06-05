@@ -1,10 +1,10 @@
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
-import {asMock} from '../mock/as-mock';
+import {asMock} from '../mock/as-mock.js';
 
-import {ClassTransformer} from './class-transformer';
-import {transform} from './decorator/transform';
+import {ClassTransformer} from './class-transformer.js';
+import {transform} from './decorator/transform.js';
 
 describe('ClassTransformer', () => {
   test('fromConstructor create ClassTransformer instance', () => {

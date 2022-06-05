@@ -5,7 +5,7 @@ import {
   stringify,
 } from 'jest-matcher-utils';
 
-import type {ValueTransformer} from '../base/value-transformer';
+import type {ValueTransformer} from '../base/value-transformer.js';
 
 expect.extend({
   toBeCompatibleWith<T>(

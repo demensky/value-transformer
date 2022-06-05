@@ -1,5 +1,5 @@
-import type {EnumDefinition} from '../type/enum-definition';
-import type {EnumLike} from '../type/enum-like';
+import type {EnumDefinition} from '../type/enum-definition.js';
+import type {EnumLike} from '../type/enum-like.js';
 
 export function extractEnumValues<K extends string, V extends EnumLike>(
   definition: EnumDefinition<K, V>,

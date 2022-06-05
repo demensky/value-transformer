@@ -1,8 +1,8 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {isBigInt} from '../../util/guard/is-big-int';
-import {isDecimalIntString} from '../../util/guard/is-decimal-int-string';
-import {isString} from '../../util/guard/is-string';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {isBigInt} from '../../util/guard/is-big-int.js';
+import {isDecimalIntString} from '../../util/guard/is-decimal-int-string.js';
+import {isString} from '../../util/guard/is-string.js';
 
 /**
  * Handles a bigint (value is unlimited in 64 bits).

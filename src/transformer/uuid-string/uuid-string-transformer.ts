@@ -1,8 +1,8 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import type {UuidString} from '../../type/uuid-string';
-import {isString} from '../../util/guard/is-string';
-import {isUuidString} from '../../util/guard/is-uuid-string';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import type {UuidString} from '../../type/uuid-string.js';
+import {isString} from '../../util/guard/is-string.js';
+import {isUuidString} from '../../util/guard/is-uuid-string.js';
 
 export class UuidStringTransformer<
   T extends UuidString,

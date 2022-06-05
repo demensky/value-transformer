@@ -1,6 +1,6 @@
-import type {EnumDefinition} from '../../type/enum-definition';
+import type {EnumDefinition} from '../../type/enum-definition.js';
 
-import {EnumStringTransformer} from './enum-string-transformer';
+import {EnumStringTransformer} from './enum-string-transformer.js';
 
 export function asEnumString<K extends string, V extends string>(
   definition: EnumDefinition<K, V>,

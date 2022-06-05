@@ -1,7 +1,13 @@
 import '../src/jest/to-be-transformation';
 
-import {asArray, asClass, asNullable, asUnion, transform} from '../src';
-import {asMock} from '../src/transformer/mock/as-mock';
+import {
+  asArray,
+  asClass,
+  asNullable,
+  asUnion,
+  transform,
+} from '../src/index.js';
+import {asMock} from '../src/transformer/mock/as-mock.js';
 
 describe('recursive transformers', () => {
   test('self-used class in nullable field', () => {

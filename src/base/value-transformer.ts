@@ -1,5 +1,5 @@
-import type {ValueTransformerInput} from './value-transformer-input';
-import type {ValueTransformerOutput} from './value-transformer-output';
+import type {ValueTransformerInput} from './value-transformer-input.js';
+import type {ValueTransformerOutput} from './value-transformer-output.js';
 
 export abstract class ValueTransformer<I, O extends I>
   implements ValueTransformerInput<I>, ValueTransformerOutput<O>

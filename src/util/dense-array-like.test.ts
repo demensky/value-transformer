@@ -1,4 +1,4 @@
-import {denseArrayLike} from './dense-array-like';
+import {denseArrayLike} from './dense-array-like.js';
 
 describe('denseArrayLike', () => {
   test('empty array', () => {

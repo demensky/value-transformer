@@ -1,4 +1,4 @@
-import {isUuidString} from './is-uuid-string';
+import {isUuidString} from './is-uuid-string.js';
 
 describe('isUuidString', () => {
   describe('valid uuid', () => {

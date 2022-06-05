@@ -1,9 +1,9 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import type {EnumDefinition} from '../../type/enum-definition';
-import {extractEnumValues} from '../../util/extract-enum-values';
-import {isNumber} from '../../util/guard/is-number';
-import {isInSet} from '../../util/is-in-set';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import type {EnumDefinition} from '../../type/enum-definition.js';
+import {extractEnumValues} from '../../util/extract-enum-values.js';
+import {isNumber} from '../../util/guard/is-number.js';
+import {isInSet} from '../../util/is-in-set.js';
 
 export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
   V,

@@ -1,4 +1,4 @@
-import {ValueTransformer} from '../../base/value-transformer';
+import {ValueTransformer} from '../../base/value-transformer.js';
 
 export class MockTransformer<T> extends ValueTransformer<T, T> {
   public override readonly compatibleWith: ValueTransformer<

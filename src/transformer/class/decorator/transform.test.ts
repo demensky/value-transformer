@@ -1,8 +1,8 @@
-import {asMock} from '../../mock/as-mock';
-import type {MockTransformer} from '../../mock/mock-transformer';
+import {asMock} from '../../mock/as-mock.js';
+import type {MockTransformer} from '../../mock/mock-transformer.js';
 
-import {transform} from './transform';
-import {transformableFieldsMap} from './transformable-fields-map';
+import {transform} from './transform.js';
+import {transformableFieldsMap} from './transformable-fields-map.js';
 
 describe('ClassTransformer @transform decorator', () => {
   let transformerA: MockTransformer<unknown>;

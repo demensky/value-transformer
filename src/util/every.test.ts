@@ -1,4 +1,4 @@
-import {every} from './every';
+import {every} from './every.js';
 
 describe('every', () => {
   let predicate: jest.Mock<boolean, [item: string]>;

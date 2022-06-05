@@ -1,4 +1,4 @@
-import type {UuidString} from '../../type/uuid-string';
+import type {UuidString} from '../../type/uuid-string.js';
 
 const UUID_REGEX = /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/;
 

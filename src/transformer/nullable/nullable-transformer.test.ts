@@ -1,8 +1,8 @@
-import type {ValueTransformer} from '../../base/value-transformer';
-import {asMock} from '../mock/as-mock';
-import type {MockTransformer} from '../mock/mock-transformer';
+import type {ValueTransformer} from '../../base/value-transformer.js';
+import {asMock} from '../mock/as-mock.js';
+import type {MockTransformer} from '../mock/mock-transformer.js';
 
-import {NullableTransformer} from './nullable-transformer';
+import {NullableTransformer} from './nullable-transformer.js';
 
 describe('NullableTransformer', () => {
   let mockTransformer: MockTransformer<string>;

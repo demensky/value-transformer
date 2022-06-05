@@ -1,4 +1,4 @@
-import {isDecimalIntString} from './is-decimal-int-string';
+import {isDecimalIntString} from './is-decimal-int-string.js';
 
 describe('isDecimalIntString', () => {
   test('decimal digits', () => {

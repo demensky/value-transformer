@@ -1,5 +1,5 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {isNull} from '../../util/guard/is-null';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {isNull} from '../../util/guard/is-null.js';
 
 export class NullableTransformer<I, O extends I> extends ValueTransformer<
   I | null,

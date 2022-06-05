@@ -1,4 +1,4 @@
-import {extractEnumValues} from './extract-enum-values';
+import {extractEnumValues} from './extract-enum-values.js';
 
 describe('extractEnumValues', () => {
   test('empty enum', () => {

@@ -1,8 +1,8 @@
-import type {ValueTransformer} from '../../../base/value-transformer';
-import {isNotOccupiedByTransformableField} from '../../../util/is-not-occupied-by-transformable-field';
+import type {ValueTransformer} from '../../../base/value-transformer.js';
+import {isNotOccupiedByTransformableField} from '../../../util/is-not-occupied-by-transformable-field.js';
 
-import type {OneOfTransformableField} from './one-of-transformable-field';
-import {transformableFieldsMap} from './transformable-fields-map';
+import type {OneOfTransformableField} from './one-of-transformable-field.js';
+import {transformableFieldsMap} from './transformable-fields-map.js';
 
 export function defineTransformableField<
   T extends object,

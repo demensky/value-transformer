@@ -1,8 +1,8 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {isDate} from '../../util/guard/is-date';
-import {isInvalidDate} from '../../util/guard/is-invalid-date';
-import {isNumberOrString} from '../../util/guard/is-number-or-string';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {isDate} from '../../util/guard/is-date.js';
+import {isInvalidDate} from '../../util/guard/is-invalid-date.js';
+import {isNumberOrString} from '../../util/guard/is-number-or-string.js';
 
 const INVALID = 'Invalid Date';
 

@@ -1,7 +1,7 @@
-import type {ValueTransformer} from '../../../base/value-transformer';
-import type {TransformableFieldDecorator} from '../../../type/exact-property-decorator';
+import type {ValueTransformer} from '../../../base/value-transformer.js';
+import type {TransformableFieldDecorator} from '../../../type/exact-property-decorator.js';
 
-import {defineTransformableField} from './define-transformable-field';
+import {defineTransformableField} from './define-transformable-field.js';
 
 /**
  * @see {@link asClass}

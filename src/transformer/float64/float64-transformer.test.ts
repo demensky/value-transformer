@@ -1,6 +1,6 @@
 import '../../jest/to-be-transformation';
 
-import {Float64Transformer} from './float64-transformer';
+import {Float64Transformer} from './float64-transformer.js';
 
 describe('Float64Transformer', () => {
   let transformer: Float64Transformer;

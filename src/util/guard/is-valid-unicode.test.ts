@@ -1,4 +1,4 @@
-import {isValidUnicode} from './is-valid-unicode';
+import {isValidUnicode} from './is-valid-unicode.js';
 
 describe('isValidUnicode', () => {
   describe('valid', () => {

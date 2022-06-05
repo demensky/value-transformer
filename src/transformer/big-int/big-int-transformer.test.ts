@@ -2,7 +2,7 @@ import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 import '../../jest/to-throw-incompatible-literal';
 
-import {BigIntTransformer} from './big-int-transformer';
+import {BigIntTransformer} from './big-int-transformer.js';
 
 describe('BigIntTransformer', () => {
   let transformer: BigIntTransformer;

@@ -1,9 +1,9 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import type {EnumDefinition} from '../../type/enum-definition';
-import {extractEnumValues} from '../../util/extract-enum-values';
-import {isString} from '../../util/guard/is-string';
-import {isInSet} from '../../util/is-in-set';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import type {EnumDefinition} from '../../type/enum-definition.js';
+import {extractEnumValues} from '../../util/extract-enum-values.js';
+import {isString} from '../../util/guard/is-string.js';
+import {isInSet} from '../../util/is-in-set.js';
 
 export class EnumStringTransformer<V extends string> extends ValueTransformer<
   V,

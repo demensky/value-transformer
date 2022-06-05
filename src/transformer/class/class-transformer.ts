@@ -1,12 +1,12 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import type {UnverifiedObject} from '../../type/unverified-object';
-import {isArray} from '../../util/guard/is-array';
-import {isObject} from '../../util/guard/is-object';
-import {identity} from '../../util/identity';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import type {UnverifiedObject} from '../../type/unverified-object.js';
+import {isArray} from '../../util/guard/is-array.js';
+import {isObject} from '../../util/guard/is-object.js';
+import {identity} from '../../util/identity.js';
 
-import {extractTransformableFields} from './decorator/extract-transformable-fields';
-import type {OneOfTransformableField} from './decorator/one-of-transformable-field';
+import {extractTransformableFields} from './decorator/extract-transformable-fields.js';
+import type {OneOfTransformableField} from './decorator/one-of-transformable-field.js';
 
 export class ClassTransformer<T extends object> extends ValueTransformer<
   Readonly<T>,

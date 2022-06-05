@@ -1,8 +1,8 @@
 import type {MatcherHintOptions} from 'jest-matcher-utils';
 import {matcherHint, printReceived} from 'jest-matcher-utils';
 
-import type {ValueTransformer} from '../base/value-transformer';
-import {IncompatibleLiteralError} from '../error/incompatible-literal-error';
+import type {ValueTransformer} from '../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../error/incompatible-literal-error.js';
 
 expect.extend({
   toThrowIncompatibleLiteral<T>(

@@ -1,9 +1,9 @@
 import '../../jest/to-be-compatible-with';
 import '../../jest/to-be-transformation';
 
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 
-import {BooleanTransformer} from './boolean-transformer';
+import {BooleanTransformer} from './boolean-transformer.js';
 
 describe('BooleanTransformer', () => {
   let transformer: BooleanTransformer;

@@ -2,9 +2,9 @@
 
 import '../../jest/to-be-transformation';
 
-import type {UuidString} from '../../type/uuid-string';
+import type {UuidString} from '../../type/uuid-string.js';
 
-import {UuidStringTransformer} from './uuid-string-transformer';
+import {UuidStringTransformer} from './uuid-string-transformer.js';
 
 describe('UuidStringTransformer', () => {
   let transformer: UuidStringTransformer<UuidString>;

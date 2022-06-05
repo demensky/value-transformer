@@ -1,7 +1,7 @@
-import type {ValueTransformer} from '../../base/value-transformer';
-import {NeverTransformerError} from '../../error/never-transformer-error';
+import type {ValueTransformer} from '../../base/value-transformer.js';
+import {NeverTransformerError} from '../../error/never-transformer-error.js';
 
-import {NeverTransformer} from './never-transformer';
+import {NeverTransformer} from './never-transformer.js';
 
 describe('NeverTransformer', () => {
   let transformer: ValueTransformer<unknown, unknown>;

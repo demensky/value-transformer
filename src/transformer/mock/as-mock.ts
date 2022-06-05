@@ -1,4 +1,4 @@
-import {MockTransformer} from './mock-transformer';
+import {MockTransformer} from './mock-transformer.js';
 
 export function asMock<T>(
   compatibleWith: boolean,
