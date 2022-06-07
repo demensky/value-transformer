@@ -1,39 +1,31 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import '../../jest/to-be-transformation';
-
+import {macroTransformation} from '../../../test-util/macro-transformation.js';
 import type {UuidString} from '../../type/uuid-string.js';
 
 import {UuidStringTransformer} from './uuid-string-transformer.js';
 
-describe('UuidStringTransformer', () => {
-  let transformer: UuidStringTransformer<UuidString>;
+const test = anyTest as TestFn<UuidStringTransformer<UuidString>>;
 
-  beforeAll(() => {
-    transformer = new UuidStringTransformer<UuidString>();
-  });
-
-  test('simple', () => {
-    expect(transformer).toBeTransformation(
-      '00112233-4455-6677-8899-aabbccddeeff' as UuidString,
-      '00112233-4455-6677-8899-aabbccddeeff' as UuidString,
-      '00112233-4455-6677-8899-aabbccddeeff' as UuidString,
-    );
-  });
-
-  test('nil UUID', () => {
-    expect(transformer).toBeTransformation(
-      '00000000-0000-0000-0000-000000000000' as UuidString,
-      '00000000-0000-0000-0000-000000000000' as UuidString,
-      '00000000-0000-0000-0000-000000000000' as UuidString,
-    );
-  });
-
-  test('max UUID', () => {
-    expect(transformer).toBeTransformation(
-      'ffffffff-ffff-ffff-ffff-ffffffffffff' as UuidString,
-      'ffffffff-ffff-ffff-ffff-ffffffffffff' as UuidString,
-      'ffffffff-ffff-ffff-ffff-ffffffffffff' as UuidString,
-    );
-  });
+test.beforeEach((t) => {
+  t.context = new UuidStringTransformer<UuidString>();
 });
+
+test(
+  'simple',
+  macroTransformation,
+  '00112233-4455-6677-8899-aabbccddeeff' as UuidString,
+);
+
+test(
+  'nil UUID',
+  macroTransformation,
+  '00000000-0000-0000-0000-000000000000' as UuidString,
+);
+
+test(
+  'max UUID',
+  macroTransformation,
+  'ffffffff-ffff-ffff-ffff-ffffffffffff' as UuidString,
+);

@@ -1,28 +1,29 @@
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
+
 import type {ValueTransformer} from '../../base/value-transformer.js';
 import {NeverTransformerError} from '../../error/never-transformer-error.js';
 
 import {NeverTransformer} from './never-transformer.js';
 
-describe('NeverTransformer', () => {
-  let transformer: ValueTransformer<unknown, unknown>;
+const test = anyTest as TestFn<ValueTransformer<never, never>>;
 
-  beforeAll(() => {
-    transformer = new NeverTransformer();
-  });
+test.beforeEach((t) => {
+  t.context = new NeverTransformer();
+});
 
-  test('compatibleWith return false', () => {
-    expect(transformer.compatibleWith(null)).toBe(false);
-  });
+test('compatibleWith return false', (t) => {
+  t.false(t.context.compatibleWith(null));
+});
 
-  test('fromLiteral throw error', () => {
-    expect(() => {
-      transformer.fromLiteral(null);
-    }).toThrow(NeverTransformerError);
-  });
+test('fromLiteral throw error', (t) => {
+  t.throws(() => {
+    t.context.fromLiteral(null);
+  }, new NeverTransformerError());
+});
 
-  test('toLiteral throw error', () => {
-    expect(() => {
-      transformer.toLiteral(null);
-    }).toThrow(NeverTransformerError);
-  });
+test('toLiteral throw error', (t) => {
+  t.throws(() => {
+    t.context.toLiteral(null as never);
+  }, new NeverTransformerError());
 });

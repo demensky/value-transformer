@@ -1,46 +1,46 @@
+import test from 'ava';
+
 import {isBigInt} from './is-big-int.js';
 
-describe('isBigInt', () => {
-  test('boolean', () => {
-    expect(isBigInt(false)).toBe(false);
-    expect(isBigInt(true)).toBe(false);
-  });
+test('boolean', (t) => {
+  t.false(isBigInt(false));
+  t.false(isBigInt(true));
+});
 
-  test('nil', () => {
-    expect(isBigInt(null)).toBe(false);
-    expect(isBigInt(undefined)).toBe(false);
-  });
+test('nil', (t) => {
+  t.false(isBigInt(null));
+  t.false(isBigInt(undefined));
+});
 
-  test('string', () => {
-    expect(isBigInt('')).toBe(false);
-    expect(isBigInt('0')).toBe(false);
-    expect(isBigInt('-0')).toBe(false);
-    expect(isBigInt('1')).toBe(false);
-    expect(isBigInt('-1')).toBe(false);
-    expect(isBigInt('42')).toBe(false);
-  });
+test('string', (t) => {
+  t.false(isBigInt(''));
+  t.false(isBigInt('0'));
+  t.false(isBigInt('-0'));
+  t.false(isBigInt('1'));
+  t.false(isBigInt('-1'));
+  t.false(isBigInt('42'));
+});
 
-  test('number', () => {
-    expect(isBigInt(0)).toBe(false);
-    expect(isBigInt(1)).toBe(false);
-    expect(isBigInt(-1)).toBe(false);
-    expect(isBigInt(Infinity)).toBe(false);
-    expect(isBigInt(-Infinity)).toBe(false);
-    expect(isBigInt(NaN)).toBe(false);
-  });
+test('number', (t) => {
+  t.false(isBigInt(0));
+  t.false(isBigInt(1));
+  t.false(isBigInt(-1));
+  t.false(isBigInt(Infinity));
+  t.false(isBigInt(-Infinity));
+  t.false(isBigInt(NaN));
+});
 
-  test('object', () => {
-    expect(isBigInt({})).toBe(false);
-    expect(isBigInt([])).toBe(false);
-  });
+test('object', (t) => {
+  t.false(isBigInt({}));
+  t.false(isBigInt([]));
+});
 
-  test('boxed BigInt object', () => {
-    expect(isBigInt(Object(0n))).toBe(false);
-  });
+test('boxed BigInt object', (t) => {
+  t.false(isBigInt(Object(0n)));
+});
 
-  test('bigint', () => {
-    expect(isBigInt(0n)).toBe(true);
-    expect(isBigInt(1n)).toBe(true);
-    expect(isBigInt(9007199254740992n)).toBe(true);
-  });
+test('bigint', (t) => {
+  t.true(isBigInt(0n));
+  t.true(isBigInt(1n));
+  t.true(isBigInt(9007199254740992n));
 });

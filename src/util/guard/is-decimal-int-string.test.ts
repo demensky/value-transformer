@@ -1,59 +1,55 @@
+import test from 'ava';
+
 import {isDecimalIntString} from './is-decimal-int-string.js';
 
-describe('isDecimalIntString', () => {
-  test('decimal digits', () => {
-    expect(isDecimalIntString('0')).toBe(true);
-    expect(isDecimalIntString('1')).toBe(true);
-    expect(isDecimalIntString('42')).toBe(true);
-    expect(isDecimalIntString('9007199254740991')).toBe(true);
-    expect(isDecimalIntString('18446744073709551615')).toBe(true);
-    expect(isDecimalIntString('340282366920938463463374607431768211455')).toBe(
-      true,
-    );
-  });
+test('decimal digits', (t) => {
+  t.true(isDecimalIntString('0'));
+  t.true(isDecimalIntString('1'));
+  t.true(isDecimalIntString('42'));
+  t.true(isDecimalIntString('9007199254740991'));
+  t.true(isDecimalIntString('18446744073709551615'));
+  t.true(isDecimalIntString('340282366920938463463374607431768211455'));
+});
 
-  test('minus and decimal digits', () => {
-    expect(isDecimalIntString('-1')).toBe(true);
-    expect(isDecimalIntString('-42')).toBe(true);
-    expect(isDecimalIntString('-9007199254740991')).toBe(true);
-    expect(isDecimalIntString('-18446744073709551615')).toBe(true);
-    expect(isDecimalIntString('-340282366920938463463374607431768211455')).toBe(
-      true,
-    );
-  });
+test('minus and decimal digits', (t) => {
+  t.true(isDecimalIntString('-1'));
+  t.true(isDecimalIntString('-42'));
+  t.true(isDecimalIntString('-9007199254740991'));
+  t.true(isDecimalIntString('-18446744073709551615'));
+  t.true(isDecimalIntString('-340282366920938463463374607431768211455'));
+});
 
-  test('minus zero', () => {
-    expect(isDecimalIntString('-0')).toBe(false);
-  });
+test('minus zero', (t) => {
+  t.false(isDecimalIntString('-0'));
+});
 
-  test('decimal digits have extra zero', () => {
-    expect(isDecimalIntString('01')).toBe(false);
-    expect(isDecimalIntString('000042')).toBe(false);
-  });
+test('decimal digits have extra zero', (t) => {
+  t.false(isDecimalIntString('01'));
+  t.false(isDecimalIntString('000042'));
+});
 
-  test('empty string', () => {
-    expect(isDecimalIntString('')).toBe(false);
-  });
+test('empty string', (t) => {
+  t.false(isDecimalIntString(''));
+});
 
-  test('minus', () => {
-    expect(isDecimalIntString('-')).toBe(false);
-  });
+test('minus', (t) => {
+  t.false(isDecimalIntString('-'));
+});
 
-  test('letters', () => {
-    expect(isDecimalIntString('abc')).toBe(false);
-  });
+test('letters', (t) => {
+  t.false(isDecimalIntString('abc'));
+});
 
-  test('decimal digits have spaces', () => {
-    expect(isDecimalIntString('  42')).toBe(false);
-    expect(isDecimalIntString('42  ')).toBe(false);
-    expect(isDecimalIntString('4  2')).toBe(false);
-  });
+test('decimal digits have spaces', (t) => {
+  t.false(isDecimalIntString('  42'));
+  t.false(isDecimalIntString('42  '));
+  t.false(isDecimalIntString('4  2'));
+});
 
-  test('decimal digits have plus', () => {
-    expect(isDecimalIntString('+0')).toBe(false);
-    expect(isDecimalIntString('+1')).toBe(false);
-    expect(isDecimalIntString('+42')).toBe(false);
-    expect(isDecimalIntString('+9007199254740991')).toBe(false);
-    expect(isDecimalIntString('+18446744073709551615')).toBe(false);
-  });
+test('decimal digits have plus', (t) => {
+  t.false(isDecimalIntString('+0'));
+  t.false(isDecimalIntString('+1'));
+  t.false(isDecimalIntString('+42'));
+  t.false(isDecimalIntString('+9007199254740991'));
+  t.false(isDecimalIntString('+18446744073709551615'));
 });

@@ -1,53 +1,28 @@
-import '../../jest/to-be-compatible-with';
-import '../../jest/to-be-transformation';
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {macroTransformation} from '../../../test-util/macro-transformation.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 
 import {StringTransformer} from './string-transformer.js';
 
-describe('StringTransformer', () => {
-  let transformer: StringTransformer;
+const test = anyTest as TestFn<StringTransformer>;
 
-  beforeAll(() => {
-    transformer = new StringTransformer();
-  });
-
-  describe.each([null, undefined, 0, 1, [], false, true])(
-    'invalid %p',
-    (data) => {
-      test('compatible', () => {
-        expect(transformer).not.toBeCompatibleWith(data);
-      });
-
-      test('fromLiteral', () => {
-        expect(() => {
-          transformer.fromLiteral(data);
-        }).toThrow(new IncompatibleLiteralError('only strings are supported'));
-      });
-    },
-  );
-
-  test('empty string', () => {
-    expect(transformer).toBeTransformation('', '', '');
-  });
-
-  test('simple string', () => {
-    expect(transformer).toBeTransformation('foo', 'foo', 'foo');
-  });
-
-  test('broken unicode', () => {
-    expect(() => {
-      transformer.toLiteral('\ud83d');
-    }).toThrow(InvalidUnicodeError);
-  });
-
-  // \u0000
-  test('null', () => {
-    expect(transformer).toBeTransformation('\0', '\0', '\0');
-  });
-
-  test('break line', () => {
-    expect(transformer).toBeTransformation('\r\n', '\r\n', '\r\n');
-  });
+test.beforeEach((t) => {
+  t.context = new StringTransformer();
 });
+
+test('empty string', macroTransformation, '');
+
+test('simple string', macroTransformation, 'foo');
+
+test('broken unicode', (t) => {
+  t.throws(() => {
+    t.context.toLiteral('\ud83d');
+  }, new InvalidUnicodeError());
+});
+
+// \u0000
+test('null', macroTransformation, '\0');
+
+test('break line', macroTransformation, '\r\n');

@@ -1,36 +1,32 @@
+import test from 'ava';
+
 import {isUuidString} from './is-uuid-string.js';
 
-describe('isUuidString', () => {
-  describe('valid uuid', () => {
-    test('smallest', () => {
-      expect(isUuidString('00000000-0000-0000-0000-000000000000')).toBe(true);
-    });
+test('smallest', (t) => {
+  t.true(isUuidString('00000000-0000-0000-0000-000000000000'));
+});
 
-    test('biggest', () => {
-      expect(isUuidString('ffffffff-ffff-ffff-ffff-ffffffffffff')).toBe(true);
-    });
+test('biggest', (t) => {
+  t.true(isUuidString('ffffffff-ffff-ffff-ffff-ffffffffffff'));
+});
 
-    test('every chars', () => {
-      expect(isUuidString('00112233-4455-6677-8899-aabbccddeeff')).toBe(true);
-    });
-  });
+test('every chars', (t) => {
+  t.true(isUuidString('00112233-4455-6677-8899-aabbccddeeff'));
+});
 
-  describe('invalid uuid', () => {
-    test('empty string', () => {
-      expect(isUuidString('')).toBe(false);
-    });
+test('empty string', (t) => {
+  t.false(isUuidString(''));
+});
 
-    test('uuid without dashes', () => {
-      expect(isUuidString('00112233445566778899aabbccddeeff')).toBe(false);
-    });
+test('uuid without dashes', (t) => {
+  t.false(isUuidString('00112233445566778899aabbccddeeff'));
+});
 
-    test('UPPER_CASE uuid', () => {
-      expect(isUuidString('00112233-4455-6677-8899-AABBCCDDEEFF')).toBe(false);
-    });
+test('UPPER_CASE uuid', (t) => {
+  t.false(isUuidString('00112233-4455-6677-8899-AABBCCDDEEFF'));
+});
 
-    test('spaces', () => {
-      expect(isUuidString('00112233-4455-6677-8899-aabbccddeeff ')).toBe(false);
-      expect(isUuidString(' 00112233-4455-6677-8899-aabbccddeeff')).toBe(false);
-    });
-  });
+test('spaces', (t) => {
+  t.false(isUuidString('00112233-4455-6677-8899-aabbccddeeff '));
+  t.false(isUuidString(' 00112233-4455-6677-8899-aabbccddeeff'));
 });

@@ -1,81 +1,118 @@
+import test from 'ava';
+
 import {every} from './every.js';
 
-describe('every', () => {
-  let predicate: jest.Mock<boolean, [item: string]>;
+test('no items', (t) => {
+  t.plan(0);
 
-  beforeEach(() => {
-    predicate = jest.fn<boolean, [item: string]>();
+  every([], () => {
+    t.fail();
+
+    return true;
   });
+});
 
-  test('no items', () => {
-    expect(every([], predicate)).toBe(true);
+test('one non-matching', (t) => {
+  t.plan(2);
 
-    expect(predicate.mock.calls).toHaveLength(0);
-  });
+  t.false(
+    every(['foo'], (item) => {
+      t.is(item, 'foo');
 
-  describe('one item', () => {
-    test('non-matching', () => {
-      predicate.mockReturnValue(false);
+      return false;
+    }),
+  );
+});
 
-      expect(every(['foo'], predicate)).toBe(false);
+test('one matching', (t) => {
+  t.plan(2);
 
-      expect(predicate).toHaveBeenCalledTimes(1);
-      expect(predicate).toHaveBeenCalledWith('foo');
-    });
+  t.true(
+    every(['foo'], (item) => {
+      t.is(item, 'foo');
 
-    test('matching', () => {
-      predicate.mockReturnValue(true);
+      return true;
+    }),
+  );
+});
 
-      expect(every(['foo'], predicate)).toBe(true);
+test('many non-matching', (t) => {
+  t.plan(2);
 
-      expect(predicate).toHaveBeenCalledTimes(1);
-      expect(predicate).toHaveBeenCalledWith('foo');
-    });
-  });
+  t.false(
+    every(['foo', 'bar', 'baz'], (item) => {
+      t.is(item, 'foo');
 
-  describe('many items', () => {
-    test('non-matching', () => {
-      predicate.mockReturnValue(false);
+      return false;
+    }),
+  );
+});
 
-      expect(every(['foo', 'bar', 'baz'], predicate)).toBe(false);
+test('many matching only first', (t) => {
+  t.plan(3);
 
-      expect(predicate).toHaveBeenCalledTimes(1);
-      expect(predicate).toHaveBeenCalledWith('foo');
-    });
+  let index = 0;
 
-    test('matching only first', () => {
-      predicate.mockReturnValueOnce(true).mockReturnValue(false);
+  t.false(
+    every(['foo', 'bar', 'baz'], (item) => {
+      switch (index++) {
+        case 0:
+          t.is(item, 'foo');
+          return true;
+        case 1:
+          t.is(item, 'bar');
+          return false;
+        default:
+          return t.fail();
+      }
+    }),
+  );
+});
 
-      expect(every(['foo', 'bar', 'baz'], predicate)).toBe(false);
+test('many matching first and second', (t) => {
+  t.plan(4);
 
-      expect(predicate).toHaveBeenCalledTimes(2);
-      expect(predicate).toHaveBeenNthCalledWith(1, 'foo');
-      expect(predicate).toHaveBeenNthCalledWith(2, 'bar');
-    });
+  let index = 0;
 
-    test('matching first and second', () => {
-      predicate
-        .mockReturnValueOnce(true)
-        .mockReturnValueOnce(true)
-        .mockReturnValue(false);
+  t.false(
+    every(['foo', 'bar', 'baz'], (item) => {
+      switch (index++) {
+        case 0:
+          t.is(item, 'foo');
+          return true;
+        case 1:
+          t.is(item, 'bar');
+          return true;
+        case 2:
+          t.is(item, 'baz');
+          return false;
+        default:
+          return t.fail();
+      }
+    }),
+  );
+});
 
-      expect(every(['foo', 'bar', 'baz'], predicate)).toBe(false);
+test('many matching every', (t) => {
+  t.plan(4);
 
-      expect(predicate).toHaveBeenCalledTimes(3);
-      expect(predicate).toHaveBeenNthCalledWith(1, 'foo');
-      expect(predicate).toHaveBeenNthCalledWith(2, 'bar');
-      expect(predicate).toHaveBeenNthCalledWith(3, 'baz');
-    });
+  let index = 0;
 
-    test('matching every', () => {
-      predicate.mockReturnValue(true);
-
-      expect(every(['foo', 'bar', 'baz'], predicate)).toBe(true);
-
-      expect(predicate).toHaveBeenCalledTimes(3);
-      expect(predicate).toHaveBeenNthCalledWith(1, 'foo');
-      expect(predicate).toHaveBeenNthCalledWith(2, 'bar');
-      expect(predicate).toHaveBeenNthCalledWith(3, 'baz');
-    });
-  });
+  t.true(
+    every(['foo', 'bar', 'baz'], (item) => {
+      switch (index++) {
+        case 0:
+          t.is(item, 'foo');
+          return true;
+        case 1:
+          t.is(item, 'bar');
+          return true;
+        case 2:
+          t.is(item, 'baz');
+          return true;
+        default:
+          return t.fail();
+      }
+    }),
+  );
 });

@@ -1,50 +1,37 @@
-import {asMock} from '../../mock/as-mock.js';
-import type {MockTransformer} from '../../mock/mock-transformer.js';
+import test from 'ava';
+
+import {asMock} from '../../../../test-util/as-mock.js';
 
 import {transform} from './transform.js';
 import {transformableFieldsMap} from './transformable-fields-map.js';
 
-describe('ClassTransformer @transform decorator', () => {
-  let transformerA: MockTransformer<unknown>;
-  let transformerB: MockTransformer<unknown>;
+test('just class', (t) => {
+  class Tmp {
+    @transform(asMock(true, 'a-d', 'a-l', 'a-c')) public a = 'a-d';
 
-  beforeEach(() => {
-    transformerA = asMock(true, null, null, null);
-    transformerB = asMock(true, null, null, null);
-  });
+    @transform(asMock(true, 'b-d', 'b-l', 'b-c')) public b = 'b-d';
+  }
 
-  describe('just class', () => {
-    test('successfully', () => {
-      class Tmp {
-        @transform(transformerA) public a: unknown;
+  t.deepEqual(transformableFieldsMap.get(Tmp.prototype), [
+    ['a', asMock(true, 'a-d', 'a-l', 'a-c')],
+    ['b', asMock(true, 'b-d', 'b-l', 'b-c')],
+  ]);
+});
 
-        @transform(transformerB) public b: unknown;
-      }
+test('class extends class', (t) => {
+  abstract class TmpSuper {
+    @transform(asMock(true, 'a-d', 'a-l', 'a-c')) public a = 'a-d';
+  }
 
-      expect([...transformableFieldsMap.get(Tmp.prototype)]).toStrictEqual([
-        ['a', transformerA],
-        ['b', transformerB],
-      ]);
-    });
-  });
+  class TmpRecipient extends TmpSuper {
+    @transform(asMock(true, 'b-d', 'b-l', 'b-c')) public b = 'b-d';
+  }
 
-  describe('class extends class', () => {
-    test('successfully', () => {
-      abstract class TmpSuper {
-        @transform(transformerA) public a: unknown;
-      }
+  t.deepEqual(transformableFieldsMap.get(TmpSuper.prototype), [
+    ['a', asMock(true, 'a-d', 'a-l', 'a-c')],
+  ]);
 
-      class TmpRecipient extends TmpSuper {
-        @transform(transformerB) public b: unknown;
-      }
-
-      expect([...transformableFieldsMap.get(TmpSuper.prototype)]).toStrictEqual(
-        [['a', transformerA]],
-      );
-
-      expect([
-        ...transformableFieldsMap.get(TmpRecipient.prototype),
-      ]).toStrictEqual([['b', transformerB]]);
-    });
-  });
+  t.deepEqual(transformableFieldsMap.get(TmpRecipient.prototype), [
+    ['b', asMock(true, 'b-d', 'b-l', 'b-c')],
+  ]);
 });
