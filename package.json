@@ -40,6 +40,7 @@
     "dts-bundle-generator": "^6.10.0",
     "esbuild": "^0.14.42",
     "eslint": "^8.10.0",
+    "eslint-plugin-ava": "^13.2.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
