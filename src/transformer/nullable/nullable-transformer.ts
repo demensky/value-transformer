@@ -1,11 +1,11 @@
-import {decoder} from '../../base/decoder';
-import {encode} from '../../base/encode';
-import {ValueTransformer} from '../../base/value-transformer';
-import {nullableDecoder} from '../../representation/nullable/nullable-decoder';
-import {nullableEncode} from '../../representation/nullable/nullable-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isNull} from '../../util/guard/is-null';
+import {decoder} from '../../base/decoder.js';
+import {encode} from '../../base/encode.js';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {nullableDecoder} from '../../representation/nullable/nullable-decoder.js';
+import {nullableEncode} from '../../representation/nullable/nullable-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isNull} from '../../util/guard/is-null.js';
 
 export class NullableTransformer<I, O extends I> extends ValueTransformer<
   I | null,

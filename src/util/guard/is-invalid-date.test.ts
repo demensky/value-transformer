@@ -1,11 +1,11 @@
-import {isInvalidDate} from './is-invalid-date';
+import test from 'ava';
 
-describe('isInvalidDate', () => {
-  test('valid date', () => {
-    expect(isInvalidDate(new Date(0))).toBe(false);
-  });
+import {isInvalidDate} from './is-invalid-date.js';
 
-  test('invalid date', () => {
-    expect(isInvalidDate(new Date(NaN))).toBe(true);
-  });
+test('valid date', (t) => {
+  t.false(isInvalidDate(new Date(0)));
+});
+
+test('invalid date', (t) => {
+  t.true(isInvalidDate(new Date(NaN)));
 });

@@ -1,58 +1,32 @@
-import {deserialize} from '../../jest/deserialize';
-import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import {uintDecoder} from './uint-decoder';
+import {macroDecoder} from '../../../test-util/macro-decoder.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
-describe('uintDataViewDecoder', () => {
-  let decoder: DecoderGenerator<number>;
+import {uintDecoder} from './uint-decoder.js';
 
-  beforeEach(() => {
-    decoder = uintDecoder();
-  });
+const test = anyTest as TestFn<DecoderGenerator<number>>;
 
-  test('smallest in one byte', () => {
-    expect(deserialize([[0b0_0000000]], decoder)).toBe(0b0000000);
-  });
-
-  test('biggest in one byte', () => {
-    expect(deserialize([[0b0_1111111]], decoder)).toBe(0b1111111);
-  });
-
-  test('smallest in two byte', () => {
-    expect(deserialize([[0b1_0000000, 0b0_0000001]], decoder)).toBe(
-      0b0000001_0000000,
-    );
-  });
-
-  test('biggest in two byte', () => {
-    expect(deserialize([[0b1_1111111, 0b0_1111111]], decoder)).toBe(
-      0b1111111_1111111,
-    );
-  });
-
-  test('smallest in three byte', () => {
-    expect(
-      deserialize([[0b1_0000000, 0b1_0000000, 0b0_0000001]], decoder),
-    ).toBe(0b0000001_0000000_0000000);
-  });
-
-  test('biggest in three byte', () => {
-    expect(
-      deserialize([[0b1_1111111, 0b1_1111111, 0b0_1111111]], decoder),
-    ).toBe(0b1111111_1111111_1111111);
-  });
-
-  test('max safe integer', () => {
-    expect(
-      deserialize(
-        [
-          [
-            0b1_1111111, 0b1_1111111, 0b1_1111111, 0b1_1111111, 0b1_1111111,
-            0b1_1111111, 0b1_1111111, 0b0_0001111,
-          ],
-        ],
-        decoder,
-      ),
-    ).toBe(Number.MAX_SAFE_INTEGER);
-  });
+test.beforeEach((t) => {
+  t.context = uintDecoder();
 });
+
+test('smallest in one byte', macroDecoder, [[0x00]], 0);
+
+test('biggest in one byte', macroDecoder, [[0x7f]], 127);
+
+test('smallest in two byte', macroDecoder, [[0x80], [0x1]], 128);
+
+test('biggest in two byte', macroDecoder, [[0xff], [0x7f]], 16383);
+
+test('smallest in three byte', macroDecoder, [[0x80], [0x80], [0x01]], 16384);
+
+test('biggest in three byte', macroDecoder, [[0xff], [0xff], [0x7f]], 2097151);
+
+test(
+  'max safe integer',
+  macroDecoder,
+  [[0xff], [0xff], [0xff], [0xff], [0xff], [0xff], [0xff], [0x0f]],
+  Number.MAX_SAFE_INTEGER,
+);

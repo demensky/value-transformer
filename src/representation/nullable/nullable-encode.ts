@@ -1,6 +1,6 @@
-import type {EncodeFactory} from '../../type/encode-factory';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {booleanEncode} from '../boolean/boolean-encode';
+import type {EncodeFactory} from '../../type/encode-factory.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {booleanEncode} from '../boolean/boolean-encode.js';
 
 export function* nullableEncode<T>(
   value: T | null,

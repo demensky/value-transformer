@@ -1,8 +1,8 @@
-import {BusyBufferDeserializerError} from '../error/busy-buffer-deserializer-error';
-import type {DecoderGenerator} from '../type/decoder-generator';
+import {BusyBufferDeserializerError} from '../error/busy-buffer-deserializer-error.js';
+import type {DecoderGenerator} from '../type/decoder-generator.js';
 
-import type {BufferDeserializerGenerator} from './buffer-deserializer-generator';
-import {GenericBufferDeserializer} from './generic-buffer-deserializer';
+import type {BufferDeserializerGenerator} from './buffer-deserializer-generator.js';
+import {GenericBufferDeserializer} from './generic-buffer-deserializer.js';
 
 export class AsyncBufferDeserializer {
   public static from(

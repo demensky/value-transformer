@@ -1,7 +1,7 @@
-import {AMOUNT_IN_SEVEN_BIT} from '../../const/amount-in-seven-bit';
-import {SEVEN_BIT_PAYLOAD} from '../../const/seven-bit-data';
-import {USE_NEXT_BYTE} from '../../const/use-next-byte';
-import type {IterableEncoding} from '../../type/iterable-encoding';
+import {AMOUNT_IN_SEVEN_BIT} from '../../const/amount-in-seven-bit.js';
+import {SEVEN_BIT_PAYLOAD} from '../../const/seven-bit-data.js';
+import {USE_NEXT_BYTE} from '../../const/use-next-byte.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
 
 export function* uintEncode(value: number): IterableEncoding {
   console.assert(Number.isSafeInteger(value) && value >= 0);

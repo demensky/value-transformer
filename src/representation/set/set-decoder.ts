@@ -1,8 +1,8 @@
-import {valueTransformerConfig} from '../../base/value-transformer-config';
-import {OutOfMaxLengthError} from '../../error/out-of-max-length-error';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {DecoderGeneratorFactory} from '../../type/decoder-generator-factory';
-import {uintDecoder} from '../uint/uint-decoder';
+import {valueTransformerConfig} from '../../base/value-transformer-config.js';
+import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {DecoderGeneratorFactory} from '../../type/decoder-generator-factory.js';
+import {uintDecoder} from '../uint/uint-decoder.js';
 
 export function* setDecoder<T>(
   decoder: DecoderGeneratorFactory<T>,

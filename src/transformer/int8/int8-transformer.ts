@@ -1,11 +1,11 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {int8Decoder} from '../../representation/int8/int8-decoder';
-import {int8Encode} from '../../representation/int8/int8-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isInt8} from '../../util/guard/is-int8';
-import {isNumber} from '../../util/guard/is-number';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {int8Decoder} from '../../representation/int8/int8-decoder.js';
+import {int8Encode} from '../../representation/int8/int8-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isInt8} from '../../util/guard/is-int8.js';
+import {isNumber} from '../../util/guard/is-number.js';
 
 /**
  * @see {@link asInt8} alias

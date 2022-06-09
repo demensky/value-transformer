@@ -1,12 +1,12 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
-import {stringDecoder} from '../../representation/string/string-decoder';
-import {stringEncode} from '../../representation/string/string-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isString} from '../../util/guard/is-string';
-import {isValidUnicode} from '../../util/guard/is-valid-unicode';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
+import {stringDecoder} from '../../representation/string/string-decoder.js';
+import {stringEncode} from '../../representation/string/string-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isString} from '../../util/guard/is-string.js';
+import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
 
 /**
  * @see {@link asString} alias

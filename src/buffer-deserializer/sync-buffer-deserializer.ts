@@ -1,7 +1,7 @@
-import type {DecoderGenerator} from '../type/decoder-generator';
+import type {DecoderGenerator} from '../type/decoder-generator.js';
 
-import type {BufferDeserializerGenerator} from './buffer-deserializer-generator';
-import {GenericBufferDeserializer} from './generic-buffer-deserializer';
+import type {BufferDeserializerGenerator} from './buffer-deserializer-generator.js';
+import {GenericBufferDeserializer} from './generic-buffer-deserializer.js';
 
 export class SyncBufferDeserializer {
   public static from(

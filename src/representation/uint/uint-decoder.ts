@@ -1,9 +1,9 @@
-import {AMOUNT_IN_SEVEN_BIT} from '../../const/amount-in-seven-bit';
-import {SEVEN_BIT_PAYLOAD} from '../../const/seven-bit-data';
-import {USE_NEXT_BYTE} from '../../const/use-next-byte';
-import {OutOfMaxLengthError} from '../../error/out-of-max-length-error';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import {uint8Decoder} from '../uint8/uint8-decoder';
+import {AMOUNT_IN_SEVEN_BIT} from '../../const/amount-in-seven-bit.js';
+import {SEVEN_BIT_PAYLOAD} from '../../const/seven-bit-data.js';
+import {USE_NEXT_BYTE} from '../../const/use-next-byte.js';
+import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import {uint8Decoder} from '../uint8/uint8-decoder.js';
 
 export function* uintDecoder(): DecoderGenerator<number> {
   let result = 0;

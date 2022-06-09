@@ -1,9 +1,9 @@
-import {BufferDeserializerRangeError} from '../error/buffer-deserializer-range-error';
-import {CorruptedBufferDeserializerError} from '../error/corrupted-buffer-deserializer-error';
-import type {DecoderGenerator} from '../type/decoder-generator';
-import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view';
+import {BufferDeserializerRangeError} from '../error/buffer-deserializer-range-error.js';
+import {CorruptedBufferDeserializerError} from '../error/corrupted-buffer-deserializer-error.js';
+import type {DecoderGenerator} from '../type/decoder-generator.js';
+import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
 
-import type {BufferDeserializerGenerator} from './buffer-deserializer-generator';
+import type {BufferDeserializerGenerator} from './buffer-deserializer-generator.js';
 
 function* nextChunk(): BufferDeserializerGenerator<ArrayBufferView> {
   let result: IteratorResult<ArrayBufferView>;

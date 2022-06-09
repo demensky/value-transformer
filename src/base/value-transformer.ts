@@ -1,8 +1,8 @@
-import type {DecoderGenerator} from '../type/decoder-generator';
-import type {IterableEncoding} from '../type/iterable-encoding';
+import type {DecoderGenerator} from '../type/decoder-generator.js';
+import type {IterableEncoding} from '../type/iterable-encoding.js';
 
-import type {ValueTransformerInput} from './value-transformer-input';
-import type {ValueTransformerOutput} from './value-transformer-output';
+import type {ValueTransformerInput} from './value-transformer-input.js';
+import type {ValueTransformerOutput} from './value-transformer-output.js';
 
 export abstract class ValueTransformer<I, O extends I>
   implements ValueTransformerInput<I>, ValueTransformerOutput<O>

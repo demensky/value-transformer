@@ -1,52 +1,31 @@
-import {deserialize} from '../../jest/deserialize';
-import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import {bigIntDecoder} from './big-int-decoder';
+import {macroDecoder} from '../../../test-util/macro-decoder.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
-describe('bigIntDecoder', () => {
-  let decoder: DecoderGenerator<bigint>;
+import {bigIntDecoder} from './big-int-decoder.js';
 
-  beforeEach(() => {
-    decoder = bigIntDecoder();
-  });
+const test = anyTest as TestFn<DecoderGenerator<bigint>>;
 
-  describe('1 byte', () => {
-    test('0', () => {
-      expect(deserialize([[0b0_0000000]], decoder)).toBe(0n);
-    });
-
-    test('biggest positive', () => {
-      expect(deserialize([[0b0_0111111]], decoder)).toBe(63n);
-    });
-
-    test('smallest positive', () => {
-      expect(deserialize([[0b0_000001]], decoder)).toBe(1n);
-    });
-
-    test('biggest negative', () => {
-      expect(deserialize([[0b0_1000000]], decoder)).toBe(-64n);
-    });
-
-    test('smallest negative', () => {
-      expect(deserialize([[0b0_1111111]], decoder)).toBe(-1n);
-    });
-  });
-
-  describe('2 bytes', () => {
-    test('biggest positive', () => {
-      expect(deserialize([[0b1_1111111, 0b0_0111111]], decoder)).toBe(8191n);
-    });
-
-    test('smallest positive', () => {
-      expect(deserialize([[0b1_0000000, 0b0_0000001]], decoder)).toBe(128n);
-    });
-
-    test('biggest negative', () => {
-      expect(deserialize([[0b1_0000000, 0b0_1000000]], decoder)).toBe(-8192n);
-    });
-
-    test('smallest negative', () => {
-      expect(deserialize([[0b1_0111111, 0b0_1111111]], decoder)).toBe(-65n);
-    });
-  });
+test.beforeEach((t) => {
+  t.context = bigIntDecoder();
 });
+
+test('1 byte 0', macroDecoder, [[0x00]], 0n);
+
+test('1 byte biggest positive', macroDecoder, [[0x3f]], 63n);
+
+test('1 byte smallest positive', macroDecoder, [[0x01]], 1n);
+
+test('1 byte biggest negative', macroDecoder, [[0x40]], -64n);
+
+test('1 byte smallest negative', macroDecoder, [[0x7f]], -1n);
+
+test('2 bytes biggest positive', macroDecoder, [[0xff], [0x3f]], 8191n);
+
+test('2 bytes smallest positive', macroDecoder, [[0x80], [0x1]], 128n);
+
+test('2 bytes biggest negative', macroDecoder, [[0x80], [0x40]], -8192n);
+
+test('2 bytes smallest negative', macroDecoder, [[0xbf], [0x7f]], -65n);

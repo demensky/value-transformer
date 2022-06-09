@@ -1,14 +1,14 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error';
-import {stringDecoder} from '../../representation/string/string-decoder';
-import {stringEncode} from '../../representation/string/string-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {EnumDefinition} from '../../type/enum-definition';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {extractEnumValues} from '../../util/extract-enum-values';
-import {isString} from '../../util/guard/is-string';
-import {isInSet} from '../../util/is-in-set';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
+import {stringDecoder} from '../../representation/string/string-decoder.js';
+import {stringEncode} from '../../representation/string/string-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {EnumDefinition} from '../../type/enum-definition.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {extractEnumValues} from '../../util/extract-enum-values.js';
+import {isString} from '../../util/guard/is-string.js';
+import {isInSet} from '../../util/is-in-set.js';
 
 export class EnumStringTransformer<V extends string> extends ValueTransformer<
   V,

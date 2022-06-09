@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {valueTransformerConfig} from '../../base/value-transformer-config';
-import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error';
-import type {IterableEncoding} from '../../type/iterable-encoding';
+import {valueTransformerConfig} from '../../base/value-transformer-config.js';
+import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
 
 export function* bigIntEncode(value: bigint): IterableEncoding {
   const elements: number[] = [];

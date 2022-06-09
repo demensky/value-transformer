@@ -1,19 +1,19 @@
-import {compatibleWith} from '../../base/compatible-with';
-import {decoder} from '../../base/decoder';
-import {encode} from '../../base/encode';
-import {fromLiteral} from '../../base/from-literal';
-import {toCompactLiteral} from '../../base/to-compact-literal';
-import {toLiteral} from '../../base/to-literal';
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {setDecoder} from '../../representation/set/set-decoder';
-import {setEncode} from '../../representation/set/set-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {every} from '../../util/every';
-import {isArray} from '../../util/guard/is-array';
-import {isSet} from '../../util/guard/is-set';
-import {map} from '../../util/map';
+import {compatibleWith} from '../../base/compatible-with.js';
+import {decoder} from '../../base/decoder.js';
+import {encode} from '../../base/encode.js';
+import {fromLiteral} from '../../base/from-literal.js';
+import {toCompactLiteral} from '../../base/to-compact-literal.js';
+import {toLiteral} from '../../base/to-literal.js';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {setDecoder} from '../../representation/set/set-decoder.js';
+import {setEncode} from '../../representation/set/set-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {every} from '../../util/every.js';
+import {isArray} from '../../util/guard/is-array.js';
+import {isSet} from '../../util/guard/is-set.js';
+import {map} from '../../util/map.js';
 
 // TODO tests
 export class SetTransformer<I, O extends I> extends ValueTransformer<

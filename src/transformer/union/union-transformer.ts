@@ -1,20 +1,20 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import type {ValueTransformerInput} from '../../base/value-transformer-input';
-import type {ValueTransformerOutput} from '../../base/value-transformer-output';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {TransformerNotFoundError} from '../../error/transformer-not-found-error';
-import {uintDecoder} from '../../representation/uint/uint-decoder';
-import {uintEncode} from '../../representation/uint/uint-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import type {UnverifiedObject} from '../../type/unverified-object';
-import {isArray} from '../../util/guard/is-array';
-import {isEntry} from '../../util/guard/is-entry';
-import {isNumber} from '../../util/guard/is-number';
-import {isObject} from '../../util/guard/is-object';
-import {identity} from '../../util/identity';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import type {ValueTransformerInput} from '../../base/value-transformer-input.js';
+import type {ValueTransformerOutput} from '../../base/value-transformer-output.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {TransformerNotFoundError} from '../../error/transformer-not-found-error.js';
+import {uintDecoder} from '../../representation/uint/uint-decoder.js';
+import {uintEncode} from '../../representation/uint/uint-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {UnverifiedObject} from '../../type/unverified-object.js';
+import {isArray} from '../../util/guard/is-array.js';
+import {isEntry} from '../../util/guard/is-entry.js';
+import {isNumber} from '../../util/guard/is-number.js';
+import {isObject} from '../../util/guard/is-object.js';
+import {identity} from '../../util/identity.js';
 
-import type {UnionTransformerTransformers} from './union-transformer-transformers';
+import type {UnionTransformerTransformers} from './union-transformer-transformers.js';
 
 type UnionCompactLiteral = readonly [is: number, value: unknown];
 

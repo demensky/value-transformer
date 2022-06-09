@@ -1,4 +1,4 @@
-import type {ValueTransformerInput} from './value-transformer-input';
+import type {ValueTransformerInput} from './value-transformer-input.js';
 
 export function compatibleWith<I>(
   transformer: ValueTransformerInput<I>,

@@ -1,6 +1,10 @@
-import {deserialize} from '../jest/deserialize';
-import type {DecoderGenerator} from '../type/decoder-generator';
-import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view';
+import type {ExecutionContext} from 'ava';
+import test from 'ava';
+
+import type {DecoderGenerator} from '../type/decoder-generator.js';
+import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
+
+import {SyncBufferDeserializer} from './sync-buffer-deserializer.js';
 
 function* mockDecoder(
   counts: readonly number[],
@@ -22,118 +26,112 @@ function* mockDecoder(
   return result;
 }
 
-describe('SyncBufferDeserializer', () => {
-  describe('single chunk', () => {
-    test('1 1 1 1 1 1', () => {
-      expect(
-        deserialize(
-          [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
-          mockDecoder([1, 1, 1, 1, 1, 1]),
-        ),
-      ).toStrictEqual([[0x0a], [0x0b], [0x0c], [0x0d], [0x0e], [0x0f]]);
-    });
+function macroSyncBufferDeserializer(
+  t: ExecutionContext,
+  inputChunks: readonly (readonly number[])[],
+  outputChunks: readonly (readonly number[])[],
+): void {
+  const deserializer = SyncBufferDeserializer.from(
+    inputChunks.map((list) => new Uint8Array(list)),
+  );
 
-    test('1 2 3', () => {
-      expect(
-        deserialize(
-          [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
-          mockDecoder([1, 2, 3]),
-        ),
-      ).toStrictEqual([[0x0a], [0x0b, 0x0c], [0x0d, 0x0e, 0x0f]]);
-    });
+  t.deepEqual(
+    deserializer.read<readonly (readonly number[])[]>(
+      mockDecoder(outputChunks.map(({length}) => length)),
+    ),
+    outputChunks,
+  );
+}
 
-    test('2 2 2', () => {
-      expect(
-        deserialize(
-          [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
-          mockDecoder([2, 2, 2]),
-        ),
-      ).toStrictEqual([
-        [0x0a, 0x0b],
-        [0x0c, 0x0d],
-        [0x0e, 0x0f],
-      ]);
-    });
+test(
+  'single chunk 1 1 1 1 1 1',
+  macroSyncBufferDeserializer,
+  [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
+  [[0x0a], [0x0b], [0x0c], [0x0d], [0x0e], [0x0f]],
+);
 
-    test('6', () => {
-      expect(
-        deserialize([[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]], mockDecoder([6])),
-      ).toStrictEqual([[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]]);
-    });
-  });
+test(
+  'single chunk 1 2 3',
+  macroSyncBufferDeserializer,
+  [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
+  [[0x0a], [0x0b, 0x0c], [0x0d, 0x0e, 0x0f]],
+);
 
-  describe('two chunks', () => {
-    test('1 1 1 1 1 1', () => {
-      expect(
-        deserialize(
-          [
-            [0x0a, 0x0b, 0x0c],
-            [0x0d, 0x0e, 0x0f],
-          ],
-          mockDecoder([1, 1, 1, 1, 1, 1]),
-        ),
-      ).toStrictEqual([[0x0a], [0x0b], [0x0c], [0x0d], [0x0e], [0x0f]]);
-    });
+test(
+  'single chunk 2 2 2',
+  macroSyncBufferDeserializer,
+  [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
+  [
+    [0x0a, 0x0b],
+    [0x0c, 0x0d],
+    [0x0e, 0x0f],
+  ],
+);
 
-    test('4 2', () => {
-      expect(
-        deserialize(
-          [
-            [0x0a, 0x0b, 0x0c],
-            [0x0d, 0x0e, 0x0f],
-          ],
-          mockDecoder([4, 2]),
-        ),
-      ).toStrictEqual([
-        [0x0a, 0x0b, 0x0c, 0x0d],
-        [0x0e, 0x0f],
-      ]);
-    });
+test(
+  'single chunk 6',
+  macroSyncBufferDeserializer,
+  [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
+  [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
+);
 
-    test('2 2 2', () => {
-      expect(
-        deserialize(
-          [
-            [0x0a, 0x0b, 0x0c],
-            [0x0d, 0x0e, 0x0f],
-          ],
-          mockDecoder([2, 2, 2]),
-        ),
-      ).toStrictEqual([
-        [0x0a, 0x0b],
-        [0x0c, 0x0d],
-        [0x0e, 0x0f],
-      ]);
-    });
+test(
+  'two chunks 1 1 1 1 1 1',
+  macroSyncBufferDeserializer,
+  [
+    [0x0a, 0x0b, 0x0c],
+    [0x0d, 0x0e, 0x0f],
+  ],
+  [[0x0a], [0x0b], [0x0c], [0x0d], [0x0e], [0x0f]],
+);
 
-    test('2 4', () => {
-      expect(
-        deserialize(
-          [
-            [0x0a, 0x0b, 0x0c],
-            [0x0d, 0x0e, 0x0f],
-          ],
-          mockDecoder([2, 4]),
-        ),
-      ).toStrictEqual([
-        [0x0a, 0x0b],
-        [0x0c, 0x0d, 0x0e, 0x0f],
-      ]);
-    });
-  });
+test(
+  'two chunks 4 2',
+  macroSyncBufferDeserializer,
+  [
+    [0x0a, 0x0b, 0x0c],
+    [0x0d, 0x0e, 0x0f],
+  ],
+  [
+    [0x0a, 0x0b, 0x0c, 0x0d],
+    [0x0e, 0x0f],
+  ],
+);
 
-  describe('three chunks', () => {
-    test('1 4 1', () => {
-      expect(
-        deserialize(
-          [
-            [0x0a, 0x0b],
-            [0x0c, 0x0d],
-            [0x0e, 0x0f],
-          ],
-          mockDecoder([1, 4, 1]),
-        ),
-      ).toStrictEqual([[0x0a], [0x0b, 0x0c, 0x0d, 0x0e], [0x0f]]);
-    });
-  });
-});
+test(
+  'two chunks 2 2 2',
+  macroSyncBufferDeserializer,
+  [
+    [0x0a, 0x0b, 0x0c],
+    [0x0d, 0x0e, 0x0f],
+  ],
+  [
+    [0x0a, 0x0b],
+    [0x0c, 0x0d],
+    [0x0e, 0x0f],
+  ],
+);
+
+test(
+  'two chunks 2 4',
+  macroSyncBufferDeserializer,
+  [
+    [0x0a, 0x0b, 0x0c],
+    [0x0d, 0x0e, 0x0f],
+  ],
+  [
+    [0x0a, 0x0b],
+    [0x0c, 0x0d, 0x0e, 0x0f],
+  ],
+);
+
+test(
+  'three chunks 1 4 1',
+  macroSyncBufferDeserializer,
+  [
+    [0x0a, 0x0b],
+    [0x0c, 0x0d],
+    [0x0e, 0x0f],
+  ],
+  [[0x0a], [0x0b, 0x0c, 0x0d, 0x0e], [0x0f]],
+);

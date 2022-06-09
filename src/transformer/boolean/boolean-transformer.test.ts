@@ -1,33 +1,16 @@
-import '../../jest/to-be-compatible-with';
-import '../../jest/to-be-transformation';
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
+import {macroTransformation} from '../../../test-util/macro-transformation.js';
 
-import {BooleanTransformer} from './boolean-transformer';
+import {BooleanTransformer} from './boolean-transformer.js';
 
-describe('BooleanTransformer', () => {
-  let transformer: BooleanTransformer;
+const test = anyTest as TestFn<BooleanTransformer>;
 
-  beforeAll(() => {
-    transformer = new BooleanTransformer();
-  });
-
-  test('invalid', () => {
-    expect(transformer).not.toBeCompatibleWith(42);
-    expect(() => {
-      transformer.fromLiteral(42);
-    }).toThrow(IncompatibleLiteralError);
-  });
-
-  describe('valid', () => {
-    test('false', () => {
-      expect(transformer).toBeCompatibleWith(false);
-      expect(transformer).toBeTransformation(false, false, 0, [0x00]);
-    });
-
-    test('true', () => {
-      expect(transformer).toBeCompatibleWith(true);
-      expect(transformer).toBeTransformation(true, true, 1, [0x01]);
-    });
-  });
+test.beforeEach((t) => {
+  t.context = new BooleanTransformer();
 });
+
+test('true', macroTransformation, true, [0x01], true, 1);
+
+test('false', macroTransformation, false, [0x00], false, 0);

@@ -1,7 +1,7 @@
-import {prototypeChain} from '../../../util/prototype-chain';
+import {prototypeChain} from '../../../util/prototype-chain.js';
 
-import type {OneOfTransformableField} from './one-of-transformable-field';
-import {transformableFieldsMap} from './transformable-fields-map';
+import type {OneOfTransformableField} from './one-of-transformable-field.js';
+import {transformableFieldsMap} from './transformable-fields-map.js';
 
 export function* extractTransformableFields<T extends object>(
   prototype: T,

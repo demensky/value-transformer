@@ -1,47 +1,43 @@
-import {isValidUnicode} from './is-valid-unicode';
+import test from 'ava';
 
-describe('isValidUnicode', () => {
-  describe('valid', () => {
-    test('empty string', () => {
-      expect(isValidUnicode('')).toBe(true);
-    });
+import {isValidUnicode} from './is-valid-unicode.js';
 
-    test('simple string', () => {
-      expect(isValidUnicode('a')).toBe(true);
-    });
+test('empty string', (t) => {
+  t.true(isValidUnicode(''));
+});
 
-    test('paired surrogates', () => {
-      expect(isValidUnicode('a\uD83D\uDE0Ab')).toBe(true);
-    });
+test('simple string', (t) => {
+  t.true(isValidUnicode('a'));
+});
 
-    test('only paired surrogates', () => {
-      expect(isValidUnicode('\uD83D\uDE0A')).toBe(true);
-    });
-  });
+test('paired surrogates', (t) => {
+  t.true(isValidUnicode('a\uD83D\uDE0Ab'));
+});
 
-  describe('invalid', () => {
-    test('unpaired low surrogates', () => {
-      expect(isValidUnicode('a\uD800b')).toBe(false);
-      expect(isValidUnicode('a\uD83Db')).toBe(false);
-      expect(isValidUnicode('a\uDBFFb')).toBe(false);
-    });
+test('only paired surrogates', (t) => {
+  t.true(isValidUnicode('\uD83D\uDE0A'));
+});
 
-    test('only unpaired low surrogates', () => {
-      expect(isValidUnicode('\uD800')).toBe(false);
-      expect(isValidUnicode('\uD83D')).toBe(false);
-      expect(isValidUnicode('\uDBFF')).toBe(false);
-    });
+test('unpaired low surrogates', (t) => {
+  t.false(isValidUnicode('a\uD800b'));
+  t.false(isValidUnicode('a\uD83Db'));
+  t.false(isValidUnicode('a\uDBFFb'));
+});
 
-    test('unpaired high surrogates', () => {
-      expect(isValidUnicode('a\uDC00b')).toBe(false);
-      expect(isValidUnicode('a\uDE0Ab')).toBe(false);
-      expect(isValidUnicode('a\uDFFFb')).toBe(false);
-    });
+test('only unpaired low surrogates', (t) => {
+  t.false(isValidUnicode('\uD800'));
+  t.false(isValidUnicode('\uD83D'));
+  t.false(isValidUnicode('\uDBFF'));
+});
 
-    test('only unpaired high surrogates', () => {
-      expect(isValidUnicode('\uDC00')).toBe(false);
-      expect(isValidUnicode('\uDE0A')).toBe(false);
-      expect(isValidUnicode('\uDFFF')).toBe(false);
-    });
-  });
+test('unpaired high surrogates', (t) => {
+  t.false(isValidUnicode('a\uDC00b'));
+  t.false(isValidUnicode('a\uDE0Ab'));
+  t.false(isValidUnicode('a\uDFFFb'));
+});
+
+test('only unpaired high surrogates', (t) => {
+  t.false(isValidUnicode('\uDC00'));
+  t.false(isValidUnicode('\uDE0A'));
+  t.false(isValidUnicode('\uDFFF'));
 });

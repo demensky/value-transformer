@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {HEX_RADIX} from '../../const/hex-radix';
-import type {UuidString} from '../../type/uuid-string';
+import {HEX_RADIX} from '../../const/hex-radix.js';
+import type {UuidString} from '../../type/uuid-string.js';
 
 function getOctetFromHexString(value: UuidString, offset: number): number {
   return parseInt(value.slice(offset, offset + 2), HEX_RADIX);

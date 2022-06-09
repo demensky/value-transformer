@@ -1,42 +1,45 @@
-import {extractEnumValues} from './extract-enum-values';
+import test from 'ava';
 
-describe('extractEnumValues', () => {
-  test('empty enum', () => {
-    enum EmptyEnum {}
+import {extractEnumValues} from './extract-enum-values.js';
 
-    expect(extractEnumValues(EmptyEnum)).toStrictEqual(new Set<EmptyEnum>());
-  });
+test('empty enum', (t) => {
+  enum EmptyEnum {}
 
-  test('numeric enum', () => {
-    enum NumericEnum {
-      FOO = 0,
-      BAR = 1,
-    }
+  t.deepEqual(extractEnumValues(EmptyEnum), new Set<never>());
+});
 
-    expect(extractEnumValues(NumericEnum)).toStrictEqual(
-      new Set<NumericEnum>([NumericEnum.FOO, NumericEnum.BAR]),
-    );
-  });
+test('numeric enum', (t) => {
+  enum NumericEnum {
+    FOO = 0,
+    BAR = 1,
+  }
 
-  test('string enum', () => {
-    enum StringEnum {
-      FOO = 'foo',
-      BAR = 'bar',
-    }
+  t.deepEqual(
+    extractEnumValues(NumericEnum),
+    new Set<NumericEnum>([NumericEnum.FOO, NumericEnum.BAR]),
+  );
+});
 
-    expect(extractEnumValues(StringEnum)).toStrictEqual(
-      new Set<StringEnum>([StringEnum.FOO, StringEnum.BAR]),
-    );
-  });
+test('string enum', (t) => {
+  enum StringEnum {
+    FOO = 'foo',
+    BAR = 'bar',
+  }
 
-  test('mixed enum', () => {
-    enum MixedEnum {
-      FOO = 0,
-      BAR = 'bar',
-    }
+  t.deepEqual(
+    extractEnumValues(StringEnum),
+    new Set<StringEnum>([StringEnum.FOO, StringEnum.BAR]),
+  );
+});
 
-    expect(extractEnumValues(MixedEnum)).toStrictEqual(
-      new Set<MixedEnum>([MixedEnum.FOO, MixedEnum.BAR]),
-    );
-  });
+test('mixed enum', (t) => {
+  enum MixedEnum {
+    FOO = 0,
+    BAR = 'bar',
+  }
+
+  t.deepEqual(
+    extractEnumValues(MixedEnum),
+    new Set<MixedEnum>([MixedEnum.FOO, MixedEnum.BAR]),
+  );
 });

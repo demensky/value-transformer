@@ -1,5 +1,5 @@
-import {INT32_MAX_VALUE} from '../../const/int32-max-value';
-import {INT32_MIN_VALUE} from '../../const/int32-min-value';
+import {INT32_MAX_VALUE} from '../../const/int32-max-value.js';
+import {INT32_MIN_VALUE} from '../../const/int32-min-value.js';
 
 export function isInt32(value: number): boolean {
   return (

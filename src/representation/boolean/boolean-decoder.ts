@@ -1,8 +1,8 @@
-import {FALSE_OCTET} from '../../const/false-octet';
-import {TRUE_OCTET} from '../../const/true-octet';
-import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import {uint8Decoder} from '../uint8/uint8-decoder';
+import {FALSE_OCTET} from '../../const/false-octet.js';
+import {TRUE_OCTET} from '../../const/true-octet.js';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import {uint8Decoder} from '../uint8/uint8-decoder.js';
 
 export function* booleanDecoder(): DecoderGenerator<boolean> {
   const value: number = yield* uint8Decoder();

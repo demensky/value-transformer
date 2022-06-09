@@ -243,7 +243,7 @@ the [`asClass`](#asclass) transformer.
 <summary>Usage</summary>
 
 ```ts
-import {asClass} from './as-class';
+import {asClass} from './as-class.js';
 
 class UserDto {
   @transform(asString())

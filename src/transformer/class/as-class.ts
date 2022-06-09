@@ -1,4 +1,4 @@
-import {ClassTransformer} from './class-transformer';
+import {ClassTransformer} from './class-transformer.js';
 
 export function asClass<T extends object>(
   constructor: new (...args: never) => T,

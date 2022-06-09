@@ -1,27 +1,20 @@
-import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error';
-import {deserialize} from '../../jest/deserialize';
-import type {DecoderGenerator} from '../../type/decoder-generator';
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import {booleanDecoder} from './boolean-decoder';
+import {macroDecoder} from '../../../test-util/macro-decoder.js';
+import {macroDecoderThrow} from '../../../test-util/macro-decoder-throw.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
-describe('booleanDecoder', () => {
-  let decoder: DecoderGenerator<boolean>;
+import {booleanDecoder} from './boolean-decoder.js';
 
-  beforeEach(() => {
-    decoder = booleanDecoder();
-  });
+const test = anyTest as TestFn<DecoderGenerator<boolean>>;
 
-  test('false', () => {
-    expect(deserialize([[0b00000000]], decoder)).toBe(false);
-  });
-
-  test('true', () => {
-    expect(deserialize([[0b00000001]], decoder)).toBe(true);
-  });
-
-  test('42', () => {
-    expect(() => {
-      deserialize([[0b00101010]], decoder);
-    }).toThrow(InvalidBufferValueError);
-  });
+test.beforeEach((t) => {
+  t.context = booleanDecoder();
 });
+
+test('false', macroDecoder, [[0x00]], false);
+
+test('true', macroDecoder, [[0x01]], true);
+
+test('42', macroDecoderThrow, [[0x2a]]);

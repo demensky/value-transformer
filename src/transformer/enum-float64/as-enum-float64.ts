@@ -1,6 +1,6 @@
-import type {EnumDefinition} from '../../type/enum-definition';
+import type {EnumDefinition} from '../../type/enum-definition.js';
 
-import {EnumFloat64Transformer} from './enum-float64-transformer';
+import {EnumFloat64Transformer} from './enum-float64-transformer.js';
 
 export function asEnumFloat64<K extends string, V extends number>(
   definition: EnumDefinition<K, V>,

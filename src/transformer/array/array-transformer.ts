@@ -1,18 +1,18 @@
-import {compatibleWith} from '../../base/compatible-with';
-import {decoder} from '../../base/decoder';
-import {encode} from '../../base/encode';
-import {fromLiteral} from '../../base/from-literal';
-import {toCompactLiteral} from '../../base/to-compact-literal';
-import {toLiteral} from '../../base/to-literal';
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {arrayDecoder} from '../../representation/array/array-decoder';
-import {arrayEncode} from '../../representation/array/array-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {denseArrayLike} from '../../util/dense-array-like';
-import {every} from '../../util/every';
-import {isArray} from '../../util/guard/is-array';
+import {compatibleWith} from '../../base/compatible-with.js';
+import {decoder} from '../../base/decoder.js';
+import {encode} from '../../base/encode.js';
+import {fromLiteral} from '../../base/from-literal.js';
+import {toCompactLiteral} from '../../base/to-compact-literal.js';
+import {toLiteral} from '../../base/to-literal.js';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {arrayDecoder} from '../../representation/array/array-decoder.js';
+import {arrayEncode} from '../../representation/array/array-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {denseArrayLike} from '../../util/dense-array-like.js';
+import {every} from '../../util/every.js';
+import {isArray} from '../../util/guard/is-array.js';
 
 // TODO tests
 export class ArrayTransformer<I, O extends I> extends ValueTransformer<

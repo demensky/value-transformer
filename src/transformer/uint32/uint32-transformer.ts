@@ -1,11 +1,11 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {uint32Decoder} from '../../representation/uint32/uint32-decoder';
-import {uint32Encode} from '../../representation/uint32/uint32-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isNumber} from '../../util/guard/is-number';
-import {isUint32} from '../../util/guard/is-uint32';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {uint32Decoder} from '../../representation/uint32/uint32-decoder.js';
+import {uint32Encode} from '../../representation/uint32/uint32-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isNumber} from '../../util/guard/is-number.js';
+import {isUint32} from '../../util/guard/is-uint32.js';
 
 /**
  * @see {@link asUint32} alias

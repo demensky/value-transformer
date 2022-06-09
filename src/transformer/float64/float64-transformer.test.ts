@@ -1,110 +1,34 @@
-import '../../jest/to-be-transformation';
+import type {TestFn} from 'ava';
+import anyTest from 'ava';
 
-import {Float64Transformer} from './float64-transformer';
+import {macroTransformation} from '../../../test-util/macro-transformation.js';
 
-describe('Float64Transformer', () => {
-  let transformer: Float64Transformer;
+import {Float64Transformer} from './float64-transformer.js';
 
-  beforeAll(() => {
-    transformer = new Float64Transformer();
-  });
+const test = anyTest as TestFn<Float64Transformer>;
 
-  test('-Infinity', () => {
-    expect(transformer).toBeTransformation(
-      -Infinity,
-      '-Infinity',
-      '-Infinity',
-      [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff],
-    );
-  });
-
-  test('-Number.MAX_VALUE', () => {
-    expect(transformer).toBeTransformation(
-      -Number.MAX_VALUE,
-      -Number.MAX_VALUE,
-      -Number.MAX_VALUE,
-      [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xef, 0xff],
-    );
-  });
-
-  test('Number.MIN_SAFE_INTEGER', () => {
-    expect(transformer).toBeTransformation(
-      Number.MIN_SAFE_INTEGER,
-      Number.MIN_SAFE_INTEGER,
-      Number.MIN_SAFE_INTEGER,
-      [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3f, 0xc3],
-    );
-  });
-
-  test('-Number.MIN_VALUE', () => {
-    expect(transformer).toBeTransformation(
-      -Number.MIN_VALUE,
-      -Number.MIN_VALUE,
-      -Number.MIN_VALUE,
-      [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80],
-    );
-  });
-
-  test('-0', () => {
-    expect(transformer).toBeTransformation(
-      -0,
-      '-0',
-      '-0',
-      [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80],
-    );
-  });
-
-  test('NaN', () => {
-    expect(transformer).toBeTransformation(
-      NaN,
-      'NaN',
-      'NaN',
-      [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x7f],
-    );
-  });
-
-  test('0', () => {
-    expect(transformer).toBeTransformation(
-      0,
-      0,
-      0,
-      [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
-    );
-  });
-
-  test('Number.MIN_VALUE', () => {
-    expect(transformer).toBeTransformation(
-      Number.MIN_VALUE,
-      Number.MIN_VALUE,
-      Number.MIN_VALUE,
-      [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
-    );
-  });
-
-  test('Number.MAX_SAFE_INTEGER', () => {
-    expect(transformer).toBeTransformation(
-      Number.MAX_SAFE_INTEGER,
-      Number.MAX_SAFE_INTEGER,
-      Number.MAX_SAFE_INTEGER,
-      [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3f, 0x43],
-    );
-  });
-
-  test('Number.MAX_VALUE', () => {
-    expect(transformer).toBeTransformation(
-      Number.MAX_VALUE,
-      Number.MAX_VALUE,
-      Number.MAX_VALUE,
-      [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xef, 0x7f],
-    );
-  });
-
-  test('Infinity', () => {
-    expect(transformer).toBeTransformation(
-      Infinity,
-      'Infinity',
-      'Infinity',
-      [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x7f],
-    );
-  });
+test.beforeEach((t) => {
+  t.context = new Float64Transformer();
 });
+
+test('-Infinity', macroTransformation, -Infinity, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xff], '-Infinity', '-Infinity');
+
+test('-Number.MAX_VALUE', macroTransformation, -Number.MAX_VALUE, [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xef, 0xff],);
+
+test('Number.MIN_SAFE_INTEGER', macroTransformation, Number.MIN_SAFE_INTEGER, [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3f, 0xc3],);
+
+test('-Number.MIN_VALUE', macroTransformation, -Number.MIN_VALUE, [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80],);
+
+test('-0', macroTransformation, -0, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80],'-0',);
+
+test('NaN', macroTransformation, NaN,  [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0x7f],'NaN',);
+
+test('0', macroTransformation, 0, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],);
+
+test('Number.MIN_VALUE', macroTransformation, Number.MIN_VALUE, [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00],);
+
+test('Number.MAX_SAFE_INTEGER', macroTransformation, Number.MAX_SAFE_INTEGER, [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x3f, 0x43],);
+
+test('Number.MAX_VALUE', macroTransformation, Number.MAX_VALUE, [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xef, 0x7f],);
+
+test('Infinity', macroTransformation, Infinity, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0x7f], 'Infinity', 'Infinity');

@@ -1,8 +1,8 @@
-import {valueTransformerConfig} from '../../base/value-transformer-config';
-import {OutOfMaxLengthError} from '../../error/out-of-max-length-error';
-import type {EncodeFactory} from '../../type/encode-factory';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {uintEncode} from '../uint/uint-encode';
+import {valueTransformerConfig} from '../../base/value-transformer-config.js';
+import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
+import type {EncodeFactory} from '../../type/encode-factory.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {uintEncode} from '../uint/uint-encode.js';
 
 export function* setEncode<T>(
   set: ReadonlySet<T>,

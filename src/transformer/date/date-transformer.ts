@@ -1,12 +1,12 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {dateDecoder} from '../../representation/date/date-decoder';
-import {dateEncode} from '../../representation/date/date-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isDate} from '../../util/guard/is-date';
-import {isInvalidDate} from '../../util/guard/is-invalid-date';
-import {isNumberOrString} from '../../util/guard/is-number-or-string';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {dateDecoder} from '../../representation/date/date-decoder.js';
+import {dateEncode} from '../../representation/date/date-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isDate} from '../../util/guard/is-date.js';
+import {isInvalidDate} from '../../util/guard/is-invalid-date.js';
+import {isNumberOrString} from '../../util/guard/is-number-or-string.js';
 
 const INVALID = 'Invalid Date';
 

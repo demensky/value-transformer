@@ -1,49 +1,49 @@
-import '../../jest/to-be-compatible-with';
-import '../../jest/to-be-transformation';
+import test from 'ava';
 
-import {asMock} from '../mock/as-mock';
+import {asMock} from '../../../test-util/as-mock.js';
+import {toBeTransformation} from '../../../test-util/to-be-transformation.js';
 
-import {ClassTransformer} from './class-transformer';
-import {transform} from './decorator/transform';
+import {ClassTransformer} from './class-transformer.js';
+import {transform} from './decorator/transform.js';
 
-describe('ClassTransformer', () => {
-  test('fromConstructor create ClassTransformer instance', () => {
-    class Tmp {}
+test('compatibleWith true', (t) => {
+  class Tmp {}
 
-    expect(ClassTransformer.fromConstructor(Tmp)).toBeInstanceOf(
-      ClassTransformer,
-    );
-  });
+  t.true(ClassTransformer.fromConstructor(Tmp).compatibleWith(new Tmp()));
+});
 
-  test('compatibleWith', () => {
-    class Tmp {}
+test('compatibleWith false', (t) => {
+  class Tmp {}
 
-    expect(ClassTransformer.fromConstructor(Tmp)).toBeCompatibleWith(new Tmp());
-  });
+  t.false(ClassTransformer.fromConstructor(Tmp).compatibleWith(new Date()));
+});
 
-  test('empty class', () => {
-    class Tmp {}
+test('empty class', (t) => {
+  class Tmp {}
 
-    expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
-      new Tmp(),
-      {},
-      [],
-      [],
-    );
-  });
+  toBeTransformation(
+    t,
+    ClassTransformer.fromConstructor(Tmp),
+    new Tmp(),
+    [],
+    {},
+    [],
+  );
+});
 
-  test('class with fields', () => {
-    class Tmp {
-      @transform(asMock(true, 'a-d', 'a-c', 'a-l', [0x0a])) public a = 'a-d';
+test('class with fields', (t) => {
+  class Tmp {
+    @transform(asMock(true, 'a-d', [0x0a], 'a-l', 'a-c')) public a = 'a-d';
 
-      @transform(asMock(true, 'b-d', 'b-c', 'b-l', [0x0b])) public b = 'b-d';
-    }
+    @transform(asMock(true, 'b-d', [0x0b], 'b-l', 'b-c')) public b = 'b-d';
+  }
 
-    expect(ClassTransformer.fromConstructor(Tmp)).toBeTransformation(
-      new Tmp(),
-      {a: 'a-l', b: 'b-l'},
-      ['a-c', 'b-c'],
-      [0x0a, 0x0b],
-    );
-  });
+  toBeTransformation(
+    t,
+    ClassTransformer.fromConstructor(Tmp),
+    new Tmp(),
+    [0x0a, 0x0b],
+    {a: 'a-l', b: 'b-l'},
+    ['a-c', 'b-c'],
+  );
 });

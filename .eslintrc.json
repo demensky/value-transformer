@@ -235,35 +235,39 @@
   "overrides": [
     {
       "files": ["*.test.ts"],
-      "plugins": ["jest"],
+      "plugins": ["ava"],
       "rules": {
         "@typescript-eslint/no-extraneous-class": "off",
         "@typescript-eslint/no-magic-numbers": "off",
-        "jest/consistent-test-it": [
-          "error",
-          {"fn": "test", "withinDescribe": "test"}
-        ],
-        "jest/expect-expect": "error",
-        "jest/no-alias-methods": "error",
-        "jest/no-conditional-expect": "error",
-        "jest/no-deprecated-functions": "error",
-        "jest/no-export": "error",
-        "jest/no-identical-title": "error",
-        "jest/no-test-prefixes": "error",
-        "jest/prefer-called-with": "error",
-        "jest/prefer-spy-on": "error",
-        "jest/prefer-strict-equal": "error",
-        "jest/prefer-to-be": "error",
-        "jest/prefer-to-contain": "error",
-        "jest/prefer-to-have-length": "error",
-        "jest/prefer-todo": "error",
-        "jest/require-top-level-describe": "error"
-      }
-    },
-    {
-      "files": ["src/jest/**/*.ts"],
-      "rules": {
-        "@typescript-eslint/no-namespace": "off"
+        "@typescript-eslint/consistent-type-assertions": "off",
+
+        "ava/assertion-arguments": "error",
+        "ava/hooks-order": "error",
+        "ava/max-asserts": ["off", 5],
+        "ava/no-async-fn-without-await": "error",
+        "ava/no-duplicate-modifiers": "error",
+        "ava/no-identical-title": "error",
+        "ava/no-ignored-test-files": "error",
+        "ava/no-import-test-files": "error",
+        "ava/no-incorrect-deep-equal": "error",
+        "ava/no-inline-assertions": "error",
+        "ava/no-nested-tests": "error",
+        "ava/no-only-test": "error",
+        "ava/no-skip-assert": "error",
+        "ava/no-skip-test": "error",
+        "ava/no-todo-implementation": "error",
+        "ava/no-todo-test": "warn",
+        "ava/no-unknown-modifiers": "error",
+        "ava/prefer-async-await": "error",
+        "ava/prefer-power-assert": "off",
+        "ava/prefer-t-regex": "error",
+        "ava/test-title": "error",
+        "ava/test-title-format": "off",
+        "ava/use-t": "error",
+        "ava/use-t-throws-async-well": "error",
+        "ava/use-t-well": "error",
+        "ava/use-test": "error",
+        "ava/use-true-false": "error"
       }
     }
   ]

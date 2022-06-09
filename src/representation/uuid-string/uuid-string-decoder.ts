@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {BYTES_PER_UUID} from '../../const/bytes-per-uuid';
-import {HEX_RADIX} from '../../const/hex-radix';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {ReadonlyLittleEndianDataView} from '../../type/readonly-little-endian-data-view';
-import type {UuidString} from '../../type/uuid-string';
+import {BYTES_PER_UUID} from '../../const/bytes-per-uuid.js';
+import {HEX_RADIX} from '../../const/hex-radix.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {ReadonlyLittleEndianDataView} from '../../type/readonly-little-endian-data-view.js';
+import type {UuidString} from '../../type/uuid-string.js';
 
 function getOctetHexString(
   view: ReadonlyLittleEndianDataView,

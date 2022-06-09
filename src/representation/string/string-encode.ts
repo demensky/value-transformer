@@ -1,9 +1,9 @@
-import {valueTransformerConfig} from '../../base/value-transformer-config';
-import {InvalidUnicodeError} from '../../error/invalid-unicode-error';
-import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isValidUnicode} from '../../util/guard/is-valid-unicode';
-import {uintEncode} from '../uint/uint-encode';
+import {valueTransformerConfig} from '../../base/value-transformer-config.js';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
+import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
+import {uintEncode} from '../uint/uint-encode.js';
 
 export function* stringEncode(value: string): IterableEncoding {
   if (!isValidUnicode(value)) {

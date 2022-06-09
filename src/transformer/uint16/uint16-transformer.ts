@@ -1,11 +1,11 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {uint16Decoder} from '../../representation/uint16/uint16-decoder';
-import {uint16Encode} from '../../representation/uint16/uint16-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {isNumber} from '../../util/guard/is-number';
-import {isUint16} from '../../util/guard/is-uint16';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {uint16Decoder} from '../../representation/uint16/uint16-decoder.js';
+import {uint16Encode} from '../../representation/uint16/uint16-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {isNumber} from '../../util/guard/is-number.js';
+import {isUint16} from '../../util/guard/is-uint16.js';
 
 /**
  * @see {@link asUint16} alias

@@ -1,14 +1,14 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error';
-import {float64Decoder} from '../../representation/float64/float64-decoder';
-import {float64Encode} from '../../representation/float64/float64-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {EnumDefinition} from '../../type/enum-definition';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import {extractEnumValues} from '../../util/extract-enum-values';
-import {isNumber} from '../../util/guard/is-number';
-import {isInSet} from '../../util/is-in-set';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
+import {float64Decoder} from '../../representation/float64/float64-decoder.js';
+import {float64Encode} from '../../representation/float64/float64-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {EnumDefinition} from '../../type/enum-definition.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import {extractEnumValues} from '../../util/extract-enum-values.js';
+import {isNumber} from '../../util/guard/is-number.js';
+import {isInSet} from '../../util/is-in-set.js';
 
 export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
   V,

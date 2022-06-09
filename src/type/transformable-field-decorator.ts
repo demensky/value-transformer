@@ -1,4 +1,4 @@
-import type {KeysWithExactType} from './keys-with-exact-type';
+import type {KeysWithExactType} from './keys-with-exact-type.js';
 
 export type TransformableFieldDecorator<I, O extends I> = <T extends object>(
   prototype: T,

@@ -1,12 +1,12 @@
-import {ValueTransformer} from '../../base/value-transformer';
-import {IncompatibleLiteralError} from '../../error/incompatible-literal-error';
-import {uuidStringDecoder} from '../../representation/uuid-string/uuid-string-decoder';
-import {uuidStringEncode} from '../../representation/uuid-string/uuid-string-encode';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import type {IterableEncoding} from '../../type/iterable-encoding';
-import type {UuidString} from '../../type/uuid-string';
-import {isString} from '../../util/guard/is-string';
-import {isUuidString} from '../../util/guard/is-uuid-string';
+import {ValueTransformer} from '../../base/value-transformer.js';
+import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
+import {uuidStringDecoder} from '../../representation/uuid-string/uuid-string-decoder.js';
+import {uuidStringEncode} from '../../representation/uuid-string/uuid-string-encode.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {UuidString} from '../../type/uuid-string.js';
+import {isString} from '../../util/guard/is-string.js';
+import {isUuidString} from '../../util/guard/is-uuid-string.js';
 
 export class UuidStringTransformer<
   T extends UuidString,

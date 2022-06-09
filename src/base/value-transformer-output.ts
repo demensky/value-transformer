@@ -1,4 +1,4 @@
-import type {DecoderGenerator} from '../type/decoder-generator';
+import type {DecoderGenerator} from '../type/decoder-generator.js';
 
 export interface ValueTransformerOutput<O> {
   decoder(): DecoderGenerator<O>;

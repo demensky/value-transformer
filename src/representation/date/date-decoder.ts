@@ -1,6 +1,6 @@
-import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error';
-import type {DecoderGenerator} from '../../type/decoder-generator';
-import {float64Decoder} from '../float64/float64-decoder';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import {float64Decoder} from '../float64/float64-decoder.js';
 
 export function* dateDecoder(): DecoderGenerator<Date> {
   const time: number = yield* float64Decoder();

@@ -1,4 +1,4 @@
-import {SparseArrayError} from '../error/sparse-array-error';
+import {SparseArrayError} from '../error/sparse-array-error.js';
 
 export function* denseArrayLike<T>(array: ArrayLike<T>): Iterable<T> {
   for (let index = 0; index < array.length; index++) {

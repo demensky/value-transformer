@@ -1,6 +1,6 @@
-import type {ValueTransformer} from '../../base/value-transformer';
+import type {ValueTransformer} from '../../base/value-transformer.js';
 
-import {MapTransformer} from './map-transformer';
+import {MapTransformer} from './map-transformer.js';
 
 export function asMap<KI, KO extends KI, VI, VO extends VI>(
   keyTransformer: ValueTransformer<KI, KO>,

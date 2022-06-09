@@ -1,6 +1,6 @@
-import type {DecoderGeneratorFactory} from '../type/decoder-generator-factory';
+import type {DecoderGeneratorFactory} from '../type/decoder-generator-factory.js';
 
-import type {ValueTransformerOutput} from './value-transformer-output';
+import type {ValueTransformerOutput} from './value-transformer-output.js';
 
 export function decoder<O>(
   transformer: ValueTransformerOutput<O>,
