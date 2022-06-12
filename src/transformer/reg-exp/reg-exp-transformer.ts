@@ -1,8 +1,8 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {regExpDecoder} from '../../coder/reg-exp/reg-exp-decoder.js';
+import {regExpEncode} from '../../coder/reg-exp/reg-exp-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
-import {regExpDecoder} from '../../representation/reg-exp/reg-exp-decoder.js';
-import {regExpEncode} from '../../representation/reg-exp/reg-exp-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import type {UnverifiedObject} from '../../type/unverified-object.js';

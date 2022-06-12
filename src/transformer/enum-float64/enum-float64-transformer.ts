@@ -1,8 +1,8 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {float64Decoder} from '../../coder/float64/float64-decoder.js';
+import {float64Encode} from '../../coder/float64/float64-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import {float64Decoder} from '../../representation/float64/float64-decoder.js';
-import {float64Encode} from '../../representation/float64/float64-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {EnumDefinition} from '../../type/enum-definition.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';

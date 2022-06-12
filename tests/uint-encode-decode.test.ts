@@ -1,9 +1,9 @@
 import type {ExecutionContext} from 'ava';
 import test from 'ava';
 
+import {uintDecoder} from '../src/coder/uint/uint-decoder.js';
+import {uintEncode} from '../src/coder/uint/uint-encode.js';
 import {SyncBufferDeserializer} from '../src/index.js';
-import {uintDecoder} from '../src/representation/uint/uint-decoder.js';
-import {uintEncode} from '../src/representation/uint/uint-encode.js';
 
 function macroEncodeDecodeUint(t: ExecutionContext, value: number): void {
   t.is(

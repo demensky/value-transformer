@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {dateDecoder} from '../../coder/date/date-decoder.js';
+import {dateEncode} from '../../coder/date/date-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import {dateDecoder} from '../../representation/date/date-decoder.js';
-import {dateEncode} from '../../representation/date/date-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isDate} from '../../util/guard/is-date.js';

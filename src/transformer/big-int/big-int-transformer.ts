@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {bigIntDecoder} from '../../coder/big-int/big-int-decoder.js';
+import {bigIntEncode} from '../../coder/big-int/big-int-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import {bigIntDecoder} from '../../representation/big-int/big-int-decoder.js';
-import {bigIntEncode} from '../../representation/big-int/big-int-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isBigInt} from '../../util/guard/is-big-int.js';

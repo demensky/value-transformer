@@ -1,8 +1,8 @@
 import {decoder} from '../../base/decoder.js';
 import {encode} from '../../base/encode.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
-import {nullableDecoder} from '../../representation/nullable/nullable-decoder.js';
-import {nullableEncode} from '../../representation/nullable/nullable-encode.js';
+import {nullableDecoder} from '../../coder/nullable/nullable-decoder.js';
+import {nullableEncode} from '../../coder/nullable/nullable-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isNull} from '../../util/guard/is-null.js';

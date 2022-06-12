@@ -1,10 +1,10 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
 import type {ValueTransformerInput} from '../../base/value-transformer-input.js';
 import type {ValueTransformerOutput} from '../../base/value-transformer-output.js';
+import {uintDecoder} from '../../coder/uint/uint-decoder.js';
+import {uintEncode} from '../../coder/uint/uint-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error.js';
-import {uintDecoder} from '../../representation/uint/uint-decoder.js';
-import {uintEncode} from '../../representation/uint/uint-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import type {UnverifiedObject} from '../../type/unverified-object.js';

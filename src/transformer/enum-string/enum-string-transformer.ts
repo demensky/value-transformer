@@ -1,8 +1,8 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {stringDecoder} from '../../coder/string/string-decoder.js';
+import {stringEncode} from '../../coder/string/string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import {stringDecoder} from '../../representation/string/string-decoder.js';
-import {stringEncode} from '../../representation/string/string-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {EnumDefinition} from '../../type/enum-definition.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';

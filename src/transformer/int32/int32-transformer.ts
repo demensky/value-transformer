@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {int32Decoder} from '../../coder/int32/int32-decoder.js';
+import {int32Encode} from '../../coder/int32/int32-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import {int32Decoder} from '../../representation/int32/int32-decoder.js';
-import {int32Encode} from '../../representation/int32/int32-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isInt32} from '../../util/guard/is-int32.js';

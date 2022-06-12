@@ -1,7 +1,7 @@
 import {ValueTransformer} from '../../base/value-transformer.js';
+import {uuidStringDecoder} from '../../coder/uuid-string/uuid-string-decoder.js';
+import {uuidStringEncode} from '../../coder/uuid-string/uuid-string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import {uuidStringDecoder} from '../../representation/uuid-string/uuid-string-decoder.js';
-import {uuidStringEncode} from '../../representation/uuid-string/uuid-string-encode.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import type {UuidString} from '../../type/uuid-string.js';
