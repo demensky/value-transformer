@@ -1,6 +1,6 @@
 import type {ExecutionContext} from 'ava';
 
-import type {EncodeFactory} from '../src/type/encode-factory.js';
+import type {EncodeFactory} from '../src/index.js';
 
 export function macroEncode<T>(
   t: ExecutionContext<EncodeFactory<T>>,

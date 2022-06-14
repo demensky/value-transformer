@@ -1,7 +1,7 @@
 import type {ExecutionContext} from 'ava';
 
 import type {ValueTransformer} from '../src/index.js';
-import {SyncBufferDeserializer} from '../src/index.js';
+import {IterableBufferReader} from '../src/index.js';
 
 function concatToUint8(views: ArrayBufferView[]): Uint8Array {
   const result = new Uint8Array(
@@ -56,7 +56,7 @@ export function toBeTransformation<T>(
   );
 
   t.deepEqual(
-    SyncBufferDeserializer.from([view]).finalRead(transformer.decoder()),
+    IterableBufferReader.from([view]).finalRead(transformer.decoder()),
     data,
     'decoder() not equal data',
   );

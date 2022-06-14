@@ -1,20 +1,20 @@
 import type {DecoderGenerator} from '../type/decoder-generator.js';
 
-import type {BufferDeserializerGenerator} from './buffer-deserializer-generator.js';
-import {GenericBufferDeserializer} from './generic-buffer-deserializer.js';
+import {BufferReaderController} from './buffer-reader-controller.js';
+import type {BufferReaderGenerator} from './buffer-reader-generator.js';
 
-export class SyncBufferDeserializer {
+export class IterableBufferReader {
   public static from(
     iterable: Iterable<ArrayBufferView>,
-  ): SyncBufferDeserializer {
-    return new SyncBufferDeserializer(iterable[Symbol.iterator]());
+  ): IterableBufferReader {
+    return new IterableBufferReader(iterable[Symbol.iterator]());
   }
 
-  private readonly _deserializer = new GenericBufferDeserializer();
+  private readonly _controller = new BufferReaderController();
 
   public constructor(private readonly _iterator: Iterator<ArrayBufferView>) {}
 
-  private _handle<T>(generator: BufferDeserializerGenerator<T>): T {
+  private _handle<T>(generator: BufferReaderGenerator<T>): T {
     let result: IteratorResult<null, T> = generator.next();
 
     while (result.done !== true) {
@@ -26,7 +26,7 @@ export class SyncBufferDeserializer {
 
   public final(): void {
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    this._handle<void>(this._deserializer.final());
+    this._handle<void>(this._controller.final());
   }
 
   public finalRead<T>(decoder: DecoderGenerator<T>): T {
@@ -38,6 +38,6 @@ export class SyncBufferDeserializer {
   }
 
   public read<T>(decoder: DecoderGenerator<T>): T {
-    return this._handle<T>(this._deserializer.read(decoder));
+    return this._handle<T>(this._controller.read(decoder));
   }
 }

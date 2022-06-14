@@ -4,7 +4,7 @@ import test from 'ava';
 import type {DecoderGenerator} from '../type/decoder-generator.js';
 import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
 
-import {SyncBufferDeserializer} from './sync-buffer-deserializer.js';
+import {IterableBufferReader} from './iterable-buffer-reader.js';
 
 function* mockDecoder(
   counts: readonly number[],
@@ -31,7 +31,7 @@ function macroSyncBufferDeserializer(
   inputChunks: readonly (readonly number[])[],
   outputChunks: readonly (readonly number[])[],
 ): void {
-  const deserializer = SyncBufferDeserializer.from(
+  const deserializer = IterableBufferReader.from(
     inputChunks.map((list) => new Uint8Array(list)),
   );
 

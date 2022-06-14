@@ -3,9 +3,9 @@ import {CorruptedBufferDeserializerError} from '../error/corrupted-buffer-deseri
 import type {DecoderGenerator} from '../type/decoder-generator.js';
 import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
 
-import type {BufferDeserializerGenerator} from './buffer-deserializer-generator.js';
+import type {BufferReaderGenerator} from './buffer-reader-generator.js';
 
-function* nextChunk(): BufferDeserializerGenerator<ArrayBufferView> {
+function* nextChunk(): BufferReaderGenerator<ArrayBufferView> {
   let result: IteratorResult<ArrayBufferView>;
 
   do {
@@ -19,7 +19,7 @@ function* nextChunk(): BufferDeserializerGenerator<ArrayBufferView> {
   return result.value;
 }
 
-export class GenericBufferDeserializer {
+export class BufferReaderController {
   private _chunk: ArrayBufferView | null = null;
 
   private _corrupted: CorruptedBufferDeserializerError | null = null;
@@ -37,7 +37,7 @@ export class GenericBufferDeserializer {
     throw cause;
   }
 
-  public *final(): BufferDeserializerGenerator<void> {
+  public *final(): BufferReaderGenerator<void> {
     if (this._corrupted !== null) {
       throw this._corrupted;
     }
@@ -59,9 +59,7 @@ export class GenericBufferDeserializer {
     }
   }
 
-  public *read<T>(
-    decoder: DecoderGenerator<T>,
-  ): BufferDeserializerGenerator<T> {
+  public *read<T>(decoder: DecoderGenerator<T>): BufferReaderGenerator<T> {
     if (this._corrupted !== null) {
       throw this._corrupted;
     }
