@@ -2,7 +2,7 @@ export * from './base/value-transformer.js';
 export * from './base/value-transformer-config.js';
 export * from './base/value-transformer-input.js';
 export * from './base/value-transformer-output.js';
-export * from './buffer-reader/async-iterable-buffer-reader.js';
+export * from './buffer-reader/buffer-source-stream-reader.js';
 export * from './buffer-reader/iterable-buffer-reader.js';
 export * from './coder/array/array-decoder.js';
 export * from './coder/array/array-encode.js';

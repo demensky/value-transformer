@@ -2,21 +2,23 @@ import {BufferDeserializerRangeError} from '../error/buffer-deserializer-range-e
 import {CorruptedBufferDeserializerError} from '../error/corrupted-buffer-deserializer-error.js';
 import type {DecoderGenerator} from '../type/decoder-generator.js';
 import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
+import {narrowToArrayBufferView} from '../util/narrow-to-array-buffer-view.js';
 
+import type {BufferReaderChunk} from './buffer-reader-chunk.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
 
 function* nextChunk(): BufferReaderGenerator<ArrayBufferView> {
-  let result: IteratorResult<ArrayBufferView>;
+  let chunk: BufferReaderChunk;
 
   do {
-    result = yield null;
+    chunk = yield null;
 
-    if (result.done === true) {
+    if (chunk.done === true) {
       throw new BufferDeserializerRangeError();
     }
-  } while (result.value.byteLength === 0);
+  } while (chunk.value.byteLength === 0);
 
-  return result.value;
+  return narrowToArrayBufferView(chunk.value);
 }
 
 export class BufferReaderController {
@@ -47,7 +49,7 @@ export class BufferReaderController {
     }
 
     while (true) {
-      const chunk: IteratorResult<ArrayBufferView> = yield null;
+      const chunk: BufferReaderChunk = yield null;
 
       if (chunk.done === true) {
         return;

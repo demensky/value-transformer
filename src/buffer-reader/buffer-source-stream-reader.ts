@@ -4,11 +4,11 @@ import type {DecoderGenerator} from '../type/decoder-generator.js';
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
 
-export class AsyncIterableBufferReader {
+export class BufferSourceStreamReader {
   public static from(
-    iterable: AsyncIterable<ArrayBufferView>,
-  ): AsyncIterableBufferReader {
-    return new AsyncIterableBufferReader(iterable[Symbol.asyncIterator]());
+    stream: ReadableStream<BufferSource>,
+  ): BufferSourceStreamReader {
+    return new BufferSourceStreamReader(stream.getReader());
   }
 
   private _busy = false;
@@ -16,7 +16,7 @@ export class AsyncIterableBufferReader {
   private readonly _controller = new BufferReaderController();
 
   public constructor(
-    private readonly _iterator: AsyncIterator<ArrayBufferView>,
+    private readonly _reader: ReadableStreamDefaultReader<BufferSource>,
   ) {}
 
   private async _handle<T>(generator: BufferReaderGenerator<T>): Promise<T> {
@@ -29,7 +29,7 @@ export class AsyncIterableBufferReader {
     let result: IteratorResult<null, T> = generator.next();
 
     while (result.done !== true) {
-      result = generator.next(await this._iterator.next());
+      result = generator.next(await this._reader.read());
     }
 
     this._busy = false;
@@ -37,9 +37,11 @@ export class AsyncIterableBufferReader {
     return result.value;
   }
 
-  public final(): Promise<void> {
+  public async final(): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    return this._handle<void>(this._controller.final());
+    await this._handle<void>(this._controller.final());
+
+    this._reader.releaseLock();
   }
 
   public async finalRead<T>(decoder: DecoderGenerator<T>): Promise<T> {
