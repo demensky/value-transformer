@@ -20,36 +20,38 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     return new ClassTransformer<T>(constructor);
   }
 
-  private _fieldsInfo: readonly OneOfTransformableField<T>[] | null = null;
+  readonly #ctor: new (...args: never) => T;
 
-  private constructor(
-    private readonly _constructor: new (...args: never) => T,
-  ) {
+  #fieldsInfo: readonly OneOfTransformableField<T>[] | null = null;
+
+  private constructor(ctor: new (...args: never) => T) {
     super();
+
+    this.#ctor = ctor;
   }
 
-  private _getFieldsInfo(): readonly OneOfTransformableField<T>[] {
-    if (this._fieldsInfo !== null) {
-      return this._fieldsInfo;
+  #getFieldsInfo(): readonly OneOfTransformableField<T>[] {
+    if (this.#fieldsInfo !== null) {
+      return this.#fieldsInfo;
     }
 
-    this._fieldsInfo = [
+    this.#fieldsInfo = [
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      ...extractTransformableFields<T>(this._constructor.prototype as T),
+      ...extractTransformableFields<T>(this.#ctor.prototype as T),
     ];
 
-    return this._fieldsInfo;
+    return this.#fieldsInfo;
   }
 
   public compatibleWith(data: unknown): data is Readonly<T> {
-    return data instanceof this._constructor;
+    return data instanceof this.#ctor;
   }
 
   public *decoder(): DecoderGenerator<T> {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const instance: T = Object.create(this._constructor.prototype as T) as T;
+    const instance: T = Object.create(this.#ctor.prototype as T) as T;
 
-    for (const [key, transformer] of this._getFieldsInfo()) {
+    for (const [key, transformer] of this.#getFieldsInfo()) {
       instance[key] = yield* transformer.decoder();
     }
 
@@ -57,17 +59,17 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
   }
 
   public *encode(data: Readonly<T>): IterableEncoding {
-    console.assert(data instanceof this._constructor);
+    console.assert(data instanceof this.#ctor);
 
-    for (const [key, transformer] of this._getFieldsInfo()) {
+    for (const [key, transformer] of this.#getFieldsInfo()) {
       yield* transformer.encode(data[key]);
     }
   }
 
   public fromLiteral(literal: unknown): T {
-    const fields = this._getFieldsInfo();
+    const fields = this.#getFieldsInfo();
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const instance: T = Object.create(this._constructor.prototype as T) as T;
+    const instance: T = Object.create(this.#ctor.prototype as T) as T;
 
     if (!isObject(literal)) {
       throw new IncompatibleLiteralError();
@@ -93,17 +95,17 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
   }
 
   public override toCompactLiteral(data: Readonly<T>): unknown {
-    console.assert(data instanceof this._constructor);
+    console.assert(data instanceof this.#ctor);
 
-    return this._getFieldsInfo().map<unknown>(([key, transformer]) =>
+    return this.#getFieldsInfo().map<unknown>(([key, transformer]) =>
       transformer.toCompactLiteral(data[key]),
     );
   }
 
   public toLiteral(data: Readonly<T>): unknown {
-    console.assert(data instanceof this._constructor);
+    console.assert(data instanceof this.#ctor);
 
-    const fields = this._getFieldsInfo();
+    const fields = this.#getFieldsInfo();
     const literal: Partial<Record<keyof T, unknown>> = {};
 
     for (const [key, transformer] of fields) {

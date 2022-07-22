@@ -36,14 +36,16 @@ export class UnionTransformer<
   I extends readonly unknown[],
   O extends I,
 > extends ValueTransformer<I[number], O[number]> {
-  public constructor(
-    private readonly _transformers: UnionTransformerTransformers<I, O>,
-  ) {
+  readonly #transformers: UnionTransformerTransformers<I, O>;
+
+  public constructor(transformers: UnionTransformerTransformers<I, O>) {
     super();
+
+    this.#transformers = transformers;
   }
 
-  private _findInputEntry(data: I[number]): InputEntry<I[number]> {
-    for (const entry of this._transformers.entries()) {
+  #findInputEntry(data: I[number]): InputEntry<I[number]> {
+    for (const entry of this.#transformers.entries()) {
       if (!entry[ENTRY_VALUE_INDEX].compatibleWith(data)) {
         continue;
       }
@@ -54,13 +56,13 @@ export class UnionTransformer<
     throw new TransformerNotFoundError();
   }
 
-  private _findOutputByIs(is: number): ValueTransformerOutput<O[number]> {
-    if (is >= this._transformers.length) {
+  #findOutputByIs(is: number): ValueTransformerOutput<O[number]> {
+    if (is >= this.#transformers.length) {
       throw new TransformerNotFoundError();
     }
 
     const transformer: ValueTransformerOutput<O[number]> | undefined =
-      this._transformers[is];
+      this.#transformers[is];
 
     if (transformer === undefined) {
       throw new TransformerNotFoundError();
@@ -70,17 +72,17 @@ export class UnionTransformer<
   }
 
   public compatibleWith(data: unknown): data is I[number] {
-    return this._transformers.some((transformer) =>
+    return this.#transformers.some((transformer) =>
       transformer.compatibleWith(data),
     );
   }
 
   public *decoder(): DecoderGenerator<O[number]> {
-    return yield* this._findOutputByIs(yield* uintDecoder()).decoder();
+    return yield* this.#findOutputByIs(yield* uintDecoder()).decoder();
   }
 
   public *encode(data: I[number]): IterableEncoding {
-    const [is, transformer]: InputEntry<I[number]> = this._findInputEntry(data);
+    const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
 
     yield* uintEncode(is);
     yield* transformer.encode(data);
@@ -109,11 +111,11 @@ export class UnionTransformer<
       throw new IncompatibleLiteralError();
     }
 
-    return this._findOutputByIs(is).fromLiteral(value);
+    return this.#findOutputByIs(is).fromLiteral(value);
   }
 
   public override toCompactLiteral(data: I[number]): unknown {
-    const [is, transformer]: InputEntry<I[number]> = this._findInputEntry(data);
+    const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
 
     return identity<UnionCompactLiteral>([
       is,
@@ -122,7 +124,7 @@ export class UnionTransformer<
   }
 
   public toLiteral(data: I[number]): unknown {
-    const [is, transformer]: InputEntry<I[number]> = this._findInputEntry(data);
+    const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
 
     return identity<UnionLiteral>({is, value: transformer.toLiteral(data)});
   }

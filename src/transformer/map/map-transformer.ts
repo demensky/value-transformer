@@ -22,25 +22,32 @@ export class MapTransformer<
   VI,
   VO extends VI,
 > extends ValueTransformer<ReadonlyMap<KI, VI>, Map<KO, VO>> {
+  readonly #keyTransformer: ValueTransformer<KI, KO>;
+
+  readonly #valueTransformer: ValueTransformer<VI, VO>;
+
   public constructor(
-    private readonly _keyTransformer: ValueTransformer<KI, KO>,
-    private readonly _valueTransformer: ValueTransformer<VI, VO>,
+    keyTransformer: ValueTransformer<KI, KO>,
+    valueTransformer: ValueTransformer<VI, VO>,
   ) {
     super();
+
+    this.#valueTransformer = valueTransformer;
+    this.#keyTransformer = keyTransformer;
   }
 
   public compatibleWith(data: unknown): data is ReadonlyMap<KI, VI> {
     return (
       isMap(data) &&
-      every<unknown>(data.keys(), compatibleWith<KI>(this._keyTransformer)) &&
-      every<unknown>(data.values(), compatibleWith<VI>(this._valueTransformer))
+      every<unknown>(data.keys(), compatibleWith<KI>(this.#keyTransformer)) &&
+      every<unknown>(data.values(), compatibleWith<VI>(this.#valueTransformer))
     );
   }
 
   public decoder(): DecoderGenerator<Map<KO, VO>> {
     return mapDecoder<KO, VO>(
-      decoder<KO>(this._keyTransformer),
-      decoder<VO>(this._valueTransformer),
+      decoder<KO>(this.#keyTransformer),
+      decoder<VO>(this.#valueTransformer),
     );
   }
 
@@ -49,8 +56,8 @@ export class MapTransformer<
 
     return mapEncode<KI, VI>(
       data,
-      encode<KI>(this._keyTransformer),
-      encode<VI>(this._valueTransformer),
+      encode<KI>(this.#keyTransformer),
+      encode<VI>(this.#valueTransformer),
     );
   }
 
@@ -68,8 +75,8 @@ export class MapTransformer<
         const [key, value]: readonly [unknown, unknown] = item;
 
         return [
-          this._keyTransformer.fromLiteral(key),
-          this._valueTransformer.fromLiteral(value),
+          this.#keyTransformer.fromLiteral(key),
+          this.#valueTransformer.fromLiteral(value),
         ];
       }),
     );
@@ -81,8 +88,8 @@ export class MapTransformer<
     return Array.from<readonly [unknown, unknown]>(
       mapEntries<KI, unknown, VI, unknown>(
         data,
-        toCompactLiteral<KI>(this._keyTransformer),
-        toCompactLiteral<VI>(this._valueTransformer),
+        toCompactLiteral<KI>(this.#keyTransformer),
+        toCompactLiteral<VI>(this.#valueTransformer),
       ),
     );
   }
@@ -93,8 +100,8 @@ export class MapTransformer<
     return Array.from<readonly [unknown, unknown]>(
       mapEntries<KI, unknown, VI, unknown>(
         data,
-        toLiteral<KI>(this._keyTransformer),
-        toLiteral<VI>(this._valueTransformer),
+        toLiteral<KI>(this.#keyTransformer),
+        toLiteral<VI>(this.#valueTransformer),
       ),
     );
   }

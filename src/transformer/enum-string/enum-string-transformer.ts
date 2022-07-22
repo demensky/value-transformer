@@ -20,18 +20,22 @@ export class EnumStringTransformer<V extends string> extends ValueTransformer<
     return new EnumStringTransformer<V>(extractEnumValues<K, V>(definition));
   }
 
-  private constructor(private readonly _values: ReadonlySet<V>) {
+  readonly #values: ReadonlySet<V>;
+
+  private constructor(values: ReadonlySet<V>) {
     super();
+
+    this.#values = values;
   }
 
   public compatibleWith(data: unknown): data is V {
-    return isString(data) && isInSet<V>(data, this._values);
+    return isString(data) && isInSet<V>(data, this.#values);
   }
 
   public *decoder(): DecoderGenerator<V> {
     const value: string = yield* stringDecoder();
 
-    if (!isInSet<V>(value, this._values)) {
+    if (!isInSet<V>(value, this.#values)) {
       throw new InvalidBufferValueError();
     }
 
@@ -39,13 +43,13 @@ export class EnumStringTransformer<V extends string> extends ValueTransformer<
   }
 
   public encode(data: V): IterableEncoding {
-    console.assert(isString(data) && isInSet<V>(data, this._values));
+    console.assert(isString(data) && isInSet<V>(data, this.#values));
 
     return stringEncode(data);
   }
 
   public fromLiteral(literal: unknown): V {
-    if (!isString(literal) || !isInSet<V>(literal, this._values)) {
+    if (!isString(literal) || !isInSet<V>(literal, this.#values)) {
       throw new IncompatibleLiteralError();
     }
 
@@ -53,7 +57,7 @@ export class EnumStringTransformer<V extends string> extends ValueTransformer<
   }
 
   public toLiteral(data: V): unknown {
-    console.assert(isString(data) && isInSet<V>(data, this._values));
+    console.assert(isString(data) && isInSet<V>(data, this.#values));
 
     return data;
   }

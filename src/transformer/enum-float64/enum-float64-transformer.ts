@@ -20,18 +20,22 @@ export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
     return new EnumFloat64Transformer<V>(extractEnumValues<K, V>(definition));
   }
 
-  private constructor(private readonly _values: ReadonlySet<V>) {
+  readonly #values: ReadonlySet<V>;
+
+  private constructor(values: ReadonlySet<V>) {
     super();
+
+    this.#values = values;
   }
 
   public compatibleWith(data: unknown): data is V {
-    return isNumber(data) && isInSet<V>(data, this._values);
+    return isNumber(data) && isInSet<V>(data, this.#values);
   }
 
   public *decoder(): DecoderGenerator<V> {
     const value: number = yield* float64Decoder();
 
-    if (!isInSet<V>(value, this._values)) {
+    if (!isInSet<V>(value, this.#values)) {
       throw new InvalidBufferValueError();
     }
 
@@ -39,13 +43,13 @@ export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
   }
 
   public encode(data: V): IterableEncoding {
-    console.assert(isNumber(data) && isInSet<V>(data, this._values));
+    console.assert(isNumber(data) && isInSet<V>(data, this.#values));
 
     return float64Encode(data);
   }
 
   public fromLiteral(literal: unknown): V {
-    if (!isNumber(literal) || !isInSet<V>(literal, this._values)) {
+    if (!isNumber(literal) || !isInSet<V>(literal, this.#values)) {
       throw new IncompatibleLiteralError();
     }
 
@@ -53,7 +57,7 @@ export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
   }
 
   public toLiteral(data: V): unknown {
-    console.assert(isNumber(data) && isInSet<V>(data, this._values));
+    console.assert(isNumber(data) && isInSet<V>(data, this.#values));
 
     return data;
   }

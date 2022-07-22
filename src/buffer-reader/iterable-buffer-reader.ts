@@ -10,15 +10,19 @@ export class IterableBufferReader {
     return new IterableBufferReader(iterable[Symbol.iterator]());
   }
 
-  private readonly _controller = new BufferReaderController();
+  readonly #controller = new BufferReaderController();
 
-  public constructor(private readonly _iterator: Iterator<ArrayBufferView>) {}
+  readonly #iterator: Iterator<ArrayBufferView>;
 
-  private _handle<T>(generator: BufferReaderGenerator<T>): T {
+  public constructor(iterator: Iterator<ArrayBufferView>) {
+    this.#iterator = iterator;
+  }
+
+  #handle<T>(generator: BufferReaderGenerator<T>): T {
     let result: IteratorResult<null, T> = generator.next();
 
     while (result.done !== true) {
-      result = generator.next(this._iterator.next());
+      result = generator.next(this.#iterator.next());
     }
 
     return result.value;
@@ -26,7 +30,7 @@ export class IterableBufferReader {
 
   public final(): void {
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    this._handle<void>(this._controller.final());
+    this.#handle<void>(this.#controller.final());
   }
 
   public finalRead<T>(decoder: DecoderGenerator<T>): T {
@@ -38,6 +42,6 @@ export class IterableBufferReader {
   }
 
   public read<T>(decoder: DecoderGenerator<T>): T {
-    return this._handle<T>(this._controller.read(decoder));
+    return this.#handle<T>(this.#controller.read(decoder));
   }
 }

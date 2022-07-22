@@ -11,31 +11,35 @@ export class NullableTransformer<I, O extends I> extends ValueTransformer<
   I | null,
   O | null
 > {
-  public constructor(private readonly _transformer: ValueTransformer<I, O>) {
+  readonly #transformer: ValueTransformer<I, O>;
+
+  public constructor(transformer: ValueTransformer<I, O>) {
     super();
+
+    this.#transformer = transformer;
   }
 
   public compatibleWith(data: unknown): data is I | null {
-    return isNull(data) || this._transformer.compatibleWith(data);
+    return isNull(data) || this.#transformer.compatibleWith(data);
   }
 
   public decoder(): DecoderGenerator<O | null> {
-    return nullableDecoder<O>(decoder<O>(this._transformer));
+    return nullableDecoder<O>(decoder<O>(this.#transformer));
   }
 
   public encode(data: I | null): IterableEncoding {
-    return nullableEncode<I>(data, encode<I>(this._transformer));
+    return nullableEncode<I>(data, encode<I>(this.#transformer));
   }
 
   public fromLiteral(literal: unknown): O | null {
-    return isNull(literal) ? null : this._transformer.fromLiteral(literal);
+    return isNull(literal) ? null : this.#transformer.fromLiteral(literal);
   }
 
   public override toCompactLiteral(data: I | null): unknown {
-    return isNull(data) ? null : this._transformer.toCompactLiteral(data);
+    return isNull(data) ? null : this.#transformer.toCompactLiteral(data);
   }
 
   public toLiteral(data: I | null): unknown {
-    return isNull(data) ? null : this._transformer.toLiteral(data);
+    return isNull(data) ? null : this.#transformer.toLiteral(data);
   }
 }

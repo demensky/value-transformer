@@ -19,22 +19,26 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
   readonly I[],
   O[]
 > {
-  public constructor(private readonly _transformer: ValueTransformer<I, O>) {
+  readonly #transformer: ValueTransformer<I, O>;
+
+  public constructor(_transformer: ValueTransformer<I, O>) {
     super();
+
+    this.#transformer = _transformer;
   }
 
   public compatibleWith(data: unknown): data is readonly I[] {
-    return isArray(data) && every(data, compatibleWith<I>(this._transformer));
+    return isArray(data) && every(data, compatibleWith<I>(this.#transformer));
   }
 
   public decoder(): DecoderGenerator<O[]> {
-    return arrayDecoder<O>(decoder<O>(this._transformer));
+    return arrayDecoder<O>(decoder<O>(this.#transformer));
   }
 
   public encode(data: readonly I[]): IterableEncoding {
     console.assert(isArray(data));
 
-    return arrayEncode<I>(data, encode<I>(this._transformer));
+    return arrayEncode<I>(data, encode<I>(this.#transformer));
   }
 
   public fromLiteral(literal: unknown): O[] {
@@ -42,7 +46,7 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
       throw new IncompatibleLiteralError();
     }
 
-    return Array.from<unknown, O>(literal, fromLiteral<O>(this._transformer));
+    return Array.from<unknown, O>(literal, fromLiteral<O>(this.#transformer));
   }
 
   public override toCompactLiteral(data: readonly I[]): unknown {
@@ -50,7 +54,7 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
 
     return Array.from<I, unknown>(
       denseArrayLike<I>(data),
-      toCompactLiteral<I>(this._transformer),
+      toCompactLiteral<I>(this.#transformer),
     );
   }
 
@@ -59,7 +63,7 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
 
     return Array.from<I, unknown>(
       denseArrayLike<I>(data),
-      toLiteral<I>(this._transformer),
+      toLiteral<I>(this.#transformer),
     );
   }
 }

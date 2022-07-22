@@ -109,41 +109,42 @@
       }
     ],
     "@typescript-eslint/explicit-member-accessibility": "error",
-    "@typescript-eslint/member-ordering": [
-      "error",
-      {
-        "default": {
-          "memberTypes": [
-            "signature",
+    // TODO after typescript-eslint/typescript-eslint#4182
+    //"@typescript-eslint/member-ordering": [
+    //  "error",
+    //  {
+    //    "default": {
+    //      "memberTypes": [
+    //        "signature",
 
-            "private-static-field",
-            "protected-static-field",
-            "public-static-field",
+    //        "private-static-field",
+    //        "protected-static-field",
+    //        "public-static-field",
 
-            "private-static-method",
-            "protected-static-method",
-            "public-static-method",
+    //        "private-static-method",
+    //        "protected-static-method",
+    //        "public-static-method",
 
-            "private-abstract-field",
-            "private-instance-field",
-            "protected-abstract-field",
-            "protected-instance-field",
-            "public-abstract-field",
-            "public-instance-field",
+    //        "private-abstract-field",
+    //        "private-instance-field",
+    //        "protected-abstract-field",
+    //        "protected-instance-field",
+    //        "public-abstract-field",
+    //        "public-instance-field",
 
-            "constructor",
+    //        "constructor",
 
-            "private-abstract-method",
-            "private-instance-method",
-            "protected-abstract-method",
-            "protected-instance-method",
-            "public-abstract-method",
-            "public-instance-method"
-          ],
-          "order": "alphabetically"
-        }
-      }
-    ],
+    //        "private-abstract-method",
+    //        "private-instance-method",
+    //        "protected-abstract-method",
+    //        "protected-instance-method",
+    //        "public-abstract-method",
+    //        "public-instance-method"
+    //      ],
+    //      "order": "alphabetically"
+    //    }
+    //  }
+    //],
     // TODO @typescript-eslint/naming-convention
     "@typescript-eslint/no-base-to-string": "error",
     "@typescript-eslint/no-dynamic-delete": "error",

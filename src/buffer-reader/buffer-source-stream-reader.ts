@@ -11,37 +11,39 @@ export class BufferSourceStreamReader {
     return new BufferSourceStreamReader(stream.getReader());
   }
 
-  private _busy = false;
+  #busy = false;
 
-  private readonly _controller = new BufferReaderController();
+  readonly #controller = new BufferReaderController();
 
-  public constructor(
-    private readonly _reader: ReadableStreamDefaultReader<BufferSource>,
-  ) {}
+  readonly #reader: ReadableStreamDefaultReader<BufferSource>;
 
-  private async _handle<T>(generator: BufferReaderGenerator<T>): Promise<T> {
-    if (this._busy) {
+  public constructor(reader: ReadableStreamDefaultReader<BufferSource>) {
+    this.#reader = reader;
+  }
+
+  async #handle<T>(generator: BufferReaderGenerator<T>): Promise<T> {
+    if (this.#busy) {
       throw new BusyBufferDeserializerError();
     }
 
-    this._busy = true;
+    this.#busy = true;
 
     let result: IteratorResult<null, T> = generator.next();
 
     while (result.done !== true) {
-      result = generator.next(await this._reader.read());
+      result = generator.next(await this.#reader.read());
     }
 
-    this._busy = false;
+    this.#busy = false;
 
     return result.value;
   }
 
   public async final(): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    await this._handle<void>(this._controller.final());
+    await this.#handle<void>(this.#controller.final());
 
-    this._reader.releaseLock();
+    this.#reader.releaseLock();
   }
 
   public async finalRead<T>(decoder: DecoderGenerator<T>): Promise<T> {
@@ -53,6 +55,6 @@ export class BufferSourceStreamReader {
   }
 
   public read<T>(decoder: DecoderGenerator<T>): Promise<T> {
-    return this._handle<T>(this._controller.read(decoder));
+    return this.#handle<T>(this.#controller.read(decoder));
   }
 }

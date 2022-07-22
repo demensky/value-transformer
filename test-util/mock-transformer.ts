@@ -2,39 +2,54 @@ import type {DecoderGenerator, IterableEncoding} from '../src/index.js';
 import {ValueTransformer} from '../src/index.js';
 
 export class MockTransformer<T> extends ValueTransformer<T, T> {
+  readonly #buffer: Uint8Array;
+
+  readonly #compact: unknown;
+
+  readonly #compatible: boolean;
+
+  readonly #data: T;
+
+  readonly #literal: unknown;
+
   public constructor(
-    private readonly _compatible: boolean,
-    private readonly _data: T,
-    private readonly _buffer: Uint8Array,
-    private readonly _compact: unknown,
-    private readonly _literal: unknown,
+    compatible: boolean,
+    data: T,
+    buffer: Uint8Array,
+    compact: unknown,
+    literal: unknown,
   ) {
     super();
+    this.#literal = literal;
+    this.#compact = compact;
+    this.#buffer = buffer;
+    this.#data = data;
+    this.#compatible = compatible;
   }
 
   public compatibleWith(_data: unknown): _data is T {
-    return this._compatible;
+    return this.#compatible;
   }
 
   public *decoder(): DecoderGenerator<T> {
-    yield this._buffer.length;
+    yield this.#buffer.length;
 
-    return this._data;
+    return this.#data;
   }
 
   public *encode(_data: T): IterableEncoding {
-    yield this._buffer;
+    yield this.#buffer;
   }
 
   public fromLiteral(_literal: unknown): T {
-    return this._data;
+    return this.#data;
   }
 
   public override toCompactLiteral(_data: T): unknown {
-    return this._compact;
+    return this.#compact;
   }
 
   public toLiteral(_data: T): unknown {
-    return this._literal;
+    return this.#literal;
   }
 }

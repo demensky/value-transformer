@@ -20,22 +20,26 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
   ReadonlySet<I>,
   Set<O>
 > {
-  public constructor(private readonly _transformer: ValueTransformer<I, O>) {
+  readonly #transformer: ValueTransformer<I, O>;
+
+  public constructor(transformer: ValueTransformer<I, O>) {
     super();
+
+    this.#transformer = transformer;
   }
 
   public compatibleWith(data: unknown): data is ReadonlySet<I> {
-    return isSet(data) && every(data, compatibleWith<I>(this._transformer));
+    return isSet(data) && every(data, compatibleWith<I>(this.#transformer));
   }
 
   public decoder(): DecoderGenerator<Set<O>> {
-    return setDecoder<O>(decoder<O>(this._transformer));
+    return setDecoder<O>(decoder<O>(this.#transformer));
   }
 
   public encode(data: ReadonlySet<I>): IterableEncoding {
     console.assert(isSet(data));
 
-    return setEncode<I>(data, encode<I>(this._transformer));
+    return setEncode<I>(data, encode<I>(this.#transformer));
   }
 
   public fromLiteral(literal: unknown): Set<O> {
@@ -44,19 +48,19 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
     }
 
     return new Set<O>(
-      map<unknown, O>(literal, fromLiteral<O>(this._transformer)),
+      map<unknown, O>(literal, fromLiteral<O>(this.#transformer)),
     );
   }
 
   public override toCompactLiteral(data: ReadonlySet<I>): unknown {
     console.assert(isSet(data));
 
-    return Array.from<I, unknown>(data, toCompactLiteral<I>(this._transformer));
+    return Array.from<I, unknown>(data, toCompactLiteral<I>(this.#transformer));
   }
 
   public toLiteral(data: ReadonlySet<I>): unknown {
     console.assert(isSet(data));
 
-    return Array.from<I, unknown>(data, toLiteral<I>(this._transformer));
+    return Array.from<I, unknown>(data, toLiteral<I>(this.#transformer));
   }
 }

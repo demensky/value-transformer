@@ -22,14 +22,14 @@ function* nextChunk(): BufferReaderGenerator<ArrayBufferView> {
 }
 
 export class BufferReaderController {
-  private _chunk: ArrayBufferView | null = null;
+  #chunk: ArrayBufferView | null = null;
 
-  private _corrupted: CorruptedBufferDeserializerError | null = null;
+  #corrupted: CorruptedBufferDeserializerError | null = null;
 
-  private _cursor = 0;
+  #cursor = 0;
 
-  private _throwAsCorrupted(cause: unknown): never {
-    this._corrupted = new CorruptedBufferDeserializerError(
+  #throwAsCorrupted(cause: unknown): never {
+    this.#corrupted = new CorruptedBufferDeserializerError(
       'due to an error, further data reading is meaningless',
       // TODO remove "as"
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -40,12 +40,12 @@ export class BufferReaderController {
   }
 
   public *final(): BufferReaderGenerator<void> {
-    if (this._corrupted !== null) {
-      throw this._corrupted;
+    if (this.#corrupted !== null) {
+      throw this.#corrupted;
     }
 
-    if (this._chunk !== null) {
-      this._throwAsCorrupted(new BufferDeserializerRangeError());
+    if (this.#chunk !== null) {
+      this.#throwAsCorrupted(new BufferDeserializerRangeError());
     }
 
     while (true) {
@@ -56,14 +56,14 @@ export class BufferReaderController {
       }
 
       if (chunk.value.byteLength > 0) {
-        this._throwAsCorrupted(new BufferDeserializerRangeError());
+        this.#throwAsCorrupted(new BufferDeserializerRangeError());
       }
     }
   }
 
   public *read<T>(decoder: DecoderGenerator<T>): BufferReaderGenerator<T> {
-    if (this._corrupted !== null) {
-      throw this._corrupted;
+    if (this.#corrupted !== null) {
+      throw this.#corrupted;
     }
 
     try {
@@ -81,12 +81,12 @@ export class BufferReaderController {
         let chunk: ArrayBufferView;
         let cursor: number;
 
-        if (this._chunk === null) {
+        if (this.#chunk === null) {
           chunk = yield* nextChunk();
           cursor = 0;
         } else {
-          chunk = this._chunk;
-          cursor = this._cursor;
+          chunk = this.#chunk;
+          cursor = this.#cursor;
         }
 
         if (byteLength <= chunk.byteLength - cursor) {
@@ -135,10 +135,10 @@ export class BufferReaderController {
         }
 
         if (chunk.byteLength === cursor) {
-          this._chunk = null;
+          this.#chunk = null;
         } else {
-          this._chunk = chunk;
-          this._cursor = cursor;
+          this.#chunk = chunk;
+          this.#cursor = cursor;
         }
 
         request = decoder.next(response);
@@ -146,7 +146,7 @@ export class BufferReaderController {
 
       return request.value;
     } catch (cause) {
-      this._throwAsCorrupted(cause);
+      this.#throwAsCorrupted(cause);
     }
   }
 }
