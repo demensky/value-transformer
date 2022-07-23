@@ -4,17 +4,15 @@ import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
 
 export class IterableBufferReader {
-  public static from(
-    iterable: Iterable<ArrayBufferView>,
-  ): IterableBufferReader {
+  public static from(iterable: Iterable<BufferSource>): IterableBufferReader {
     return new IterableBufferReader(iterable[Symbol.iterator]());
   }
 
   readonly #controller = new BufferReaderController();
 
-  readonly #iterator: Iterator<ArrayBufferView>;
+  readonly #iterator: Iterator<BufferSource>;
 
-  public constructor(iterator: Iterator<ArrayBufferView>) {
+  public constructor(iterator: Iterator<BufferSource>) {
     this.#iterator = iterator;
   }
 
