@@ -4,7 +4,7 @@ import test from 'ava';
 import type {DecoderGenerator} from '../type/decoder-generator.js';
 import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
 
-import {IterableBufferReader} from './iterable-buffer-reader.js';
+import {BufferSourceIterableReader} from './buffer-source-iterable-reader.js';
 
 function* mockDecoder(
   counts: readonly number[],
@@ -26,12 +26,12 @@ function* mockDecoder(
   return result;
 }
 
-function macroSyncBufferDeserializer(
+function macroBufferSourceIterableReader(
   t: ExecutionContext,
   inputChunks: readonly (readonly number[])[],
   outputChunks: readonly (readonly number[])[],
 ): void {
-  const deserializer = IterableBufferReader.from(
+  const deserializer = BufferSourceIterableReader.from(
     inputChunks.map((list) => new Uint8Array(list)),
   );
 
@@ -45,21 +45,21 @@ function macroSyncBufferDeserializer(
 
 test(
   'single chunk 1 1 1 1 1 1',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
   [[0x0a], [0x0b], [0x0c], [0x0d], [0x0e], [0x0f]],
 );
 
 test(
   'single chunk 1 2 3',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
   [[0x0a], [0x0b, 0x0c], [0x0d, 0x0e, 0x0f]],
 );
 
 test(
   'single chunk 2 2 2',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
   [
     [0x0a, 0x0b],
@@ -70,14 +70,14 @@ test(
 
 test(
   'single chunk 6',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
   [[0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f]],
 );
 
 test(
   'two chunks 1 1 1 1 1 1',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [
     [0x0a, 0x0b, 0x0c],
     [0x0d, 0x0e, 0x0f],
@@ -87,7 +87,7 @@ test(
 
 test(
   'two chunks 4 2',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [
     [0x0a, 0x0b, 0x0c],
     [0x0d, 0x0e, 0x0f],
@@ -100,7 +100,7 @@ test(
 
 test(
   'two chunks 2 2 2',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [
     [0x0a, 0x0b, 0x0c],
     [0x0d, 0x0e, 0x0f],
@@ -114,7 +114,7 @@ test(
 
 test(
   'two chunks 2 4',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [
     [0x0a, 0x0b, 0x0c],
     [0x0d, 0x0e, 0x0f],
@@ -127,7 +127,7 @@ test(
 
 test(
   'three chunks 1 4 1',
-  macroSyncBufferDeserializer,
+  macroBufferSourceIterableReader,
   [
     [0x0a, 0x0b],
     [0x0c, 0x0d],

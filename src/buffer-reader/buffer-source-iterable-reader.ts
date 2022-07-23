@@ -3,9 +3,11 @@ import type {DecoderGenerator} from '../type/decoder-generator.js';
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
 
-export class IterableBufferReader {
-  public static from(iterable: Iterable<BufferSource>): IterableBufferReader {
-    return new IterableBufferReader(iterable[Symbol.iterator]());
+export class BufferSourceIterableReader {
+  public static from(
+    iterable: Iterable<BufferSource>,
+  ): BufferSourceIterableReader {
+    return new BufferSourceIterableReader(iterable[Symbol.iterator]());
   }
 
   readonly #controller = new BufferReaderController();

@@ -1,11 +1,15 @@
 import type {ExecutionContext} from 'ava';
 import test from 'ava';
 
-import {IterableBufferReader, uintDecoder, uintEncode} from '../src/index.js';
+import {
+  BufferSourceIterableReader,
+  uintDecoder,
+  uintEncode,
+} from '../src/index.js';
 
 function macroEncodeDecodeUint(t: ExecutionContext, value: number): void {
   t.is(
-    IterableBufferReader.from(uintEncode(value)).finalRead(uintDecoder()),
+    BufferSourceIterableReader.from(uintEncode(value)).finalRead(uintDecoder()),
     value,
   );
 }
