@@ -1,3 +1,3 @@
 export function isInvalidDate(data: Date): boolean {
-  return Number.isNaN(data.getDate());
+  return Number.isNaN(data.getTime());
 }
