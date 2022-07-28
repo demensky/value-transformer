@@ -23,7 +23,7 @@ export function macroDecoder<T>(
     );
   }
 
-  t.true(request.done);
+  t.true(request.done, 'Not all chunks are decorated');
   t.is(index, chunks.length, 'Wrong chunks count');
-  t.is(request.value, data, 'Wrong data');
+  t.deepEqual(request.value, data, 'Wrong data');
 }
