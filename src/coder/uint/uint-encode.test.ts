@@ -1,29 +1,37 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
-
-import {macroEncode} from '../../../test-util/macro-encode.js';
-import type {EncodeFactory} from '../../type/encode-factory.js';
+import {expect, test} from '@jest/globals';
 
 import {uintEncode} from './uint-encode.js';
 
-const test = anyTest as TestFn<EncodeFactory<number>>;
-
-test.beforeEach((t) => {
-  t.context = uintEncode;
+test('smallest in one byte', () => {
+  expect([...uintEncode(0)]).toStrictEqual([new Uint8Array([0x00])]);
 });
 
-test('smallest in one byte', macroEncode, 0, [[0x00]]);
+test('biggest in one byte', () => {
+  expect([...uintEncode(127)]).toStrictEqual([new Uint8Array([0x7f])]);
+});
 
-test('biggest in one byte', macroEncode, 127, [[0x7f]]);
+test('smallest in two byte', () => {
+  expect([...uintEncode(128)]).toStrictEqual([new Uint8Array([0x80, 0x01])]);
+});
 
-test('smallest in two byte', macroEncode, 128, [[0x80, 0x01]]);
+test('biggest in two byte', () => {
+  expect([...uintEncode(16383)]).toStrictEqual([new Uint8Array([0xff, 0x7f])]);
+});
 
-test('biggest in two byte', macroEncode, 16383, [[0xff, 0x7f]]);
+test('smallest in three byte', () => {
+  expect([...uintEncode(16384)]).toStrictEqual([
+    new Uint8Array([0x80, 0x80, 0x01]),
+  ]);
+});
 
-test('smallest in three byte', macroEncode, 16384, [[0x80, 0x80, 0x01]]);
+test('biggest in three byte', () => {
+  expect([...uintEncode(2097151)]).toStrictEqual([
+    new Uint8Array([0xff, 0xff, 0x7f]),
+  ]);
+});
 
-test('biggest in three byte', macroEncode, 2097151, [[0xff, 0xff, 0x7f]]);
-
-test('max safe integer', macroEncode, Number.MAX_SAFE_INTEGER, [
-  [0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x0f],
-]);
+test('max safe integer', () => {
+  expect([...uintEncode(Number.MAX_SAFE_INTEGER)]).toStrictEqual([
+    new Uint8Array([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x0f]),
+  ]);
+});

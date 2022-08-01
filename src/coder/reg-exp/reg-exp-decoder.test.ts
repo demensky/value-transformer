@@ -1,34 +1,73 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {beforeEach, expect, test} from '@jest/globals';
 
-import {macroDecoder} from '../../../test-util/macro-decoder.js';
-import {macroDecoderThrow} from '../../../test-util/macro-decoder-throw.js';
+import {hexDataView} from '../../../test-util/hex-data-view.js';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
 import {regExpDecoder} from './reg-exp-decoder.js';
 
-const test = anyTest as TestFn<DecoderGenerator<RegExp>>;
+let generator: DecoderGenerator<RegExp>;
 
-test.beforeEach((t) => {
-  t.context = regExpDecoder();
+beforeEach(() => {
+  generator = regExpDecoder();
 });
 
-test('empty', macroDecoder, [[0x00], [], [0x00], []], /(?:)/);
+test('empty', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+    ],
+    /(?:)/,
+  );
+});
 
-test(
-  'empty group',
-  macroDecoder,
-  [[0x04], [0x28, 0x3f, 0x3a, 0x29], [0x00], []],
-  /(?:)/,
-);
+test('empty group', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('04')],
+      [4, hexDataView('28 3f 3a 29')],
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+    ],
+    /(?:)/,
+  );
+});
 
-test('no flags', macroDecoder, [[0x01], [0x61], [0x00], []], /a/);
+test('no flags', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('01')],
+      [1, hexDataView('61')],
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+    ],
+    /a/,
+  );
+});
 
-test(
-  'all flags',
-  macroDecoder,
-  [[0x01], [0x61], [0x07], [0x64, 0x67, 0x69, 0x6d, 0x73, 0x75, 0x79]],
-  /a/dgimsuy,
-);
+test('all flags', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('01')],
+      [1, hexDataView('61')],
+      [1, hexDataView('07')],
+      [7, hexDataView('64 67 69 6d 73 75 79')],
+    ],
+    /a/dgimsuy,
+  );
+});
 
-test('invalid regexp', macroDecoderThrow, [[0x02], [0x61, 0x5b], [0x00], []]);
+test('invalid regexp', () => {
+  expect(generator).toYieldsThrow(
+    [
+      [1, hexDataView('02')],
+      [2, hexDataView('61 5b')],
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+    ],
+    InvalidBufferValueError,
+  );
+});

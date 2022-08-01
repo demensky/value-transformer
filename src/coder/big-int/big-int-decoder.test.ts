@@ -1,31 +1,72 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {beforeEach, expect, test} from '@jest/globals';
 
-import {macroDecoder} from '../../../test-util/macro-decoder.js';
+import {hexDataView} from '../../../test-util/hex-data-view.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
 import {bigIntDecoder} from './big-int-decoder.js';
 
-const test = anyTest as TestFn<DecoderGenerator<bigint>>;
+let generator: DecoderGenerator<bigint>;
 
-test.beforeEach((t) => {
-  t.context = bigIntDecoder();
+beforeEach(() => {
+  generator = bigIntDecoder();
 });
 
-test('1 byte 0', macroDecoder, [[0x00]], 0n);
+test('1 byte 0', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('00')]], 0n);
+});
 
-test('1 byte biggest positive', macroDecoder, [[0x3f]], 63n);
+test('1 byte biggest positive', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('3f')]], 63n);
+});
 
-test('1 byte smallest positive', macroDecoder, [[0x01]], 1n);
+test('1 byte smallest positive', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('01')]], 1n);
+});
 
-test('1 byte biggest negative', macroDecoder, [[0x40]], -64n);
+test('1 byte biggest negative', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('40')]], -64n);
+});
 
-test('1 byte smallest negative', macroDecoder, [[0x7f]], -1n);
+test('1 byte smallest negative', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('7f')]], -1n);
+});
 
-test('2 bytes biggest positive', macroDecoder, [[0xff], [0x3f]], 8191n);
+test('2 bytes biggest positive', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('ff')],
+      [1, hexDataView('3f')],
+    ],
+    8191n,
+  );
+});
 
-test('2 bytes smallest positive', macroDecoder, [[0x80], [0x1]], 128n);
+test('2 bytes smallest positive', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('80')],
+      [1, hexDataView('01')],
+    ],
+    128n,
+  );
+});
 
-test('2 bytes biggest negative', macroDecoder, [[0x80], [0x40]], -8192n);
+test('2 bytes biggest negative', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('80')],
+      [1, hexDataView('40')],
+    ],
+    -8192n,
+  );
+});
 
-test('2 bytes smallest negative', macroDecoder, [[0xbf], [0x7f]], -65n);
+test('2 bytes smallest negative', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('bf')],
+      [1, hexDataView('7f')],
+    ],
+    -65n,
+  );
+});

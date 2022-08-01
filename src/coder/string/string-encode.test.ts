@@ -1,25 +1,70 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {expect, test} from '@jest/globals';
 
-import {macroEncode} from '../../../test-util/macro-encode.js';
-import {macroEncodeThrow} from '../../../test-util/macro-encode-throw.js';
-import type {EncodeFactory} from '../../type/encode-factory.js';
+import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
+import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 
 import {stringEncode} from './string-encode.js';
 
-const test = anyTest as TestFn<EncodeFactory<string>>;
+test('empty string', () => {
+  const iterator: Iterator<ArrayBufferView> =
+    stringEncode('')[Symbol.iterator]();
 
-test.beforeEach((t) => {
-  t.context = stringEncode;
+  expect(iterator.next()).toStrictEqual({
+    done: false,
+    value: new Uint8Array([0x00]),
+  });
+  expect(iterator.next()).toStrictEqual({
+    done: false,
+    value: new Uint8Array([]),
+  });
+  expect(iterator.next()).toStrictEqual({done: true, value: undefined});
 });
 
-test('empty string', macroEncode, '', [[0x00], []]);
+test('simple string', () => {
+  const iterator: Iterator<ArrayBufferView> =
+    stringEncode('foo')[Symbol.iterator]();
 
-test('simple string', macroEncode, 'foo', [[0x03], [0x66, 0x6f, 0x6f]]);
+  expect(iterator.next()).toStrictEqual({
+    done: false,
+    value: new Uint8Array([0x03]),
+  });
+  expect(iterator.next()).toStrictEqual({
+    done: false,
+    value: new Uint8Array([0x66, 0x6f, 0x6f]),
+  });
+  expect(iterator.next()).toStrictEqual({done: true, value: undefined});
+});
 
-test('broken unicode', macroEncodeThrow, '\ud83d');
+test('broken unicode', () => {
+  const iterator: Iterator<ArrayBufferView> =
+    stringEncode('\ud83d')[Symbol.iterator]();
 
-// \u0000
-test('null', macroEncode, '\0', [[0x01], [0x00]]);
+  expect(() => {
+    iterator.next();
+  }).toThrow(InvalidUnicodeError);
+});
 
-test('break line', macroEncode, '\r\n', [[0x02], [0x0d, 0x0a]]);
+test('break line', () => {
+  const iterator: Iterator<ArrayBufferView> =
+    stringEncode('\r\n')[Symbol.iterator]();
+
+  expect(iterator.next()).toStrictEqual({
+    done: false,
+    value: new Uint8Array([0x02]),
+  });
+  expect(iterator.next()).toStrictEqual({
+    done: false,
+    value: new Uint8Array([0x0d, 0x0a]),
+  });
+  expect(iterator.next()).toStrictEqual({done: true, value: undefined});
+});
+
+test('too long string', () => {
+  const value = 'a'.repeat(0x10001);
+  const iterator: Iterator<ArrayBufferView> =
+    stringEncode(value)[Symbol.iterator]();
+
+  expect(() => {
+    iterator.next();
+  }).toThrow(OutOfMaxByteLengthError);
+});

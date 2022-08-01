@@ -1,24 +1,75 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {beforeEach, expect, test} from '@jest/globals';
 
-import {macroDecoder} from '../../../test-util/macro-decoder.js';
-import {macroDecoderThrow} from '../../../test-util/macro-decoder-throw.js';
+import {hexDataView} from '../../../test-util/hex-data-view.js';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
+import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
 import {stringDecoder} from './string-decoder.js';
 
-const test = anyTest as TestFn<DecoderGenerator<string>>;
+let generator: DecoderGenerator<string>;
 
-test.beforeEach((t) => {
-  t.context = stringDecoder();
+beforeEach(() => {
+  generator = stringDecoder();
 });
 
-test('empty string', macroDecoder, [[0x00], []], '');
+test('empty string', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+    ],
+    '',
+  );
+});
 
-test('simple string', macroDecoder, [[0x03], [0x66, 0x6f, 0x6f]], 'foo');
+test('simple string', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('03')],
+      [3, hexDataView('66 6f 6f')],
+    ],
+    'foo',
+  );
+});
 
-test('broken unicode', macroDecoderThrow, [[0x03], [0xf0, 0x9f, 0xa5]]);
+test('broken unicode', () => {
+  expect(generator).toYieldsThrow(
+    [
+      [1, hexDataView('03')],
+      [3, hexDataView('f0 9f a5')],
+    ],
+    InvalidBufferValueError,
+  );
+});
 
-test('null', macroDecoder, [[0x01], [0x00]], '\0' /* \u0000 */);
+test('null', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('01')],
+      [1, hexDataView('00')],
+    ],
+    '\0',
+  );
+});
 
-test('break line', macroDecoder, [[0x02], [0x0d, 0x0a]], '\r\n');
+test('break line', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('02')],
+      [2, hexDataView('0d 0a')],
+    ],
+    '\r\n',
+  );
+});
+
+test('byte length of the string is greater than the limit', () => {
+  expect(generator).toYieldsThrow(
+    [
+      [1, hexDataView('81')],
+      [1, hexDataView('80')],
+      [1, hexDataView('04')],
+    ],
+    OutOfMaxByteLengthError,
+  );
+});

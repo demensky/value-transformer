@@ -1,11 +1,11 @@
-import test from 'ava';
+import {expect, test} from '@jest/globals';
 
 import {isInvalidDate} from './is-invalid-date.js';
 
-test('valid date', (t) => {
-  t.false(isInvalidDate(new Date(0)));
+test('valid date', () => {
+  expect(isInvalidDate(new Date(0))).toBe(false);
 });
 
-test('invalid date', (t) => {
-  t.true(isInvalidDate(new Date(NaN)));
+test('invalid date', () => {
+  expect(isInvalidDate(new Date(NaN))).toBe(true);
 });

@@ -1,32 +1,95 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {beforeEach, expect, test} from '@jest/globals';
 
-import {macroDecoder} from '../../../test-util/macro-decoder.js';
+import {hexDataView} from '../../../test-util/hex-data-view.js';
+import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
 import {uintDecoder} from './uint-decoder.js';
 
-const test = anyTest as TestFn<DecoderGenerator<number>>;
+let generator: DecoderGenerator<number>;
 
-test.beforeEach((t) => {
-  t.context = uintDecoder();
+beforeEach(() => {
+  generator = uintDecoder();
 });
 
-test('smallest in one byte', macroDecoder, [[0x00]], 0);
+test('smallest in one byte', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('00')]], 0);
+});
 
-test('biggest in one byte', macroDecoder, [[0x7f]], 127);
+test('biggest in one byte', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('7f')]], 127);
+});
 
-test('smallest in two byte', macroDecoder, [[0x80], [0x1]], 128);
+test('smallest in two byte', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('80')],
+      [1, hexDataView('01')],
+    ],
+    128,
+  );
+});
 
-test('biggest in two byte', macroDecoder, [[0xff], [0x7f]], 16383);
+test('biggest in two byte', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('ff')],
+      [1, hexDataView('7f')],
+    ],
+    16383,
+  );
+});
 
-test('smallest in three byte', macroDecoder, [[0x80], [0x80], [0x01]], 16384);
+test('smallest in three byte', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('80')],
+      [1, hexDataView('80')],
+      [1, hexDataView('01')],
+    ],
+    16384,
+  );
+});
 
-test('biggest in three byte', macroDecoder, [[0xff], [0xff], [0x7f]], 2097151);
+test('biggest in three byte', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('7f')],
+    ],
+    2097151,
+  );
+});
 
-test(
-  'max safe integer',
-  macroDecoder,
-  [[0xff], [0xff], [0xff], [0xff], [0xff], [0xff], [0xff], [0x0f]],
-  Number.MAX_SAFE_INTEGER,
-);
+test('max safe integer', () => {
+  expect(generator).toYieldsReturn(
+    [
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('0f')],
+    ],
+    Number.MAX_SAFE_INTEGER,
+  );
+});
+
+test('too big value', () => {
+  expect(generator).toYieldsThrow(
+    [
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+      [1, hexDataView('ff')],
+    ],
+    OutOfMaxLengthError,
+  );
+});

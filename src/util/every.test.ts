@@ -1,118 +1,76 @@
-import test from 'ava';
+import {expect, jest, test} from '@jest/globals';
 
 import {every} from './every.js';
 
-test('no items', (t) => {
-  t.plan(0);
+test('no items', () => {
+  const mockPredicate = jest.fn(() => false);
+  const result: boolean = every<never>([], mockPredicate);
 
-  every([], () => {
-    t.fail();
-
-    return true;
-  });
+  expect(result).toBe(true);
+  expect(mockPredicate).toHaveBeenCalledTimes(0);
 });
 
-test('one non-matching', (t) => {
-  t.plan(2);
+test('one non-matching', () => {
+  const mockPredicate = jest.fn(() => false);
+  const result: boolean = every<string>(['foo'], mockPredicate);
 
-  t.false(
-    every(['foo'], (item) => {
-      t.is(item, 'foo');
-
-      return false;
-    }),
-  );
+  expect(result).toBe(false);
+  expect(mockPredicate).toHaveBeenCalledTimes(1);
+  expect(mockPredicate).toHaveBeenCalledWith('foo');
 });
 
-test('one matching', (t) => {
-  t.plan(2);
+test('one matching', () => {
+  const mockPredicate = jest.fn(() => true);
+  const result: boolean = every<string>(['foo'], mockPredicate);
 
-  t.true(
-    every(['foo'], (item) => {
-      t.is(item, 'foo');
-
-      return true;
-    }),
-  );
+  expect(result).toBe(true);
+  expect(mockPredicate).toHaveBeenCalledTimes(1);
+  expect(mockPredicate).toHaveBeenCalledWith('foo');
 });
 
-test('many non-matching', (t) => {
-  t.plan(2);
+test('many non-matching', () => {
+  const mockPredicate = jest.fn(() => false);
+  const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 
-  t.false(
-    every(['foo', 'bar', 'baz'], (item) => {
-      t.is(item, 'foo');
-
-      return false;
-    }),
-  );
+  expect(result).toBe(false);
+  expect(mockPredicate).toHaveBeenCalledTimes(1);
+  expect(mockPredicate).toHaveBeenCalledWith('foo');
 });
 
-test('many matching only first', (t) => {
-  t.plan(3);
+test('many matching only first', () => {
+  const mockPredicate = jest.fn(() => false).mockImplementationOnce(() => true);
 
-  let index = 0;
+  const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 
-  t.false(
-    every(['foo', 'bar', 'baz'], (item) => {
-      switch (index++) {
-        case 0:
-          t.is(item, 'foo');
-          return true;
-        case 1:
-          t.is(item, 'bar');
-          return false;
-        default:
-          return t.fail();
-      }
-    }),
-  );
+  expect(result).toBe(false);
+  expect(mockPredicate).toHaveBeenCalledTimes(2);
+  expect(mockPredicate).toHaveBeenNthCalledWith(1, 'foo');
+  expect(mockPredicate).toHaveBeenNthCalledWith(2, 'bar');
 });
 
-test('many matching first and second', (t) => {
-  t.plan(4);
+test('many matching first and second', () => {
+  const mockPredicate = jest
+    .fn(() => false)
+    .mockImplementationOnce(() => true)
+    .mockImplementationOnce(() => true);
 
-  let index = 0;
+  const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 
-  t.false(
-    every(['foo', 'bar', 'baz'], (item) => {
-      switch (index++) {
-        case 0:
-          t.is(item, 'foo');
-          return true;
-        case 1:
-          t.is(item, 'bar');
-          return true;
-        case 2:
-          t.is(item, 'baz');
-          return false;
-        default:
-          return t.fail();
-      }
-    }),
-  );
+  expect(result).toBe(false);
+  expect(mockPredicate).toHaveBeenCalledTimes(3);
+  expect(mockPredicate).toHaveBeenNthCalledWith(1, 'foo');
+  expect(mockPredicate).toHaveBeenNthCalledWith(2, 'bar');
+  expect(mockPredicate).toHaveBeenNthCalledWith(3, 'baz');
 });
 
-test('many matching every', (t) => {
-  t.plan(4);
+test('many matching every', () => {
+  const mockPredicate = jest.fn(() => true);
 
-  let index = 0;
+  const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 
-  t.true(
-    every(['foo', 'bar', 'baz'], (item) => {
-      switch (index++) {
-        case 0:
-          t.is(item, 'foo');
-          return true;
-        case 1:
-          t.is(item, 'bar');
-          return true;
-        case 2:
-          t.is(item, 'baz');
-          return true;
-        default:
-          return t.fail();
-      }
-    }),
-  );
+  expect(result).toBe(true);
+  expect(mockPredicate).toHaveBeenCalledTimes(3);
+  expect(mockPredicate).toHaveBeenNthCalledWith(1, 'foo');
+  expect(mockPredicate).toHaveBeenNthCalledWith(2, 'bar');
+  expect(mockPredicate).toHaveBeenNthCalledWith(3, 'baz');
 });

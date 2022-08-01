@@ -1,29 +1,37 @@
-import type {ExecutionContext} from 'ava';
-import test from 'ava';
+import {expect, test} from '@jest/globals';
 
-import {
-  BufferSourceIterableReader,
-  uintDecoder,
-  uintEncode,
-} from '../src/index.js';
+import {uintDecoder} from '../src/coder/uint/uint-decoder.js';
+import {uintEncode} from '../src/coder/uint/uint-encode.js';
+import {createEncoderDecoder} from '../test-util/create-encoder-decoder.js';
 
-function macroEncodeDecodeUint(t: ExecutionContext, value: number): void {
-  t.is(
-    BufferSourceIterableReader.from(uintEncode(value)).finalRead(uintDecoder()),
-    value,
+const uintEncodeDecode = createEncoderDecoder(uintEncode, uintDecoder);
+
+test('smallest in one byte', () => {
+  expect(uintEncodeDecode(0)).toBe(0);
+});
+
+test('biggest in one byte', () => {
+  expect(uintEncodeDecode(127)).toBe(127);
+});
+
+test('smallest in two byte', () => {
+  expect(uintEncodeDecode(128)).toBe(128);
+});
+
+test('biggest in two byte', () => {
+  expect(uintEncodeDecode(16383)).toBe(16383);
+});
+
+test('smallest in three byte', () => {
+  expect(uintEncodeDecode(16384)).toBe(16384);
+});
+
+test('biggest in three byte', () => {
+  expect(uintEncodeDecode(2097151)).toBe(2097151);
+});
+
+test('max safe integer', () => {
+  expect(uintEncodeDecode(Number.MAX_SAFE_INTEGER)).toBe(
+    Number.MAX_SAFE_INTEGER,
   );
-}
-
-test('smallest in one byte', macroEncodeDecodeUint, 0b0000000);
-
-test('biggest in one byte', macroEncodeDecodeUint, 0b1111111);
-
-test('smallest in two byte', macroEncodeDecodeUint, 0b1_0000000);
-
-test('biggest in two byte', macroEncodeDecodeUint, 0b1111111_1111111);
-
-test('smallest in three byte', macroEncodeDecodeUint, 0b1_0000000_0000000);
-
-test('biggest in three byte', macroEncodeDecodeUint, 0b1111111_1111111_1111111);
-
-test('max safe integer', macroEncodeDecodeUint, Number.MAX_SAFE_INTEGER);
+});

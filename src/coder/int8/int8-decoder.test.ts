@@ -1,18 +1,23 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {beforeEach, expect, test} from '@jest/globals';
 
-import {macroDecoder} from '../../../test-util/macro-decoder.js';
+import {hexDataView} from '../../../test-util/hex-data-view.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import {uint8Decoder} from '../uint8/uint8-decoder.js';
 
-const test = anyTest as TestFn<DecoderGenerator<number>>;
+let generator: DecoderGenerator<number>;
 
-test.beforeEach((t) => {
-  t.context = uint8Decoder();
+beforeEach(() => {
+  generator = uint8Decoder();
 });
 
-test('min', macroDecoder, [[0x00]], 0);
+test('min', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('00')]], 0);
+});
 
-test('42', macroDecoder, [[0x2a]], 42);
+test('42', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('2a')]], 42);
+});
 
-test('max', macroDecoder, [[0xff]], 255);
+test('max', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('ff')]], 255);
+});

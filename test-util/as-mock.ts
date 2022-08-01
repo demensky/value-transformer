@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import {MockTransformer} from './mock-transformer.js';
 
 export function asMock<T>(

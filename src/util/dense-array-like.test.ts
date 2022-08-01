@@ -1,35 +1,38 @@
-import test from 'ava';
+import {expect, test} from '@jest/globals';
+
+import {SparseArrayError} from '../error/sparse-array-error.js';
 
 import {denseArrayLike} from './dense-array-like.js';
 
-test('empty array', (t) => {
-  t.deepEqual([...denseArrayLike([])], []);
+test('empty array', () => {
+  expect([...denseArrayLike([])]).toStrictEqual([]);
 });
 
-test('dense array', (t) => {
-  t.deepEqual(
-    [...denseArrayLike(['foo', 'bar', 'baz'])],
-    ['foo', 'bar', 'baz'],
-  );
+test('dense array', () => {
+  expect([...denseArrayLike(['foo', 'bar', 'baz'])]).toStrictEqual([
+    'foo',
+    'bar',
+    'baz',
+  ]);
 });
 
-test('partially sparse array', (t) => {
+test('partially sparse array', () => {
   const array: string[] = [];
 
   array[0] = 'foo';
   array[2] = 'baz';
 
-  t.throws(() => {
+  expect(() => {
     Array.from(denseArrayLike(array));
-  });
+  }).toThrow(SparseArrayError);
 });
 
-test('fully sparse array', (t) => {
+test('fully sparse array', () => {
   const array: string[] = [];
 
   array.length = 3;
 
-  t.throws(() => {
+  expect(() => {
     Array.from(denseArrayLike(array));
-  });
+  }).toThrow(SparseArrayError);
 });

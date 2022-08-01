@@ -1,20 +1,28 @@
-import type {TestFn} from 'ava';
-import anyTest from 'ava';
+import {beforeEach, expect, test} from '@jest/globals';
 
-import {macroDecoder} from '../../../test-util/macro-decoder.js';
-import {macroDecoderThrow} from '../../../test-util/macro-decoder-throw.js';
+import {hexDataView} from '../../../test-util/hex-data-view.js';
+import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
 import {booleanDecoder} from './boolean-decoder.js';
 
-const test = anyTest as TestFn<DecoderGenerator<boolean>>;
+let generator: DecoderGenerator<boolean>;
 
-test.beforeEach((t) => {
-  t.context = booleanDecoder();
+beforeEach(() => {
+  generator = booleanDecoder();
 });
 
-test('false', macroDecoder, [[0x00]], false);
+test('false', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('00')]], false);
+});
 
-test('true', macroDecoder, [[0x01]], true);
+test('true', () => {
+  expect(generator).toYieldsReturn([[1, hexDataView('01')]], true);
+});
 
-test('42', macroDecoderThrow, [[0x2a]]);
+test('42', () => {
+  expect(generator).toYieldsThrow(
+    [[1, hexDataView('2a')]],
+    InvalidBufferValueError,
+  );
+});

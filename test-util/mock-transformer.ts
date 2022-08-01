@@ -1,5 +1,8 @@
-import type {DecoderGenerator, IterableEncoding} from '../src/index.js';
-import {ValueTransformer} from '../src/index.js';
+/* istanbul ignore file */
+
+import {ValueTransformer} from '../src/base/value-transformer.js';
+import type {DecoderGenerator} from '../src/type/decoder-generator.js';
+import type {IterableEncoding} from '../src/type/iterable-encoding.js';
 
 export class MockTransformer<T> extends ValueTransformer<T, T> {
   readonly #buffer: Uint8Array;

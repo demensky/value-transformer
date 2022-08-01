@@ -1,45 +1,42 @@
-import test from 'ava';
+import {expect, test} from '@jest/globals';
 
 import {extractEnumValues} from './extract-enum-values.js';
 
-test('empty enum', (t) => {
+test('empty enum', () => {
   enum EmptyEnum {}
 
-  t.deepEqual(extractEnumValues(EmptyEnum), new Set<never>());
+  expect(extractEnumValues(EmptyEnum)).toStrictEqual(new Set<never>());
 });
 
-test('numeric enum', (t) => {
+test('numeric enum', () => {
   enum NumericEnum {
     FOO = 0,
     BAR = 1,
   }
 
-  t.deepEqual(
-    extractEnumValues(NumericEnum),
+  expect(extractEnumValues(NumericEnum)).toStrictEqual(
     new Set<NumericEnum>([NumericEnum.FOO, NumericEnum.BAR]),
   );
 });
 
-test('string enum', (t) => {
+test('string enum', () => {
   enum StringEnum {
     FOO = 'foo',
     BAR = 'bar',
   }
 
-  t.deepEqual(
-    extractEnumValues(StringEnum),
+  expect(extractEnumValues(StringEnum)).toStrictEqual(
     new Set<StringEnum>([StringEnum.FOO, StringEnum.BAR]),
   );
 });
 
-test('mixed enum', (t) => {
+test('mixed enum', () => {
   enum MixedEnum {
     FOO = 0,
     BAR = 'bar',
   }
 
-  t.deepEqual(
-    extractEnumValues(MixedEnum),
+  expect(extractEnumValues(MixedEnum)).toStrictEqual(
     new Set<MixedEnum>([MixedEnum.FOO, MixedEnum.BAR]),
   );
 });
