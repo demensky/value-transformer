@@ -1,33 +1,29 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {HEX_RADIX} from '../../const/hex-radix.js';
 import type {UuidString} from '../../type/uuid-string.js';
-
-function getOctetFromHexString(value: UuidString, offset: number): number {
-  return parseInt(value.slice(offset, offset + 2), HEX_RADIX);
-}
+import {parseHexInt} from '../../util/parse-hex-int.js';
 
 export function uuidStringEncode(value: UuidString): ArrayBufferView {
   return new Uint8Array([
-    getOctetFromHexString(value, 0),
-    getOctetFromHexString(value, 2),
-    getOctetFromHexString(value, 4),
-    getOctetFromHexString(value, 6),
+    parseHexInt(value.slice(0, 2)),
+    parseHexInt(value.slice(2, 4)),
+    parseHexInt(value.slice(4, 6)),
+    parseHexInt(value.slice(6, 8)),
 
-    getOctetFromHexString(value, 9),
-    getOctetFromHexString(value, 11),
+    parseHexInt(value.slice(9, 11)),
+    parseHexInt(value.slice(11, 13)),
 
-    getOctetFromHexString(value, 14),
-    getOctetFromHexString(value, 16),
+    parseHexInt(value.slice(14, 16)),
+    parseHexInt(value.slice(16, 18)),
 
-    getOctetFromHexString(value, 19),
-    getOctetFromHexString(value, 21),
+    parseHexInt(value.slice(19, 21)),
+    parseHexInt(value.slice(21, 23)),
 
-    getOctetFromHexString(value, 24),
-    getOctetFromHexString(value, 26),
-    getOctetFromHexString(value, 28),
-    getOctetFromHexString(value, 30),
-    getOctetFromHexString(value, 32),
-    getOctetFromHexString(value, 34),
+    parseHexInt(value.slice(24, 26)),
+    parseHexInt(value.slice(26, 28)),
+    parseHexInt(value.slice(28, 30)),
+    parseHexInt(value.slice(30, 32)),
+    parseHexInt(value.slice(32, 34)),
+    parseHexInt(value.slice(34, 36)),
   ]);
 }
