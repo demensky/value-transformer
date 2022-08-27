@@ -1,5 +1,5 @@
-import {BufferDeserializerRangeError} from '../error/buffer-deserializer-range-error.js';
-import {CorruptedBufferDeserializerError} from '../error/corrupted-buffer-deserializer-error.js';
+import {BufferReaderRangeError} from '../error/buffer-reader-range-error.js';
+import {CorruptedBufferReaderError} from '../error/corrupted-buffer-reader-error.js';
 import type {DecoderGenerator} from '../type/decoder-generator.js';
 import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
 import {narrowToArrayBufferView} from '../util/narrow-to-array-buffer-view.js';
@@ -14,7 +14,7 @@ function* nextChunk(): BufferReaderGenerator<ArrayBufferView> {
     chunk = yield null;
 
     if (chunk.done === true) {
-      throw new BufferDeserializerRangeError();
+      throw new BufferReaderRangeError();
     }
   } while (chunk.value.byteLength === 0);
 
@@ -24,26 +24,21 @@ function* nextChunk(): BufferReaderGenerator<ArrayBufferView> {
 export class BufferReaderController {
   #chunk: ArrayBufferView | null = null;
 
-  #corrupted: CorruptedBufferDeserializerError | null = null;
+  #corrupted: ErrorOptions | null = null;
 
   #cursor = 0;
 
-  #throwAsCorrupted(cause: unknown): never {
-    this.#corrupted = new CorruptedBufferDeserializerError(
-      'due to an error, further data reading is meaningless',
-      {cause},
-    );
-
-    throw cause;
-  }
-
   public *final(): BufferReaderGenerator<void> {
     if (this.#corrupted !== null) {
-      throw this.#corrupted;
+      throw new CorruptedBufferReaderError('', this.#corrupted);
     }
 
     if (this.#chunk !== null) {
-      this.#throwAsCorrupted(new BufferDeserializerRangeError());
+      const cause = new BufferReaderRangeError();
+
+      this.#corrupted = {cause};
+
+      throw cause;
     }
 
     while (true) {
@@ -54,14 +49,18 @@ export class BufferReaderController {
       }
 
       if (chunk.value.byteLength > 0) {
-        this.#throwAsCorrupted(new BufferDeserializerRangeError());
+        const cause = new BufferReaderRangeError();
+
+        this.#corrupted = {cause};
+
+        throw cause;
       }
     }
   }
 
   public *read<T>(decoder: DecoderGenerator<T>): BufferReaderGenerator<T> {
     if (this.#corrupted !== null) {
-      throw this.#corrupted;
+      throw new CorruptedBufferReaderError('', this.#corrupted);
     }
 
     try {
@@ -144,7 +143,9 @@ export class BufferReaderController {
 
       return request.value;
     } catch (cause) {
-      this.#throwAsCorrupted(cause);
+      this.#corrupted = {cause};
+
+      throw cause;
     }
   }
 }
