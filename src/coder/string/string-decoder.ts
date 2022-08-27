@@ -14,11 +14,6 @@ export function* stringDecoder(): DecoderGenerator<string> {
   try {
     return new TextDecoder('utf-8', {fatal: true}).decode(yield byteLength);
   } catch (cause) {
-    throw new InvalidBufferValueError(
-      '',
-      // TODO remove "as"
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      {cause} as ErrorOptions,
-    );
+    throw new InvalidBufferValueError('', {cause});
   }
 }

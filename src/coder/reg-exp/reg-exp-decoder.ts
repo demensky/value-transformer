@@ -9,8 +9,6 @@ export function* regExpDecoder(): DecoderGenerator<RegExp> {
   try {
     return new RegExp(pattern, flags);
   } catch (cause) {
-    // TODO remove "as"
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    throw new InvalidBufferValueError('', {cause} as ErrorOptions);
+    throw new InvalidBufferValueError('', {cause});
   }
 }

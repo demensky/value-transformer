@@ -31,9 +31,7 @@ export class BufferReaderController {
   #throwAsCorrupted(cause: unknown): never {
     this.#corrupted = new CorruptedBufferDeserializerError(
       'due to an error, further data reading is meaningless',
-      // TODO remove "as"
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      {cause} as ErrorOptions,
+      {cause},
     );
 
     throw cause;
