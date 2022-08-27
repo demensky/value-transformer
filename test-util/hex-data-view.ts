@@ -4,7 +4,19 @@ import type {ReadonlyLittleEndianDataView} from '../src/type/readonly-little-end
 import {parseHexInt} from '../src/util/parse-hex-int.js';
 
 export function hexDataView(bytes: string): ReadonlyLittleEndianDataView {
-  const hexes = bytes.match(/[\da-f]{2}/g) ?? [];
+  const croppedBytes = bytes.trim();
 
-  return new DataView(Uint8Array.from(hexes, parseHexInt).buffer);
+  if (croppedBytes === '') {
+    return new DataView(new ArrayBuffer(0));
+  }
+
+  return new DataView(
+    Uint8Array.from(croppedBytes.split(/\s+/), (byte) => {
+      if (!/^[\da-f]{2}$/.test(byte)) {
+        throw new Error('Wrong string');
+      }
+
+      return parseHexInt(byte);
+    }).buffer,
+  );
 }
