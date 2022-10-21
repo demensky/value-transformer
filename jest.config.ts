@@ -1,13 +1,7 @@
 import type {Config} from '@jest/types';
 
 export default (): Config.InitialOptions => ({
-  preset: 'ts-jest/presets/js-with-ts-esm',
-  extensionsToTreatAsEsm: ['.ts'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
-  },
+  preset: 'ts-jest/presets/default-esm',
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
