@@ -3,15 +3,15 @@
   "version": "0.6.0",
   "description": "This library allows you to serialize/deserialize complex data using transformers. There is no need to interact with the raw representation: the signature of JSON literals and ArrayBuffers is encapsulated.\n",
   "type": "module",
-  "types": "./dist/index.d.mts",
+  "types": "./dist/index.d.ts",
   "exports": {
-    "types": "./dist/index.d.mts",
-    "development": "./dist/index.dev.mjs",
-    "default": "./dist/index.mjs"
+    "types": "./dist/index.d.ts",
+    "development": "./dist/index.dev.js",
+    "default": "./dist/index.js"
   },
   "sideEffects": false,
   "scripts": {
-    "build": "ts-node ./build.mts && dts-bundle-generator src/index.ts --out-file dist/index.d.mts",
+    "build": "tsup",
     "prepare": "husky install && npm run build",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" jest"
   },
@@ -41,8 +41,6 @@
     "@types/node": "^18.7.13",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
-    "dts-bundle-generator": "^6.12.0",
-    "esbuild": "^0.15.5",
     "eslint": "^8.25.0",
     "eslint-plugin-ava": "^13.2.0",
     "eslint-plugin-import": "^2.26.0",
@@ -57,6 +55,7 @@
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
+    "tsup": "^6.3.0",
     "typescript": "~4.8.2"
   }
 }
