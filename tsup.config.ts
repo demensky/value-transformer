@@ -7,6 +7,9 @@ export default defineConfig([
     format: ['esm'],
     sourcemap: true,
     clean: true,
+    esbuildOptions: (options) => {
+      options.drop = ['console'];
+    },
   },
   {
     entry: ['src/index.ts'],
@@ -15,9 +18,6 @@ export default defineConfig([
     format: ['esm'],
     sourcemap: true,
     clean: true,
-    esbuildOptions: (options) => {
-      options.drop = ['console'];
-    },
   },
   {
     entry: ['src/index.ts'],
