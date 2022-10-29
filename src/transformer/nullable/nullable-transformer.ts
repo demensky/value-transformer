@@ -35,11 +35,7 @@ export class NullableTransformer<I, O extends I> extends ValueTransformer<
     return isNull(literal) ? null : this.#transformer.fromLiteral(literal);
   }
 
-  public override toCompactLiteral(data: I | null): unknown {
-    return isNull(data) ? null : this.#transformer.toCompactLiteral(data);
-  }
-
-  public toLiteral(data: I | null): unknown {
-    return isNull(data) ? null : this.#transformer.toLiteral(data);
+  public toLiteral(data: I | null, compact: boolean): unknown {
+    return isNull(data) ? null : this.#transformer.toLiteral(data, compact);
   }
 }

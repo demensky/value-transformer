@@ -94,22 +94,21 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     return instance;
   }
 
-  public override toCompactLiteral(data: Readonly<T>): unknown {
+  public toLiteral(data: Readonly<T>, compact: boolean): unknown {
     console.assert(data instanceof this.#ctor);
 
-    return this.#getFieldsInfo().map<unknown>(([key, transformer]) =>
-      transformer.toCompactLiteral(data[key]),
-    );
-  }
+    const fields: readonly OneOfTransformableField<T>[] = this.#getFieldsInfo();
 
-  public toLiteral(data: Readonly<T>): unknown {
-    console.assert(data instanceof this.#ctor);
+    if (compact) {
+      return fields.map<unknown>(([key, transformer]) =>
+        transformer.toLiteral(data[key], true),
+      );
+    }
 
-    const fields = this.#getFieldsInfo();
     const literal: Partial<Record<keyof T, unknown>> = {};
 
     for (const [key, transformer] of fields) {
-      literal[key] = transformer.toLiteral(data[key]);
+      literal[key] = transformer.toLiteral(data[key], false);
     }
 
     return literal;

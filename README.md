@@ -83,10 +83,6 @@ Strictly check the literal for validity and deserialize it into data.
 
 Serialize the passed data into a JSON-like literal.
 
-### `toCompactLiteral(data)`
-
-Serialize the passed data into a compact JSON-like literal.
-
 ## Transformers
 
 ### Simple transformers

@@ -64,7 +64,7 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
     return new RegExp(source, flags);
   }
 
-  public override toCompactLiteral(data: RegExp): unknown {
+  public toLiteral(data: RegExp, compact: boolean): unknown {
     console.assert(isRegExp(data));
 
     const {flags, source}: RegExp = data;
@@ -77,22 +77,8 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
       throw new InvalidUnicodeError('flags');
     }
 
-    return identity<RegExpCompactLiteral>([source, flags]);
-  }
-
-  public toLiteral(data: RegExp): unknown {
-    console.assert(isRegExp(data));
-
-    const {flags, source}: RegExp = data;
-
-    if (!isValidUnicode(source)) {
-      throw new InvalidUnicodeError('source');
-    }
-
-    if (!isValidUnicode(flags)) {
-      throw new InvalidUnicodeError('flags');
-    }
-
-    return identity<RegExpLiteral>({source, flags});
+    return compact
+      ? identity<RegExpCompactLiteral>([source, flags])
+      : identity<RegExpLiteral>({source, flags});
   }
 }

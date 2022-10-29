@@ -5,7 +5,5 @@ export interface ValueTransformerInput<I> {
 
   encode(data: I): IterableEncoding;
 
-  toLiteral(data: I): unknown;
-
-  toCompactLiteral(data: I): unknown;
+  toLiteral(data: I, compact: boolean): unknown;
 }

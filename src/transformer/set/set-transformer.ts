@@ -2,7 +2,6 @@ import {compatibleWith} from '../../base/compatible-with.js';
 import {decoder} from '../../base/decoder.js';
 import {encode} from '../../base/encode.js';
 import {fromLiteral} from '../../base/from-literal.js';
-import {toCompactLiteral} from '../../base/to-compact-literal.js';
 import {toLiteral} from '../../base/to-literal.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {setDecoder} from '../../coder/set/set-decoder.js';
@@ -52,15 +51,12 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
     );
   }
 
-  public override toCompactLiteral(data: ReadonlySet<I>): unknown {
+  public toLiteral(data: ReadonlySet<I>, compact: boolean): unknown {
     console.assert(isSet(data));
 
-    return Array.from<I, unknown>(data, toCompactLiteral<I>(this.#transformer));
-  }
-
-  public toLiteral(data: ReadonlySet<I>): unknown {
-    console.assert(isSet(data));
-
-    return Array.from<I, unknown>(data, toLiteral<I>(this.#transformer));
+    return Array.from<I, unknown>(
+      data,
+      toLiteral<I>(this.#transformer, compact),
+    );
   }
 }

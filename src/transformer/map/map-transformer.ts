@@ -1,7 +1,6 @@
 import {compatibleWith} from '../../base/compatible-with.js';
 import {decoder} from '../../base/decoder.js';
 import {encode} from '../../base/encode.js';
-import {toCompactLiteral} from '../../base/to-compact-literal.js';
 import {toLiteral} from '../../base/to-literal.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {mapDecoder} from '../../coder/map/map-decoder.js';
@@ -82,26 +81,14 @@ export class MapTransformer<
     );
   }
 
-  public override toCompactLiteral(data: ReadonlyMap<KI, VI>): unknown {
+  public toLiteral(data: ReadonlyMap<KI, VI>, compact: boolean): unknown {
     console.assert(isMap(data));
 
     return Array.from<readonly [unknown, unknown]>(
       mapEntries<KI, unknown, VI, unknown>(
         data,
-        toCompactLiteral<KI>(this.#keyTransformer),
-        toCompactLiteral<VI>(this.#valueTransformer),
-      ),
-    );
-  }
-
-  public toLiteral(data: ReadonlyMap<KI, VI>): unknown {
-    console.assert(isMap(data));
-
-    return Array.from<readonly [unknown, unknown]>(
-      mapEntries<KI, unknown, VI, unknown>(
-        data,
-        toLiteral<KI>(this.#keyTransformer),
-        toLiteral<VI>(this.#valueTransformer),
+        toLiteral<KI>(this.#keyTransformer, compact),
+        toLiteral<VI>(this.#valueTransformer, compact),
       ),
     );
   }

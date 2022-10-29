@@ -114,18 +114,17 @@ export class UnionTransformer<
     return this.#findOutputByIs(is).fromLiteral(value);
   }
 
-  public override toCompactLiteral(data: I[number]): unknown {
+  public toLiteral(data: I[number], compact: boolean): unknown {
     const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
 
-    return identity<UnionCompactLiteral>([
-      is,
-      transformer.toCompactLiteral(data),
-    ]);
-  }
-
-  public toLiteral(data: I[number]): unknown {
-    const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
-
-    return identity<UnionLiteral>({is, value: transformer.toLiteral(data)});
+    return compact
+      ? identity<UnionCompactLiteral>([
+          is,
+          transformer.toLiteral(data, compact),
+        ])
+      : identity<UnionLiteral>({
+          is,
+          value: transformer.toLiteral(data, compact),
+        });
   }
 }

@@ -52,15 +52,13 @@ export class DateTransformer extends ValueTransformer<Date, Date> {
     return date;
   }
 
-  public override toCompactLiteral(data: Date): unknown {
+  public toLiteral(data: Date, compact: boolean): unknown {
     console.assert(isDate(data));
 
-    return isInvalidDate(data) ? INVALID : data.getTime();
-  }
+    if (isInvalidDate(data)) {
+      return INVALID;
+    }
 
-  public toLiteral(data: Date): unknown {
-    console.assert(isDate(data));
-
-    return isInvalidDate(data) ? INVALID : data.toISOString();
+    return compact ? data.getTime() : data.toISOString();
   }
 }

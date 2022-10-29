@@ -50,15 +50,11 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
     );
   }
 
-  public override toCompactLiteral(data: boolean): unknown {
+  public toLiteral(data: boolean, compact: boolean): unknown {
     console.assert(isBoolean(data));
 
-    return identity<BooleanCompactLiteral>(data ? TRUE_COMPACT : FALSE_COMPACT);
-  }
-
-  public toLiteral(data: boolean): unknown {
-    console.assert(isBoolean(data));
-
-    return data;
+    return compact
+      ? identity<BooleanCompactLiteral>(data ? TRUE_COMPACT : FALSE_COMPACT)
+      : data;
   }
 }

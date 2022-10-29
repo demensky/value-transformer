@@ -48,11 +48,7 @@ export class MockTransformer<T> extends ValueTransformer<T, T> {
     return this.#data;
   }
 
-  public override toCompactLiteral(_data: T): unknown {
-    return this.#compact;
-  }
-
-  public toLiteral(_data: T): unknown {
-    return this.#literal;
+  public toLiteral(_data: T, compact: boolean): unknown {
+    return compact ? this.#compact : this.#literal;
   }
 }

@@ -2,7 +2,6 @@ import {compatibleWith} from '../../base/compatible-with.js';
 import {decoder} from '../../base/decoder.js';
 import {encode} from '../../base/encode.js';
 import {fromLiteral} from '../../base/from-literal.js';
-import {toCompactLiteral} from '../../base/to-compact-literal.js';
 import {toLiteral} from '../../base/to-literal.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {arrayDecoder} from '../../coder/array/array-decoder.js';
@@ -49,21 +48,12 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
     return Array.from<unknown, O>(literal, fromLiteral<O>(this.#transformer));
   }
 
-  public override toCompactLiteral(data: readonly I[]): unknown {
+  public toLiteral(data: readonly I[], compact: boolean): unknown {
     console.assert(isArray(data));
 
     return Array.from<I, unknown>(
       denseArrayLike<I>(data),
-      toCompactLiteral<I>(this.#transformer),
-    );
-  }
-
-  public toLiteral(data: readonly I[]): unknown {
-    console.assert(isArray(data));
-
-    return Array.from<I, unknown>(
-      denseArrayLike<I>(data),
-      toLiteral<I>(this.#transformer),
+      toLiteral<I>(this.#transformer, compact),
     );
   }
 }
