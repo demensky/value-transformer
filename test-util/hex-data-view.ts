@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 
-import type {ReadonlyLittleEndianDataView} from '../src/type/readonly-little-endian-data-view.js';
+import type {RestrictedDataView} from '../src/type/restricted-data-view.js';
 import {parseHexInt} from '../src/util/parse-hex-int.js';
 
-export function hexDataView(bytes: string): ReadonlyLittleEndianDataView {
+export function hexDataView(bytes: string): RestrictedDataView {
   const croppedBytes = bytes.trim();
 
   if (croppedBytes === '') {

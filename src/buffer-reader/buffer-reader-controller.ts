@@ -1,7 +1,7 @@
 import {BufferReaderRangeError} from '../error/buffer-reader-range-error.js';
 import {CorruptedBufferReaderError} from '../error/corrupted-buffer-reader-error.js';
 import type {DecoderGenerator} from '../type/decoder-generator.js';
-import type {ReadonlyLittleEndianDataView} from '../type/readonly-little-endian-data-view.js';
+import type {RestrictedDataView} from '../type/restricted-data-view.js';
 import {narrowToArrayBufferView} from '../util/narrow-to-array-buffer-view.js';
 
 import type {BufferReaderChunk} from './buffer-reader-chunk.js';
@@ -74,7 +74,7 @@ export class BufferReaderController {
           continue;
         }
 
-        let response: ReadonlyLittleEndianDataView;
+        let response: RestrictedDataView;
         let chunk: ArrayBufferView;
         let cursor: number;
 

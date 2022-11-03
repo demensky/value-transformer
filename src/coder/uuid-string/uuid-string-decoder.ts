@@ -3,11 +3,11 @@
 import {BYTES_PER_UUID} from '../../const/bytes-per-uuid.js';
 import {HEX_RADIX} from '../../const/hex-radix.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {ReadonlyLittleEndianDataView} from '../../type/readonly-little-endian-data-view.js';
+import type {RestrictedDataView} from '../../type/restricted-data-view.js';
 import type {UuidString} from '../../type/uuid-string.js';
 
 function getOctetHexString(
-  view: ReadonlyLittleEndianDataView,
+  view: RestrictedDataView,
   byteOffset: number,
 ): string {
   return (0x100 + view.getUint8(byteOffset)).toString(HEX_RADIX).slice(-2);
@@ -16,7 +16,7 @@ function getOctetHexString(
 export function* uuidStringDecoder<
   T extends UuidString,
 >(): DecoderGenerator<T> {
-  const view: ReadonlyLittleEndianDataView = yield BYTES_PER_UUID;
+  const view: RestrictedDataView = yield BYTES_PER_UUID;
 
   const result: string[] = [
     getOctetHexString(view, 0x0),
