@@ -1,4 +1,4 @@
-import {expect, test} from '@jest/globals';
+import {expect, test} from 'vitest';
 
 import {uintDecoder} from '../src/coder/uint/uint-decoder.js';
 import {uintEncode} from '../src/coder/uint/uint-encode.js';

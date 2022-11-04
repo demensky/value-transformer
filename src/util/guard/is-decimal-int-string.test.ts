@@ -1,4 +1,4 @@
-import {expect, test} from '@jest/globals';
+import {expect, test} from 'vitest';
 
 import {isDecimalIntString} from './is-decimal-int-string.js';
 

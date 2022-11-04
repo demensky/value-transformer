@@ -237,45 +237,10 @@
   "overrides": [
     {
       "files": ["*.test.ts"],
-      "plugins": ["jest"],
       "rules": {
         "@typescript-eslint/no-extraneous-class": "off",
         "@typescript-eslint/no-magic-numbers": "off",
-        "@typescript-eslint/consistent-type-assertions": "off",
-
-        "jest/consistent-test-it": [
-          "error",
-          {"fn": "test", "withinDescribe": "test"}
-        ],
-        "jest/expect-expect": "error",
-        "jest/max-nested-describe": "error",
-        "jest/no-alias-methods": "error",
-        "jest/no-commented-out-tests": "error",
-        "jest/no-conditional-expect": "error",
-        "jest/no-conditional-in-test": "error",
-        "jest/no-deprecated-functions": "error",
-        "jest/no-done-callback": "error",
-        "jest/no-duplicate-hooks": "error",
-        "jest/no-focused-tests": "error",
-        "jest/no-identical-title": "error",
-        "jest/no-jasmine-globals": "error",
-        "jest/no-standalone-expect": "error",
-        "jest/no-test-prefixes": "error",
-        "jest/no-test-return-statement": "error",
-        "jest/prefer-called-with": "error",
-        "jest/prefer-comparison-matcher": "error",
-        "jest/prefer-equality-matcher": "error",
-        "jest/prefer-hooks-in-order": "error",
-        "jest/prefer-hooks-on-top": "error",
-        "jest/prefer-lowercase-title": "error",
-        "jest/prefer-mock-promise-shorthand": "error",
-        "jest/prefer-spy-on": "error",
-        "jest/prefer-strict-equal": "error",
-        "jest/prefer-to-be": "error",
-        "jest/prefer-to-contain": "error",
-        "jest/prefer-to-have-length": "error",
-        "jest/prefer-todo": "error",
-        "jest/valid-title": "error"
+        "@typescript-eslint/consistent-type-assertions": "off"
       }
     }
   ]

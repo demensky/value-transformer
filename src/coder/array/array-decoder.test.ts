@@ -1,15 +1,13 @@
-import {beforeEach, expect, test} from '@jest/globals';
-import type {Mock} from 'jest-mock';
+import {beforeEach, expect, test} from 'vitest';
 
 import {hexDataView} from '../../../test-util/hex-data-view.js';
 import {mockByteDecoder} from '../../../test-util/mock-byte-decoder.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {uint8Decoder} from '../uint8/uint8-decoder.js';
 
 import {arrayDecoder} from './array-decoder.js';
 
-let mockDecoder: Mock<typeof uint8Decoder>;
+let mockDecoder: ReturnType<typeof mockByteDecoder>;
 let generator: DecoderGenerator<readonly number[]>;
 
 beforeEach(() => {

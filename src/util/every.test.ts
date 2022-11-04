@@ -1,9 +1,9 @@
-import {expect, jest, test} from '@jest/globals';
+import {expect, test, vi} from 'vitest';
 
 import {every} from './every.js';
 
 test('no items', () => {
-  const mockPredicate = jest.fn(() => false);
+  const mockPredicate = vi.fn(() => false);
   const result: boolean = every<never>([], mockPredicate);
 
   expect(result).toBe(true);
@@ -11,7 +11,7 @@ test('no items', () => {
 });
 
 test('one non-matching', () => {
-  const mockPredicate = jest.fn(() => false);
+  const mockPredicate = vi.fn(() => false);
   const result: boolean = every<string>(['foo'], mockPredicate);
 
   expect(result).toBe(false);
@@ -20,7 +20,7 @@ test('one non-matching', () => {
 });
 
 test('one matching', () => {
-  const mockPredicate = jest.fn(() => true);
+  const mockPredicate = vi.fn(() => true);
   const result: boolean = every<string>(['foo'], mockPredicate);
 
   expect(result).toBe(true);
@@ -29,7 +29,7 @@ test('one matching', () => {
 });
 
 test('many non-matching', () => {
-  const mockPredicate = jest.fn(() => false);
+  const mockPredicate = vi.fn(() => false);
   const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 
   expect(result).toBe(false);
@@ -38,7 +38,7 @@ test('many non-matching', () => {
 });
 
 test('many matching only first', () => {
-  const mockPredicate = jest.fn(() => false).mockImplementationOnce(() => true);
+  const mockPredicate = vi.fn(() => false).mockImplementationOnce(() => true);
 
   const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 
@@ -49,7 +49,7 @@ test('many matching only first', () => {
 });
 
 test('many matching first and second', () => {
-  const mockPredicate = jest
+  const mockPredicate = vi
     .fn(() => false)
     .mockImplementationOnce(() => true)
     .mockImplementationOnce(() => true);
@@ -64,7 +64,7 @@ test('many matching first and second', () => {
 });
 
 test('many matching every', () => {
-  const mockPredicate = jest.fn(() => true);
+  const mockPredicate = vi.fn(() => true);
 
   const result: boolean = every<string>(['foo', 'bar', 'baz'], mockPredicate);
 

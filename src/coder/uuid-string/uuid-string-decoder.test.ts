@@ -1,4 +1,4 @@
-import {beforeEach, expect, test} from '@jest/globals';
+import {beforeEach, expect, test} from 'vitest';
 
 import {hexDataView} from '../../../test-util/hex-data-view.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
