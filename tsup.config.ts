@@ -3,7 +3,6 @@ import {defineConfig} from 'tsup';
 export default defineConfig([
   {
     entry: ['src/index.ts'],
-    target: 'ES2022',
     format: ['esm'],
     sourcemap: true,
     clean: true,
@@ -14,7 +13,6 @@ export default defineConfig([
   {
     entry: ['src/index.ts'],
     outExtension: () => ({js: '.dev.js'}),
-    target: 'ES2022',
     format: ['esm'],
     sourcemap: true,
     clean: true,
