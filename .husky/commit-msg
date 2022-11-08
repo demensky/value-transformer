@@ -4,3 +4,4 @@
 pnpm exec commitlint --strict --edit "${1}"
 pnpm exec eslint .
 pnpm exec vitest run
+pnpm exec lint-staged
