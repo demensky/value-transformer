@@ -1,6 +1,5 @@
 import {beforeEach, expect, test} from 'vitest';
 
-import {hexDataView} from '../../../test-util/hex-data-view.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 
 import {int8Decoder} from './int8-decoder.js';
@@ -12,13 +11,13 @@ beforeEach(() => {
 });
 
 test('min', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('80')]], -128);
+  expect(generator).toDecode(['80'], -128);
 });
 
 test('42', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('2a')]], 42);
+  expect(generator).toDecode(['2a'], 42);
 });
 
 test('max', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('7f')]], 127);
+  expect(generator).toDecode(['7f'], 127);
 });

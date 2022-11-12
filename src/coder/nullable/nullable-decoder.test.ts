@@ -16,19 +16,13 @@ beforeEach(() => {
 });
 
 test('null', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('00')]], null);
+  expect(generator).toDecode(['00'], null);
 
   expect(mockDecoder).not.toHaveBeenCalled();
 });
 
 test('not null', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('01')],
-      [1, hexDataView('0a')],
-    ],
-    0x0a,
-  );
+  expect(generator).toDecode(['01', '0a'], 0x0a);
 
   expect(mockDecoder).toHaveBeenCalledTimes(1);
 });

@@ -14,23 +14,11 @@ beforeEach(() => {
 });
 
 test('empty string', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('00')],
-      [0, hexDataView('')],
-    ],
-    '',
-  );
+  expect(generator).toDecode(['00', ''], '');
 });
 
 test('simple string', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('03')],
-      [3, hexDataView('66 6f 6f')],
-    ],
-    'foo',
-  );
+  expect(generator).toDecode(['03', '66 6f 6f'], 'foo');
 });
 
 test('broken unicode', () => {
@@ -44,23 +32,11 @@ test('broken unicode', () => {
 });
 
 test('null', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('01')],
-      [1, hexDataView('00')],
-    ],
-    '\0',
-  );
+  expect(generator).toDecode(['01', '00'], '\0');
 });
 
 test('break line', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('02')],
-      [2, hexDataView('0d 0a')],
-    ],
-    '\r\n',
-  );
+  expect(generator).toDecode(['02', '0d 0a'], '\r\n');
 });
 
 test('byte length of the string is greater than the limit', () => {

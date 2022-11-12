@@ -5,6 +5,7 @@ export default defineConfig({
     setupFiles: [
       './test-util/to-yields-return.ts',
       './test-util/to-yields-throw.ts',
+      './test-util/to-decode.ts',
     ],
   },
 });

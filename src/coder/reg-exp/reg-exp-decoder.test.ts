@@ -13,49 +13,20 @@ beforeEach(() => {
 });
 
 test('empty', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('00')],
-      [0, hexDataView('')],
-      [1, hexDataView('00')],
-      [0, hexDataView('')],
-    ],
-    /(?:)/,
-  );
+  expect(generator).toDecode(['00', '', '00', ''], /(?:)/);
 });
 
 test('empty group', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('04')],
-      [4, hexDataView('28 3f 3a 29')],
-      [1, hexDataView('00')],
-      [0, hexDataView('')],
-    ],
-    /(?:)/,
-  );
+  expect(generator).toDecode(['04', '28 3f 3a 29', '00', ''], /(?:)/);
 });
 
 test('no flags', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('01')],
-      [1, hexDataView('61')],
-      [1, hexDataView('00')],
-      [0, hexDataView('')],
-    ],
-    /a/,
-  );
+  expect(generator).toDecode(['01', '61', '00', ''], /a/);
 });
 
 test('all flags', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('01')],
-      [1, hexDataView('61')],
-      [1, hexDataView('07')],
-      [7, hexDataView('64 67 69 6d 73 75 79')],
-    ],
+  expect(generator).toDecode(
+    ['01', '61', '07', '64 67 69 6d 73 75 79'],
     /a/dgimsuy,
   );
 });

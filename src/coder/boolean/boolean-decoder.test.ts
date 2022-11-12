@@ -13,11 +13,11 @@ beforeEach(() => {
 });
 
 test('false', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('00')]], false);
+  expect(generator).toDecode(['00'], false);
 });
 
 test('true', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('01')]], true);
+  expect(generator).toDecode(['01'], true);
 });
 
 test('42', () => {

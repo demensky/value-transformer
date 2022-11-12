@@ -16,33 +16,19 @@ beforeEach(() => {
 });
 
 test('empty array', () => {
-  expect(generator).toYieldsReturn([[1, hexDataView('00')]], []);
+  expect(generator).toDecode(['00'], []);
 
   expect(mockDecoder).not.toHaveBeenCalled();
 });
 
 test('single item', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('01')],
-      [1, hexDataView('0a')],
-    ],
-    [0x0a],
-  );
+  expect(generator).toDecode(['01', '0a'], [0x0a]);
 
   expect(mockDecoder).toHaveBeenCalledTimes(1);
 });
 
 test('many items', () => {
-  expect(generator).toYieldsReturn(
-    [
-      [1, hexDataView('03')],
-      [1, hexDataView('0a')],
-      [1, hexDataView('0b')],
-      [1, hexDataView('0c')],
-    ],
-    [0x0a, 0x0b, 0x0c],
-  );
+  expect(generator).toDecode(['03', '0a', '0b', '0c'], [0x0a, 0x0b, 0x0c]);
 
   expect(mockDecoder).toHaveBeenCalledTimes(3);
 });
