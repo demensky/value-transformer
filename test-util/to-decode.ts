@@ -8,39 +8,42 @@ import {isGenerator} from '../src/util/is-generator.js';
 import {hexDataView} from './hex-data-view.js';
 
 expect.extend({
-  toDecode(decoder: unknown, chunks: readonly string[], expected: unknown) {
+  toDecode(
+    decoder: unknown,
+    chunksHexString: readonly string[],
+    expected: unknown,
+  ) {
     if (!isGenerator(decoder)) {
       throw new TypeError();
     }
 
-    const views: readonly RestrictedDataView[] = chunks.map(hexDataView);
+    const chunks: readonly RestrictedDataView[] =
+      chunksHexString.map(hexDataView);
 
     let request: IteratorResult<unknown, unknown> = decoder.next();
-    let index = 0;
+    let count = 0;
 
-    for (; request.done !== true && index < views.length; index++) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const chunk: RestrictedDataView = views[index]!;
-
+    for (const chunk of chunks) {
       if (request.value !== chunk.byteLength) {
         return {
           pass: false,
           message: () =>
-            `expected decoder to request chunk ${index} of length ${chunk.byteLength}`,
+            `expected decoder to request chunk ${count} of length ${chunk.byteLength}`,
           expected: chunk.byteLength,
           actual: request.value,
         };
       }
 
       request = decoder.next(chunk);
+      count++;
     }
 
-    if (index !== views.length) {
+    if (count !== chunks.length) {
       return {
         pass: false,
-        message: () => `expected decoder to request ${views.length} chunks`,
-        expected: views.length,
-        actual: index,
+        message: () => `expected decoder to request ${chunks.length} chunks`,
+        expected: chunks.length,
+        actual: count,
       };
     }
 
