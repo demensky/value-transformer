@@ -1,3 +1,5 @@
+import '../../../test-util/to-be-invalid-date.js';
+
 import {beforeEach, expect, test} from 'vitest';
 
 import {hexDataView} from '../../../test-util/hex-data-view.js';
@@ -23,9 +25,11 @@ test('zero', () => {
   expect(generator).toDecode(['00 00 00 00 00 00 00 00'], new Date(0));
 });
 
-// TODO
-test.skip('invalid date', () => {
-  expect(generator).toDecode(['00 00 00 00 00 00 f8 7f'], new Date(NaN));
+test('invalid date', () => {
+  expect(generator).toDecode(
+    ['00 00 00 00 00 00 f8 7f'],
+    expect.toBeInvalidDate(),
+  );
 });
 
 test('december 4, 1995', () => {
