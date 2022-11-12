@@ -14,6 +14,10 @@ test('min', () => {
   expect(generator).toDecode(['80'], -128);
 });
 
+test('0', () => {
+  expect(generator).toDecode(['00'], 0);
+});
+
 test('42', () => {
   expect(generator).toDecode(['2a'], 42);
 });
