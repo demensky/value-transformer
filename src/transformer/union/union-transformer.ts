@@ -8,13 +8,12 @@ import {TransformerNotFoundError} from '../../error/transformer-not-found-error.
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import type {UnverifiedObject} from '../../type/unverified-object.js';
+import type {ValueTransformersTuple} from '../../type/value-transformers-tuple.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isObject} from '../../util/guard/is-object.js';
 import {identity} from '../../util/identity.js';
-
-import type {UnionTransformerTransformers} from './union-transformer-transformers.js';
 
 type UnionCompactLiteral = readonly [is: number, value: unknown];
 
@@ -36,9 +35,9 @@ export class UnionTransformer<
   I extends readonly unknown[],
   O extends I,
 > extends ValueTransformer<I[number], O[number]> {
-  readonly #transformers: UnionTransformerTransformers<I, O>;
+  readonly #transformers: ValueTransformersTuple<I, O>;
 
-  public constructor(transformers: UnionTransformerTransformers<I, O>) {
+  public constructor(transformers: ValueTransformersTuple<I, O>) {
     super();
 
     this.#transformers = transformers;
