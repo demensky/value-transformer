@@ -1,9 +1,11 @@
-import {expect, test} from 'vitest';
+import {expect, test, vi} from 'vitest';
 
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 
 import {stringEncode} from './string-encode.js';
+
+vi.mock('../../base/config.ts');
 
 test('empty string', () => {
   expect(stringEncode('')).toYieldsReturn(
@@ -40,7 +42,7 @@ test('break line', () => {
 });
 
 test('too long string', () => {
-  expect(stringEncode('a'.repeat(0x10001))).toYieldsThrow(
+  expect(stringEncode('01234567890123456789!')).toYieldsThrow(
     [],
     OutOfMaxByteLengthError,
   );

@@ -1,5 +1,5 @@
+export * from './base/config.js';
 export * from './base/value-transformer.js';
-export * from './base/value-transformer-config.js';
 export * from './base/value-transformer-input.js';
 export * from './base/value-transformer-output.js';
 export * from './buffer-reader/buffer-source-iterable-reader.js';

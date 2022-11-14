@@ -1,4 +1,4 @@
-import {valueTransformerConfig} from '../../base/value-transformer-config.js';
+import {config} from '../../base/config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {DecoderGeneratorFactory} from '../../type/decoder-generator-factory.js';
@@ -10,7 +10,7 @@ export function* mapDecoder<K, V>(
 ): DecoderGenerator<Map<K, V>> {
   const size: number = yield* uintDecoder();
 
-  if (size > valueTransformerConfig.collectionMaxLength) {
+  if (size > config.collectionMaxLength) {
     throw new OutOfMaxLengthError();
   }
 

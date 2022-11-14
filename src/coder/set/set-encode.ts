@@ -1,4 +1,4 @@
-import {valueTransformerConfig} from '../../base/value-transformer-config.js';
+import {config} from '../../base/config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {EncodeFactory} from '../../type/encode-factory.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
@@ -8,7 +8,7 @@ export function* setEncode<T>(
   set: ReadonlySet<T>,
   encoder: EncodeFactory<T>,
 ): IterableEncoding {
-  if (set.size > valueTransformerConfig.collectionMaxLength) {
+  if (set.size > config.collectionMaxLength) {
     throw new OutOfMaxLengthError();
   }
 
