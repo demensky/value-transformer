@@ -38,7 +38,7 @@
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
-    "@vitest/coverage-c8": "^0.25.1",
+    "@vitest/coverage-c8": "^0.25.2",
     "eslint": "^8.27.0",
     "eslint-plugin-ava": "^13.2.0",
     "eslint-plugin-import": "^2.26.0",
@@ -51,6 +51,6 @@
     "tsup": "^6.4.0",
     "typescript": "~4.8.4",
     "vite": "^3.2.3",
-    "vitest": "^0.25.1"
+    "vitest": "^0.25.2"
   }
 }
