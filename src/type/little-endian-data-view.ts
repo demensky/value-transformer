@@ -108,4 +108,26 @@ export interface LittleEndianDataView {
    * @see {@linkcode DataView#setUint32}
    */
   setUint32(byteOffset: number, value: number, littleEndian: true): void;
+
+  /**
+   * @see {@linkcode ReadonlyDataView#getBigInt64}
+   * @see {@linkcode DataView#getBigInt64}
+   */
+  getBigInt64(byteOffset: number, littleEndian: true): bigint;
+
+  /**
+   * @see {@linkcode ReadonlyDataView#getBigUint64}
+   * @see {@linkcode DataView#getBigUint64}
+   */
+  getBigUint64(byteOffset: number, littleEndian: true): bigint;
+
+  /**
+   * @see {@linkcode DataView#setBigInt64}
+   */
+  setBigInt64(byteOffset: number, value: bigint, littleEndian: true): void;
+
+  /**
+   * @see {@linkcode DataView#setBigUint64}
+   */
+  setBigUint64(byteOffset: number, value: bigint, littleEndian: true): void;
 }
