@@ -1,7 +1,3 @@
-import {compatibleWith} from '../../base/compatible-with.js';
-import {decoder} from '../../base/decoder.js';
-import {encode} from '../../base/encode.js';
-import {toLiteral} from '../../base/to-literal.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {mapDecoder} from '../../coder/map/map-decoder.js';
 import {mapEncode} from '../../coder/map/map-encode.js';
@@ -13,7 +9,6 @@ import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
 import {isMap} from '../../util/guard/is-map.js';
 import {map} from '../../util/map.js';
-import {mapEntries} from '../../util/map-entries.js';
 
 export class MapTransformer<
   KI,
@@ -38,15 +33,19 @@ export class MapTransformer<
   public compatibleWith(data: unknown): data is ReadonlyMap<KI, VI> {
     return (
       isMap(data) &&
-      every<unknown>(data.keys(), compatibleWith<KI>(this.#keyTransformer)) &&
-      every<unknown>(data.values(), compatibleWith<VI>(this.#valueTransformer))
+      every(
+        data,
+        ([key, value]) =>
+          this.#keyTransformer.compatibleWith(key) &&
+          this.#valueTransformer.compatibleWith(value),
+      )
     );
   }
 
   public decoder(): DecoderGenerator<Map<KO, VO>> {
     return mapDecoder<KO, VO>(
-      decoder<KO>(this.#keyTransformer),
-      decoder<VO>(this.#valueTransformer),
+      () => this.#keyTransformer.decoder(),
+      () => this.#valueTransformer.decoder(),
     );
   }
 
@@ -55,8 +54,8 @@ export class MapTransformer<
 
     return mapEncode<KI, VI>(
       data,
-      encode<KI>(this.#keyTransformer),
-      encode<VI>(this.#valueTransformer),
+      (key) => this.#keyTransformer.encode(key),
+      (value) => this.#valueTransformer.encode(value),
     );
   }
 
@@ -84,12 +83,12 @@ export class MapTransformer<
   public toLiteral(data: ReadonlyMap<KI, VI>, compact: boolean): unknown {
     console.assert(isMap(data));
 
-    return Array.from<readonly [unknown, unknown]>(
-      mapEntries<KI, unknown, VI, unknown>(
-        data,
-        toLiteral<KI>(this.#keyTransformer, compact),
-        toLiteral<VI>(this.#valueTransformer, compact),
-      ),
+    return Array.from<readonly [KI, VI], readonly [unknown, unknown]>(
+      data,
+      ([key, value]) => [
+        this.#keyTransformer.toLiteral(key, compact),
+        this.#valueTransformer.toLiteral(value, compact),
+      ],
     );
   }
 }

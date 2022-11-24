@@ -1,8 +1,3 @@
-import {compatibleWith} from '../../base/compatible-with.js';
-import {decoder} from '../../base/decoder.js';
-import {encode} from '../../base/encode.js';
-import {fromLiteral} from '../../base/from-literal.js';
-import {toLiteral} from '../../base/to-literal.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {setDecoder} from '../../coder/set/set-decoder.js';
 import {setEncode} from '../../coder/set/set-encode.js';
@@ -28,17 +23,20 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public compatibleWith(data: unknown): data is ReadonlySet<I> {
-    return isSet(data) && every(data, compatibleWith<I>(this.#transformer));
+    return (
+      isSet(data) &&
+      every(data, (item) => this.#transformer.compatibleWith(item))
+    );
   }
 
   public decoder(): DecoderGenerator<Set<O>> {
-    return setDecoder<O>(decoder<O>(this.#transformer));
+    return setDecoder<O>(() => this.#transformer.decoder());
   }
 
   public encode(data: ReadonlySet<I>): IterableEncoding {
     console.assert(isSet(data));
 
-    return setEncode<I>(data, encode<I>(this.#transformer));
+    return setEncode<I>(data, (item) => this.#transformer.encode(item));
   }
 
   public fromLiteral(literal: unknown): Set<O> {
@@ -47,16 +45,15 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
     }
 
     return new Set<O>(
-      map<unknown, O>(literal, fromLiteral<O>(this.#transformer)),
+      map<unknown, O>(literal, (item) => this.#transformer.fromLiteral(item)),
     );
   }
 
   public toLiteral(data: ReadonlySet<I>, compact: boolean): unknown {
     console.assert(isSet(data));
 
-    return Array.from<I, unknown>(
-      data,
-      toLiteral<I>(this.#transformer, compact),
+    return Array.from<I, unknown>(data, (item) =>
+      this.#transformer.toLiteral(item, compact),
     );
   }
 }

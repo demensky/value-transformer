@@ -1,8 +1,3 @@
-import {compatibleWith} from '../../base/compatible-with.js';
-import {decoder} from '../../base/decoder.js';
-import {encode} from '../../base/encode.js';
-import {fromLiteral} from '../../base/from-literal.js';
-import {toLiteral} from '../../base/to-literal.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {arrayDecoder} from '../../coder/array/array-decoder.js';
 import {arrayEncode} from '../../coder/array/array-encode.js';
@@ -10,7 +5,6 @@ import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.j
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {denseArrayLike} from '../../util/dense-array-like.js';
-import {every} from '../../util/every.js';
 import {isArray} from '../../util/guard/is-array.js';
 
 // TODO tests
@@ -27,17 +21,20 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public compatibleWith(data: unknown): data is readonly I[] {
-    return isArray(data) && every(data, compatibleWith<I>(this.#transformer));
+    return (
+      isArray(data) &&
+      data.every((item) => this.#transformer.compatibleWith(item))
+    );
   }
 
   public decoder(): DecoderGenerator<O[]> {
-    return arrayDecoder<O>(decoder<O>(this.#transformer));
+    return arrayDecoder<O>(() => this.#transformer.decoder());
   }
 
   public encode(data: readonly I[]): IterableEncoding {
     console.assert(isArray(data));
 
-    return arrayEncode<I>(data, encode<I>(this.#transformer));
+    return arrayEncode<I>(data, (item) => this.#transformer.encode(item));
   }
 
   public fromLiteral(literal: unknown): O[] {
@@ -45,15 +42,16 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
       throw new IncompatibleLiteralError();
     }
 
-    return Array.from<unknown, O>(literal, fromLiteral<O>(this.#transformer));
+    return Array.from<unknown, O>(literal, (item) =>
+      this.#transformer.fromLiteral(item),
+    );
   }
 
   public toLiteral(data: readonly I[], compact: boolean): unknown {
     console.assert(isArray(data));
 
-    return Array.from<I, unknown>(
-      denseArrayLike<I>(data),
-      toLiteral<I>(this.#transformer, compact),
+    return Array.from<I, unknown>(denseArrayLike<I>(data), (item) =>
+      this.#transformer.toLiteral(item, compact),
     );
   }
 }

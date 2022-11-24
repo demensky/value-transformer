@@ -1,5 +1,3 @@
-import {decoder} from '../../base/decoder.js';
-import {encode} from '../../base/encode.js';
 import {ValueTransformer} from '../../base/value-transformer.js';
 import {nullableDecoder} from '../../coder/nullable/nullable-decoder.js';
 import {nullableEncode} from '../../coder/nullable/nullable-encode.js';
@@ -24,11 +22,11 @@ export class NullableTransformer<I, O extends I> extends ValueTransformer<
   }
 
   public decoder(): DecoderGenerator<O | null> {
-    return nullableDecoder<O>(decoder<O>(this.#transformer));
+    return nullableDecoder<O>(() => this.#transformer.decoder());
   }
 
   public encode(data: I | null): IterableEncoding {
-    return nullableEncode<I>(data, encode<I>(this.#transformer));
+    return nullableEncode<I>(data, (item) => this.#transformer.encode(item));
   }
 
   public fromLiteral(literal: unknown): O | null {
