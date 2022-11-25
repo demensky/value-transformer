@@ -2,10 +2,9 @@ import {ValueTransformer} from '../../base/value-transformer.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
-import type {UnverifiedObject} from '../../type/unverified-object.js';
+import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isObject} from '../../util/guard/is-object.js';
-import {identity} from '../../util/identity.js';
 
 import {extractTransformableFields} from './decorator/extract-transformable-fields.js';
 import type {OneOfTransformableField} from './decorator/one-of-transformable-field.js';
@@ -75,19 +74,19 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
       throw new IncompatibleLiteralError();
     }
 
-    if (isArray(literal)) {
-      if (literal.length !== fields.length) {
+    const unverifiedLiteral: Unverified<T> = literal;
+
+    if (isArray(unverifiedLiteral)) {
+      if (unverifiedLiteral.length !== fields.length) {
         throw new IncompatibleLiteralError();
       }
 
       for (const [index, [key, transformer]] of fields.entries()) {
-        instance[key] = transformer.fromLiteral(literal[index]);
+        instance[key] = transformer.fromLiteral(unverifiedLiteral[index]);
       }
     } else {
       for (const [key, transformer] of fields) {
-        instance[key] = transformer.fromLiteral(
-          identity<UnverifiedObject<T>>(literal)[key],
-        );
+        instance[key] = transformer.fromLiteral(unverifiedLiteral[key]);
       }
     }
 

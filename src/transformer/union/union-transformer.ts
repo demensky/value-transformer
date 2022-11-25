@@ -7,21 +7,16 @@ import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.j
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
-import type {UnverifiedObject} from '../../type/unverified-object.js';
+import type {Unverified} from '../../type/unverified.js';
 import type {ValueTransformersTuple} from '../../type/value-transformers-tuple.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isObject} from '../../util/guard/is-object.js';
-import {identity} from '../../util/identity.js';
 
-type UnionCompactLiteral = readonly [is: number, value: unknown];
-
-interface UnionLiteral {
-  readonly is: number;
-
-  readonly value: unknown;
-}
+type UnionLiteral =
+  | readonly [is: number, value: unknown]
+  | {readonly is: number; readonly value: unknown};
 
 const ENTRY_VALUE_INDEX = 1;
 
@@ -88,22 +83,23 @@ export class UnionTransformer<
   }
 
   public fromLiteral(literal: unknown): O[number] {
-    let is: unknown;
-    let value: unknown;
-
     if (!isObject(literal)) {
       throw new IncompatibleLiteralError();
     }
 
-    if (isArray(literal)) {
-      if (!isEntry(literal)) {
+    const unverifiedLiteral: Unverified<UnionLiteral> = literal;
+
+    let is: unknown;
+    let value: unknown;
+
+    if (isArray(unverifiedLiteral)) {
+      if (!isEntry(unverifiedLiteral)) {
         throw new IncompatibleLiteralError();
       }
 
-      [is, value] = literal;
+      [is, value] = unverifiedLiteral;
     } else {
-      is = identity<UnverifiedObject<UnionLiteral>>(literal).is;
-      value = identity<UnverifiedObject<UnionLiteral>>(literal).value;
+      ({is, value} = unverifiedLiteral);
     }
 
     if (!isNumber(is) || !Number.isSafeInteger(is)) {
@@ -115,15 +111,8 @@ export class UnionTransformer<
 
   public toLiteral(data: I[number], compact: boolean): unknown {
     const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
+    const value: unknown = transformer.toLiteral(data, compact);
 
-    return compact
-      ? identity<UnionCompactLiteral>([
-          is,
-          transformer.toLiteral(data, compact),
-        ])
-      : identity<UnionLiteral>({
-          is,
-          value: transformer.toLiteral(data, compact),
-        });
+    return (compact ? [is, value] : {is, value}) satisfies UnionLiteral;
   }
 }

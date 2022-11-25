@@ -1,18 +1,19 @@
-import type {UnverifiedObject} from '../type/unverified-object.js';
+import type {Unverified} from '../type/unverified.js';
 
 import {isObject} from './guard/is-object.js';
-import {identity} from './identity.js';
 
 export function isGenerator(
   value: unknown,
 ): value is Generator<unknown, unknown> {
+  if (!isObject(value)) {
+    return false;
+  }
+
+  const unverifiedValue: Unverified<Generator<unknown, unknown>> = value;
+
   return (
-    isObject(value) &&
-    typeof identity<UnverifiedObject<Generator<unknown, unknown>>>(value)
-      .next === 'function' &&
-    typeof identity<UnverifiedObject<Generator<unknown, unknown>>>(value)
-      .return === 'function' &&
-    typeof identity<UnverifiedObject<Generator<unknown, unknown>>>(value)
-      .throw === 'function'
+    typeof unverifiedValue.next === 'function' &&
+    typeof unverifiedValue.return === 'function' &&
+    typeof unverifiedValue.throw === 'function'
   );
 }

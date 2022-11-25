@@ -5,22 +5,17 @@ import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.j
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
-import type {UnverifiedObject} from '../../type/unverified-object.js';
+import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
 import {isObject} from '../../util/guard/is-object.js';
 import {isRegExp} from '../../util/guard/is-reg-exp.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
-import {identity} from '../../util/identity.js';
 
-interface RegExpLiteral {
-  readonly source: string;
-
-  readonly flags: string;
-}
-
-type RegExpCompactLiteral = readonly [source: string, flags: string];
+type RegExpLiteral =
+  | readonly [source: string, flags: string]
+  | {readonly source: string; readonly flags: string};
 
 // TODO ReadonlyRegExp
 export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
@@ -46,15 +41,16 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
     let source: unknown;
     let flags: unknown;
 
-    if (isArray(literal)) {
-      if (!isEntry(literal)) {
+    const unverifiedLiteral: Unverified<RegExpLiteral> = literal;
+
+    if (isArray(unverifiedLiteral)) {
+      if (!isEntry(unverifiedLiteral)) {
         throw new IncompatibleLiteralError();
       }
 
-      [source, flags] = literal;
+      [source, flags] = unverifiedLiteral;
     } else {
-      source = identity<UnverifiedObject<RegExpLiteral>>(literal).source;
-      flags = identity<UnverifiedObject<RegExpLiteral>>(literal).flags;
+      ({source, flags} = unverifiedLiteral);
     }
 
     if (!isString(source) || !isString(flags)) {
@@ -77,8 +73,8 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
       throw new InvalidUnicodeError('flags');
     }
 
-    return compact
-      ? identity<RegExpCompactLiteral>([source, flags])
-      : identity<RegExpLiteral>({source, flags});
+    return (
+      compact ? [source, flags] : {source, flags}
+    ) satisfies RegExpLiteral;
   }
 }

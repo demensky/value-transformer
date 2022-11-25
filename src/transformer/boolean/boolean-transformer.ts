@@ -5,13 +5,12 @@ import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.j
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isBoolean} from '../../util/guard/is-boolean.js';
-import {identity} from '../../util/identity.js';
 
 const TRUE_COMPACT = 1;
 
 const FALSE_COMPACT = 0;
 
-type BooleanCompactLiteral = typeof FALSE_COMPACT | typeof TRUE_COMPACT;
+type BooleanLiteral = boolean | typeof FALSE_COMPACT | typeof TRUE_COMPACT;
 
 /**
  * @see {@link asBoolean} alias
@@ -53,8 +52,8 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
   public toLiteral(data: boolean, compact: boolean): unknown {
     console.assert(isBoolean(data));
 
-    return compact
-      ? identity<BooleanCompactLiteral>(data ? TRUE_COMPACT : FALSE_COMPACT)
-      : data;
+    return (
+      compact ? (data ? TRUE_COMPACT : FALSE_COMPACT) : data
+    ) satisfies BooleanLiteral;
   }
 }
