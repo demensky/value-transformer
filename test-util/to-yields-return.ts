@@ -9,8 +9,8 @@ import type {TestYield} from './test-yield.js';
 expect.extend({
   toYieldsReturn(
     generator: unknown,
-    expectedYields: readonly TestYield[],
     expectedReturn: unknown,
+    expectedYields: readonly TestYield[],
   ) {
     if (!isGenerator(generator)) {
       throw new TypeError();
@@ -71,8 +71,8 @@ expect.extend({
 
 interface ToYieldsReturnMatcher<R = unknown> {
   toYieldsReturn(
-    expectedYields: readonly TestYield[],
     expectedReturn: unknown,
+    expectedYields: readonly TestYield[],
   ): R;
 }
 

@@ -11,13 +11,13 @@ beforeEach(() => {
 });
 
 test('0', () => {
-  expect(generator).toDecode(['00'], 0);
+  expect(generator).toDecode(0, ['00']);
 });
 
 test('42', () => {
-  expect(generator).toDecode(['2a'], 42);
+  expect(generator).toDecode(42, ['2a']);
 });
 
 test('255', () => {
-  expect(generator).toDecode(['ff'], 255);
+  expect(generator).toDecode(255, ['ff']);
 });

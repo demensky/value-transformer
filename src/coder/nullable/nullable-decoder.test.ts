@@ -16,22 +16,21 @@ beforeEach(() => {
 });
 
 test('null', () => {
-  expect(generator).toDecode(['00'], null);
+  expect(generator).toDecode(null, ['00']);
 
   expect(mockDecoder).not.toHaveBeenCalled();
 });
 
 test('not null', () => {
-  expect(generator).toDecode(['01', '0a'], 0x0a);
+  expect(generator).toDecode(0x0a, ['01', '0a']);
 
   expect(mockDecoder).toHaveBeenCalledTimes(1);
 });
 
 test('invalid control byte', () => {
-  expect(generator).toYieldsThrow(
-    [[1, hexDataView('02')]],
-    InvalidBufferValueError,
-  );
+  expect(generator).toYieldsThrow(InvalidBufferValueError, [
+    [1, hexDataView('02')],
+  ]);
 
   expect(mockDecoder).not.toHaveBeenCalled();
 });

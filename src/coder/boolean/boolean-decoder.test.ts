@@ -13,16 +13,15 @@ beforeEach(() => {
 });
 
 test('false', () => {
-  expect(generator).toDecode(['00'], false);
+  expect(generator).toDecode(false, ['00']);
 });
 
 test('true', () => {
-  expect(generator).toDecode(['01'], true);
+  expect(generator).toDecode(true, ['01']);
 });
 
 test('42', () => {
-  expect(generator).toYieldsThrow(
-    [[1, hexDataView('2a')]],
-    InvalidBufferValueError,
-  );
+  expect(generator).toYieldsThrow(InvalidBufferValueError, [
+    [1, hexDataView('2a')],
+  ]);
 });

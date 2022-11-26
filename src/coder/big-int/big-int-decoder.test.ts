@@ -11,37 +11,37 @@ beforeEach(() => {
 });
 
 test('1 byte 0', () => {
-  expect(generator).toDecode(['00'], 0n);
+  expect(generator).toDecode(0n, ['00']);
 });
 
 test('1 byte biggest positive', () => {
-  expect(generator).toDecode(['3f'], 63n);
+  expect(generator).toDecode(63n, ['3f']);
 });
 
 test('1 byte smallest positive', () => {
-  expect(generator).toDecode(['01'], 1n);
+  expect(generator).toDecode(1n, ['01']);
 });
 
 test('1 byte biggest negative', () => {
-  expect(generator).toDecode(['40'], -64n);
+  expect(generator).toDecode(-64n, ['40']);
 });
 
 test('1 byte smallest negative', () => {
-  expect(generator).toDecode(['7f'], -1n);
+  expect(generator).toDecode(-1n, ['7f']);
 });
 
 test('2 bytes biggest positive', () => {
-  expect(generator).toDecode(['ff', '3f'], 8191n);
+  expect(generator).toDecode(8191n, ['ff', '3f']);
 });
 
 test('2 bytes smallest positive', () => {
-  expect(generator).toDecode(['80', '01'], 128n);
+  expect(generator).toDecode(128n, ['80', '01']);
 });
 
 test('2 bytes biggest negative', () => {
-  expect(generator).toDecode(['80', '40'], -8192n);
+  expect(generator).toDecode(-8192n, ['80', '40']);
 });
 
 test('2 bytes smallest negative', () => {
-  expect(generator).toDecode(['bf', '7f'], -65n);
+  expect(generator).toDecode(-65n, ['bf', '7f']);
 });

@@ -13,48 +13,51 @@ beforeEach(() => {
 });
 
 test('smallest in one byte', () => {
-  expect(generator).toDecode(['00'], 0);
+  expect(generator).toDecode(0, ['00']);
 });
 
 test('biggest in one byte', () => {
-  expect(generator).toDecode(['7f'], 127);
+  expect(generator).toDecode(127, ['7f']);
 });
 
 test('smallest in two byte', () => {
-  expect(generator).toDecode(['80', '01'], 128);
+  expect(generator).toDecode(128, ['80', '01']);
 });
 
 test('biggest in two byte', () => {
-  expect(generator).toDecode(['ff', '7f'], 16383);
+  expect(generator).toDecode(16383, ['ff', '7f']);
 });
 
 test('smallest in three byte', () => {
-  expect(generator).toDecode(['80', '80', '01'], 16384);
+  expect(generator).toDecode(16384, ['80', '80', '01']);
 });
 
 test('biggest in three byte', () => {
-  expect(generator).toDecode(['ff', 'ff', '7f'], 2097151);
+  expect(generator).toDecode(2097151, ['ff', 'ff', '7f']);
 });
 
 test('max safe integer', () => {
-  expect(generator).toDecode(
-    ['ff', 'ff', 'ff', 'ff', 'ff', 'ff', 'ff', '0f'],
-    Number.MAX_SAFE_INTEGER,
-  );
+  expect(generator).toDecode(Number.MAX_SAFE_INTEGER, [
+    'ff',
+    'ff',
+    'ff',
+    'ff',
+    'ff',
+    'ff',
+    'ff',
+    '0f',
+  ]);
 });
 
 test('too big value', () => {
-  expect(generator).toYieldsThrow(
-    [
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-      [1, hexDataView('ff')],
-    ],
-    OutOfMaxLengthError,
-  );
+  expect(generator).toYieldsThrow(OutOfMaxLengthError, [
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+    [1, hexDataView('ff')],
+  ]);
 });

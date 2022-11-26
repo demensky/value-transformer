@@ -16,32 +16,29 @@ beforeEach(() => {
 });
 
 test('empty array', () => {
-  expect(generator).toDecode(['00'], []);
+  expect(generator).toDecode([], ['00']);
 
   expect(mockDecoder).not.toHaveBeenCalled();
 });
 
 test('single item', () => {
-  expect(generator).toDecode(['01', '0a'], [0x0a]);
+  expect(generator).toDecode([0x0a], ['01', '0a']);
 
   expect(mockDecoder).toHaveBeenCalledTimes(1);
 });
 
 test('many items', () => {
-  expect(generator).toDecode(['03', '0a', '0b', '0c'], [0x0a, 0x0b, 0x0c]);
+  expect(generator).toDecode([0x0a, 0x0b, 0x0c], ['03', '0a', '0b', '0c']);
 
   expect(mockDecoder).toHaveBeenCalledTimes(3);
 });
 
 test('out of max length', () => {
-  expect(generator).toYieldsThrow(
-    [
-      [1, hexDataView('81')],
-      [1, hexDataView('80')],
-      [1, hexDataView('04')],
-    ],
-    OutOfMaxLengthError,
-  );
+  expect(generator).toYieldsThrow(OutOfMaxLengthError, [
+    [1, hexDataView('81')],
+    [1, hexDataView('80')],
+    [1, hexDataView('04')],
+  ]);
 
   expect(mockDecoder).not.toHaveBeenCalled();
 });

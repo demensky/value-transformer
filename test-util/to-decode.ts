@@ -10,8 +10,8 @@ import {hexDataView} from './hex-data-view.js';
 expect.extend({
   toDecode(
     decoder: unknown,
-    chunksHexString: readonly string[],
     expected: unknown,
+    chunksHexString: readonly string[],
   ) {
     if (!isGenerator(decoder)) {
       throw new TypeError();
@@ -66,7 +66,7 @@ expect.extend({
 });
 
 interface ToDecodeMatcher<R = unknown> {
-  toDecode(chunks: readonly string[], expected: unknown): R;
+  toDecode(expected: unknown, chunks: readonly string[]): R;
 }
 
 declare global {

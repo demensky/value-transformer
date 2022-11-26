@@ -14,38 +14,32 @@ beforeEach(() => {
 });
 
 test('empty string', () => {
-  expect(generator).toDecode(['00', ''], '');
+  expect(generator).toDecode('', ['00', '']);
 });
 
 test('simple string', () => {
-  expect(generator).toDecode(['03', '66 6f 6f'], 'foo');
+  expect(generator).toDecode('foo', ['03', '66 6f 6f']);
 });
 
 test('broken unicode', () => {
-  expect(generator).toYieldsThrow(
-    [
-      [1, hexDataView('03')],
-      [3, hexDataView('f0 9f a5')],
-    ],
-    InvalidBufferValueError,
-  );
+  expect(generator).toYieldsThrow(InvalidBufferValueError, [
+    [1, hexDataView('03')],
+    [3, hexDataView('f0 9f a5')],
+  ]);
 });
 
 test('null', () => {
-  expect(generator).toDecode(['01', '00'], '\0');
+  expect(generator).toDecode('\0', ['01', '00']);
 });
 
 test('break line', () => {
-  expect(generator).toDecode(['02', '0d 0a'], '\r\n');
+  expect(generator).toDecode('\r\n', ['02', '0d 0a']);
 });
 
 test('byte length of the string is greater than the limit', () => {
-  expect(generator).toYieldsThrow(
-    [
-      [1, hexDataView('81')],
-      [1, hexDataView('80')],
-      [1, hexDataView('04')],
-    ],
-    OutOfMaxByteLengthError,
-  );
+  expect(generator).toYieldsThrow(OutOfMaxByteLengthError, [
+    [1, hexDataView('81')],
+    [1, hexDataView('80')],
+    [1, hexDataView('04')],
+  ]);
 });
