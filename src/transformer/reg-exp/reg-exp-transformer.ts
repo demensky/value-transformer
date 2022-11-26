@@ -61,6 +61,10 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
 
     const data = new RegExp(source, flags);
 
+    if (data.source !== source || data.flags !== flags) {
+      throw new IncompatibleLiteralError('regex is not symmetrical');
+    }
+
     data.lastIndex = lastIndex;
 
     return data;

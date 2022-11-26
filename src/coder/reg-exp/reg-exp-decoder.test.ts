@@ -13,9 +13,14 @@ beforeEach(() => {
 });
 
 test('empty', () => {
-  expect(generator).toDecode(
-    ['00', '', '00', '', '00 00 00 00 00 00 00 00'],
-    /(?:)/,
+  expect(generator).toYieldsThrow(
+    [
+      [1, hexDataView('00')],
+      [0, hexDataView('')],
+      [0, hexDataView('00')],
+      [0, hexDataView('')],
+    ],
+    InvalidBufferValueError,
   );
 });
 
@@ -47,7 +52,6 @@ test('invalid regexp', () => {
       [2, hexDataView('61 5b')],
       [1, hexDataView('00')],
       [0, hexDataView('')],
-      [8, hexDataView('00 00 00 00 00 00 00 00')],
     ],
     InvalidBufferValueError,
   );

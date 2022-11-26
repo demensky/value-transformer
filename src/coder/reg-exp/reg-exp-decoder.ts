@@ -4,17 +4,22 @@ import {float64Decoder} from '../float64/float64-decoder.js';
 import {stringDecoder} from '../string/string-decoder.js';
 
 export function* regExpDecoder(): DecoderGenerator<RegExp> {
-  const pattern = yield* stringDecoder();
+  const source = yield* stringDecoder();
   const flags = yield* stringDecoder();
-  const lastIndex = yield* float64Decoder();
+
+  let data: RegExp;
 
   try {
-    const data = new RegExp(pattern, flags);
-
-    data.lastIndex = lastIndex;
-
-    return data;
+    data = new RegExp(source, flags);
   } catch (cause) {
     throw new InvalidBufferValueError('', {cause});
   }
+
+  if (data.source !== source || data.flags !== flags) {
+    throw new InvalidBufferValueError('regex is not symmetrical');
+  }
+
+  data.lastIndex = yield* float64Decoder();
+
+  return data;
 }
