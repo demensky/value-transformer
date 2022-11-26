@@ -7,15 +7,15 @@ import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
-import {isEntry} from '../../util/guard/is-entry.js';
+import {isNumber} from '../../util/guard/is-number.js';
 import {isObject} from '../../util/guard/is-object.js';
 import {isRegExp} from '../../util/guard/is-reg-exp.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
 
 type RegExpLiteral =
-  | readonly [source: string, flags: string]
-  | {readonly source: string; readonly flags: string};
+  | Readonly<{source: string; flags: string; lastIndex: number}>
+  | readonly [source: string, flags: string, lastIndex: number];
 
 // TODO ReadonlyRegExp
 export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
@@ -40,30 +40,36 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
 
     let source: unknown;
     let flags: unknown;
+    let lastIndex: unknown;
 
     const unverifiedLiteral: Unverified<RegExpLiteral> = literal;
 
     if (isArray(unverifiedLiteral)) {
-      if (!isEntry(unverifiedLiteral)) {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (unverifiedLiteral.length !== 3) {
         throw new IncompatibleLiteralError();
       }
 
-      [source, flags] = unverifiedLiteral;
+      [source, flags, lastIndex] = unverifiedLiteral;
     } else {
-      ({source, flags} = unverifiedLiteral);
+      ({source, flags, lastIndex} = unverifiedLiteral);
     }
 
-    if (!isString(source) || !isString(flags)) {
+    if (!isString(source) || !isString(flags) || !isNumber(lastIndex)) {
       throw new IncompatibleLiteralError();
     }
 
-    return new RegExp(source, flags);
+    const data = new RegExp(source, flags);
+
+    data.lastIndex = lastIndex;
+
+    return data;
   }
 
   public toLiteral(data: RegExp, compact: boolean): unknown {
     console.assert(isRegExp(data));
 
-    const {flags, source}: RegExp = data;
+    const {flags, source, lastIndex}: RegExp = data;
 
     if (!isValidUnicode(source)) {
       throw new InvalidUnicodeError('source');
@@ -74,7 +80,7 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
     }
 
     return (
-      compact ? [source, flags] : {source, flags}
+      compact ? [source, flags, lastIndex] : {source, flags, lastIndex}
     ) satisfies RegExpLiteral;
   }
 }
