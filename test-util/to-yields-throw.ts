@@ -72,6 +72,5 @@ interface ToYieldsThrowMatcher<R = unknown> {
 declare global {
   namespace Vi {
     interface Assertion extends ToYieldsThrowMatcher {}
-    interface AsymmetricMatchersContaining extends ToYieldsThrowMatcher {}
   }
 }

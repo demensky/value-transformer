@@ -72,6 +72,5 @@ interface ToDecodeMatcher<R = unknown> {
 declare global {
   namespace Vi {
     interface Assertion extends ToDecodeMatcher {}
-    interface AsymmetricMatchersContaining extends ToDecodeMatcher {}
   }
 }

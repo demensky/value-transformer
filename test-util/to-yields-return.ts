@@ -79,6 +79,5 @@ interface ToYieldsReturnMatcher<R = unknown> {
 declare global {
   namespace Vi {
     interface Assertion extends ToYieldsReturnMatcher {}
-    interface AsymmetricMatchersContaining extends ToYieldsReturnMatcher {}
   }
 }
