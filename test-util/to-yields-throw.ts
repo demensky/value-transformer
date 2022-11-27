@@ -70,11 +70,8 @@ interface ToYieldsThrowMatcher<R = unknown> {
 }
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Vi {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface Assertion extends ToYieldsThrowMatcher {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface AsymmetricMatchersContaining extends ToYieldsThrowMatcher {}
   }
 }

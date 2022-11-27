@@ -249,6 +249,13 @@
         "@typescript-eslint/no-magic-numbers": "off",
         "@typescript-eslint/consistent-type-assertions": "off"
       }
+    },
+    {
+      "files": ["./test-util/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-empty-interface": "off"
+      }
     }
   ]
 }

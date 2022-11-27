@@ -77,11 +77,8 @@ interface ToYieldsReturnMatcher<R = unknown> {
 }
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Vi {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface Assertion extends ToYieldsReturnMatcher {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface AsymmetricMatchersContaining extends ToYieldsReturnMatcher {}
   }
 }
