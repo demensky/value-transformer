@@ -12,6 +12,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
+    "lint": "eslint .",
     "prepare": "husky install && npm run build",
     "test": "vitest"
   },

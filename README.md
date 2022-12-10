@@ -8,6 +8,8 @@ This library allows you to serialize/deserialize complex data using
 representation: the signature of JSON literals and `ArrayBuffer`s is
 encapsulated.
 
+![CI](https://github.com/demensky/value-transformer/workflows/CI/badge.svg)
+
 ## Example
 
 ```ts

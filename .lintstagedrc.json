@@ -1,4 +1,5 @@
 {
+  "*.yml": ["prettier --write"],
   "*.json": ["prettier --write"],
   "*.ts": ["vitest related --run", "prettier --write"]
 }
