@@ -13,6 +13,7 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky install && npm run build",
     "test": "vitest"
   },
