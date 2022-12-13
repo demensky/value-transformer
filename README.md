@@ -33,7 +33,7 @@ export class BitmapPictureDto {
 
 export class PictureDto {
   @transform(asDate())
-  public readonly createAt: Date;
+  public readonly createAt: ReadonlyDate;
 
   @transform(asFloat64())
   public readonly rating: number;

@@ -3,10 +3,11 @@ import {beforeEach, expect, test} from 'vitest';
 import {hexDataView} from '../../../test-util/hex-data-view.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {ReadonlyDate} from '../../type/readonly-date.js';
 
 import {dateDecoder} from './date-decoder.js';
 
-let generator: DecoderGenerator<Date>;
+let generator: DecoderGenerator<ReadonlyDate>;
 
 beforeEach(() => {
   generator = dateDecoder();

@@ -104,6 +104,7 @@ export * from './type/enum-like.js';
 export * from './type/iterable-encoding.js';
 export * from './type/little-endian-data-view.js';
 export * from './type/readonly-data-view.js';
+export * from './type/readonly-date.js';
 export * from './type/restricted-data-view.js';
 export * from './type/transformable-field-decorator.js';
 export * from './type/uuid-string.js';
