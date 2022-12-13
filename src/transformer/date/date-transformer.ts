@@ -11,7 +11,6 @@ import {isNumberOrString} from '../../util/guard/is-number-or-string.js';
 
 const INVALID = 'Invalid Date';
 
-// TODO ReadonlyDate
 /**
  * Handles a {@link Date} object (including "Invalid Date").
  * @see {@link asDate} alias
