@@ -1,23 +1,13 @@
-import {config} from '../../base/config.js';
-import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {DecoderGeneratorFactory} from '../../type/decoder-generator-factory.js';
-import {uintDecoder} from '../uint/uint-decoder.js';
+import {listDecoder} from '../list/list-decoder.js';
 
-export function* setDecoder<T>(
+function setAppend<T>(set: Set<T>, item: T): void {
+  set.add(item);
+}
+
+export function setDecoder<T>(
   decoder: DecoderGeneratorFactory<T>,
 ): DecoderGenerator<Set<T>> {
-  const length: number = yield* uintDecoder();
-
-  if (length > config.collectionMaxLength) {
-    throw new OutOfMaxLengthError();
-  }
-
-  const result = new Set<T>();
-
-  for (let index = 0; index < length; index++) {
-    result.add(yield* decoder());
-  }
-
-  return result;
+  return listDecoder<T, Set<T>>(new Set<T>(), decoder, setAppend);
 }
