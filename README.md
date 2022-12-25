@@ -81,7 +81,7 @@ TODO doc
 
 Strictly check the literal for validity and deserialize it into data.
 
-### `toLiteral(data)`
+### `toLiteral(data, compact)`
 
 Serialize the passed data into a JSON-like literal.
 
