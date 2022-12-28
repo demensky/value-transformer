@@ -2,38 +2,38 @@
   "name": "value-transformer",
   "version": "0.9.1",
   "description": "This library allows you to serialize/deserialize complex data using transformers. There is no need to interact with the raw representation: the signature of JSON literals and ArrayBuffers is encapsulated.\n",
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "types": "./dist/index.d.ts",
-    "development": "./dist/index.dev.js",
-    "default": "./dist/index.js"
-  },
-  "sideEffects": false,
-  "scripts": {
-    "build": "tsup",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "prepare": "husky install && npm run build",
-    "test": "vitest"
+  "homepage": "https://github.com/demensky/value-transformer#readme",
+  "bugs": {
+    "url": "https://github.com/demensky/value-transformer/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/demensky/value-transformer.git"
   },
+  "license": "MIT",
   "author": {
     "name": "Dmitry Demensky",
     "email": "dmitry@demensky.com",
     "url": "https://demensky.com/"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/demensky/value-transformer/issues"
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "development": "./dist/index.dev.js",
+    "default": "./dist/index.js"
   },
-  "homepage": "https://github.com/demensky/value-transformer#readme",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint .",
+    "prepare": "husky install && npm run build",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
@@ -48,6 +48,7 @@
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
+    "prettier-plugin-packagejson": "^2.3.0",
     "ts-node": "^10.9.1",
     "tsup": "^6.5.0",
     "typescript": "~4.9.4",
