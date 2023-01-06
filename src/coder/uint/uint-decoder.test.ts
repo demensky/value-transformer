@@ -21,31 +21,31 @@ test('biggest in one byte', () => {
 });
 
 test('smallest in two byte', () => {
-  expect(generator).toDecode(128, ['80', '01']);
+  expect(generator).toDecode(128, ['80', '00']);
 });
 
 test('biggest in two byte', () => {
-  expect(generator).toDecode(16383, ['ff', '7f']);
+  expect(generator).toDecode(16_511, ['ff', '7f']);
 });
 
 test('smallest in three byte', () => {
-  expect(generator).toDecode(16384, ['80', '80', '01']);
+  expect(generator).toDecode(16_512, ['80', '80', '00']);
 });
 
 test('biggest in three byte', () => {
-  expect(generator).toDecode(2097151, ['ff', 'ff', '7f']);
+  expect(generator).toDecode(2_113_663, ['ff', 'ff', '7f']);
 });
 
 test('max safe integer', () => {
   expect(generator).toDecode(Number.MAX_SAFE_INTEGER, [
     'ff',
-    'ff',
-    'ff',
-    'ff',
-    'ff',
-    'ff',
-    'ff',
-    '0f',
+    'fe',
+    'fe',
+    'fe',
+    'fe',
+    'fe',
+    'fe',
+    '0e',
   ]);
 });
 

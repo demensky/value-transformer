@@ -13,7 +13,7 @@ export function* uintEncode(value: number): IterableEncoding {
     const element: number = current & SEVEN_BIT_PAYLOAD;
 
     elements.push(element | USE_NEXT_BYTE);
-    current = (current - element) / AMOUNT_IN_SEVEN_BIT;
+    current = (current - AMOUNT_IN_SEVEN_BIT - element) / AMOUNT_IN_SEVEN_BIT;
   }
 
   elements.push(current);

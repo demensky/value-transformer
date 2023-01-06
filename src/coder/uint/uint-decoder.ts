@@ -6,19 +6,17 @@ import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import {uint8Decoder} from '../uint8/uint8-decoder.js';
 
 export function* uintDecoder(): DecoderGenerator<number> {
-  let result = 0;
-  let index = 0;
+  let part: number = yield* uint8Decoder();
+  let result: number = part & SEVEN_BIT_PAYLOAD;
 
-  let part: number;
-
-  do {
+  for (let index = 1; (part & USE_NEXT_BYTE) !== 0; index++) {
     part = yield* uint8Decoder();
-    result += (part & SEVEN_BIT_PAYLOAD) * AMOUNT_IN_SEVEN_BIT ** index++;
+    result += ((part & SEVEN_BIT_PAYLOAD) + 1) * AMOUNT_IN_SEVEN_BIT ** index;
 
     if (result > Number.MAX_SAFE_INTEGER) {
       throw new OutOfMaxLengthError();
     }
-  } while ((part & USE_NEXT_BYTE) !== 0);
+  }
 
   return result;
 }
