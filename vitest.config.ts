@@ -6,6 +6,7 @@ export default defineConfig({
       './test-util/to-yields-return.ts',
       './test-util/to-yields-throw.ts',
       './test-util/to-decode.ts',
+      './test-util/to-iterator.ts',
     ],
   },
 });
