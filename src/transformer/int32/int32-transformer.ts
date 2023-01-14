@@ -24,7 +24,7 @@ export class Int32Transformer extends ValueTransformer<number, number> {
   }
 
   public encode(data: number): IterableEncoding {
-    console.assert(isInt32(data));
+    console.assert(isNumber(data));
 
     return int32Encode(data);
   }
@@ -38,7 +38,7 @@ export class Int32Transformer extends ValueTransformer<number, number> {
   }
 
   public override toLiteral(data: number): unknown {
-    console.assert(isInt32(data));
+    console.assert(isNumber(data) && isInt32(data));
 
     return data;
   }

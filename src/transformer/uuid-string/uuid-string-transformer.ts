@@ -20,7 +20,7 @@ export class UuidStringTransformer<
   }
 
   public *encode(data: T): IterableEncoding {
-    console.assert(isString(data) && isUuidString<T>(data));
+    console.assert(isString(data));
 
     yield uuidStringEncode(data);
   }

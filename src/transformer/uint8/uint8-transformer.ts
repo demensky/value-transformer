@@ -24,7 +24,7 @@ export class Uint8Transformer extends ValueTransformer<number, number> {
   }
 
   public encode(data: number): IterableEncoding {
-    console.assert(isUint8(data));
+    console.assert(isNumber(data));
 
     return uint8Encode(data);
   }
@@ -38,7 +38,7 @@ export class Uint8Transformer extends ValueTransformer<number, number> {
   }
 
   public override toLiteral(data: number): unknown {
-    console.assert(isUint8(data));
+    console.assert(isNumber(data) && isUint8(data));
 
     return data;
   }

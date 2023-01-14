@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
 import type {UuidString} from '../../type/uuid-string.js';
+import {isUuidString} from '../../util/guard/is-uuid-string.js';
 import {parseHexInt} from '../../util/parse-hex-int.js';
 
 export function uuidStringEncode(value: UuidString): ArrayBufferView {
+  console.assert(isUuidString<UuidString>(value));
+
   return new Uint8Array([
     parseHexInt(value.slice(0, 2)),
     parseHexInt(value.slice(2, 4)),

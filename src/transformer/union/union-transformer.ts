@@ -13,6 +13,7 @@ import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isObject} from '../../util/guard/is-object.js';
+import {isSafeUint} from '../../util/guard/is-safe-uint.js';
 
 type UnionLiteral =
   | readonly [is: number, value: unknown]
@@ -102,7 +103,7 @@ export class UnionTransformer<
       ({is, value} = unverifiedLiteral);
     }
 
-    if (!isNumber(is) || !Number.isSafeInteger(is)) {
+    if (!isNumber(is) || !isSafeUint(is)) {
       throw new IncompatibleLiteralError();
     }
 

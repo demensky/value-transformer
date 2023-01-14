@@ -24,7 +24,7 @@ export class Int16Transformer extends ValueTransformer<number, number> {
   }
 
   public encode(data: number): IterableEncoding {
-    console.assert(isInt16(data));
+    console.assert(isNumber(data));
 
     return int16Encode(data);
   }
@@ -38,7 +38,7 @@ export class Int16Transformer extends ValueTransformer<number, number> {
   }
 
   public override toLiteral(data: number): unknown {
-    console.assert(isInt16(data));
+    console.assert(isNumber(data) && isInt16(data));
 
     return data;
   }
