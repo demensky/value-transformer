@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {mapDecoder} from '../../coder/map/map-decoder.js';
 import {mapEncode} from '../../coder/map/map-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -9,6 +8,7 @@ import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
 import {isMap} from '../../util/guard/is-map.js';
 import {map} from '../../util/map.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 export class MapTransformer<
   KI,

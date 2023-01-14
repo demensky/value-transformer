@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {float64Decoder} from '../../coder/float64/float64-decoder.js';
 import {float64Encode} from '../../coder/float64/float64-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -9,6 +8,7 @@ import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {extractEnumValues} from '../../util/extract-enum-values.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isInSet} from '../../util/is-in-set.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
   V,

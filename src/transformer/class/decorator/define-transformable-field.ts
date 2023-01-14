@@ -1,5 +1,5 @@
-import type {ValueTransformer} from '../../../base/value-transformer.js';
 import {isNotOccupiedByTransformableField} from '../../../util/is-not-occupied-by-transformable-field.js';
+import type {ValueTransformer} from '../../value/value-transformer.js';
 
 import type {OneOfTransformableField} from './one-of-transformable-field.js';
 import {transformableFieldsMap} from './transformable-fields-map.js';

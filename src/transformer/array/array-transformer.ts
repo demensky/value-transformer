@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {arrayDecoder} from '../../coder/array/array-decoder.js';
 import {arrayEncode} from '../../coder/array/array-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -6,6 +5,7 @@ import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {denseArrayLike} from '../../util/dense-array-like.js';
 import {isArray} from '../../util/guard/is-array.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 // TODO tests
 export class ArrayTransformer<I, O extends I> extends ValueTransformer<

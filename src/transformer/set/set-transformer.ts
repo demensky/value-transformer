@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {setDecoder} from '../../coder/set/set-decoder.js';
 import {setEncode} from '../../coder/set/set-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -8,6 +7,7 @@ import {every} from '../../util/every.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isSet} from '../../util/guard/is-set.js';
 import {map} from '../../util/map.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 // TODO tests
 export class SetTransformer<I, O extends I> extends ValueTransformer<

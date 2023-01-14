@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {uint8Decoder} from '../../coder/uint8/uint8-decoder.js';
 import {uint8Encode} from '../../coder/uint8/uint8-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -6,6 +5,7 @@ import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isUint8} from '../../util/guard/is-uint8.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
  * @see {@link asUint8} alias

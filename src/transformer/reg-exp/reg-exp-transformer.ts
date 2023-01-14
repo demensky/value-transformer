@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {regExpDecoder} from '../../coder/reg-exp/reg-exp-decoder.js';
 import {regExpEncode} from '../../coder/reg-exp/reg-exp-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -12,6 +11,7 @@ import {isObject} from '../../util/guard/is-object.js';
 import {isRegExp} from '../../util/guard/is-reg-exp.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 type RegExpLiteral =
   | Readonly<{source: string; flags: string; lastIndex: number}>

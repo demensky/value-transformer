@@ -1,5 +1,5 @@
-import type {ValueTransformerInput} from '../base/value-transformer-input.js';
-import type {ValueTransformerOutput} from '../base/value-transformer-output.js';
+import type {ValueTransformerInput} from '../transformer/value/value-transformer-input.js';
+import type {ValueTransformerOutput} from '../transformer/value/value-transformer-output.js';
 
 export type ValueTransformersTuple<
   I extends readonly unknown[],

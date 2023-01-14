@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {stringDecoder} from '../../coder/string/string-decoder.js';
 import {stringEncode} from '../../coder/string/string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -7,6 +6,7 @@ import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
  * @see {@link asString} alias

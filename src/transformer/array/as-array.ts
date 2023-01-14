@@ -1,4 +1,4 @@
-import type {ValueTransformer} from '../../base/value-transformer.js';
+import type {ValueTransformer} from '../value/value-transformer.js';
 
 import {ArrayTransformer} from './array-transformer.js';
 

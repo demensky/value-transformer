@@ -1,10 +1,10 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {float64Decoder} from '../../coder/float64/float64-decoder.js';
 import {float64Encode} from '../../coder/float64/float64-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isNumber} from '../../util/guard/is-number.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 const NAN_LITERAL_VALUE = 'NaN';
 

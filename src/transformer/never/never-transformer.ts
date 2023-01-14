@@ -1,5 +1,5 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {NeverTransformerError} from '../../error/never-transformer-error.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
  * Handles no value (any attempt to serialize or deserialize will throw an

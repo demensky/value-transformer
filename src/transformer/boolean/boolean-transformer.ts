@@ -1,10 +1,10 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {booleanDecoder} from '../../coder/boolean/boolean-decoder.js';
 import {booleanEncode} from '../../coder/boolean/boolean-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isBoolean} from '../../util/guard/is-boolean.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 const TRUE_COMPACT = 1;
 

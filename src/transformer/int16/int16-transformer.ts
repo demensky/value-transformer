@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {int16Decoder} from '../../coder/int16/int16-decoder.js';
 import {int16Encode} from '../../coder/int16/int16-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -6,6 +5,7 @@ import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isInt16} from '../../util/guard/is-int16.js';
 import {isNumber} from '../../util/guard/is-number.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
  * @see {@link asInt16} alias

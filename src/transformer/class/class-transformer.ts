@@ -1,10 +1,10 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isObject} from '../../util/guard/is-object.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 import {extractTransformableFields} from './decorator/extract-transformable-fields.js';
 import type {OneOfTransformableField} from './decorator/one-of-transformable-field.js';

@@ -1,4 +1,4 @@
-import type {IterableEncoding} from '../type/iterable-encoding.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
 
 export interface ValueTransformerInput<I> {
   compatibleWith(data: unknown): data is I;

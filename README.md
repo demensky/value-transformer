@@ -330,4 +330,4 @@ const transformer = asUuidString<UserId>();
 [string-enum]:
   https://www.typescriptlang.org/docs/handbook/enums.html#string-enums
 [uuid]: https://datatracker.ietf.org/doc/html/rfc4122
-[value-transformer]: ./src/base/value-transformer.ts
+[value-transformer]: src/transformer/value/value-transformer.ts

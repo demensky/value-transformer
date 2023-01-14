@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {dateDecoder} from '../../coder/date/date-decoder.js';
 import {dateEncode} from '../../coder/date/date-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -8,6 +7,7 @@ import type {ReadonlyDate} from '../../type/readonly-date.js';
 import {isDate} from '../../util/guard/is-date.js';
 import {isInvalidDate} from '../../util/guard/is-invalid-date.js';
 import {isNumberOrString} from '../../util/guard/is-number-or-string.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 const INVALID = 'Invalid Date';
 

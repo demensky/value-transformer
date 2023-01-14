@@ -1,6 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
-import type {ValueTransformerInput} from '../../base/value-transformer-input.js';
-import type {ValueTransformerOutput} from '../../base/value-transformer-output.js';
 import {uintDecoder} from '../../coder/uint/uint-decoder.js';
 import {uintEncode} from '../../coder/uint/uint-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -14,6 +11,9 @@ import {isEntry} from '../../util/guard/is-entry.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isObject} from '../../util/guard/is-object.js';
 import {isSafeUint} from '../../util/guard/is-safe-uint.js';
+import {ValueTransformer} from '../value/value-transformer.js';
+import type {ValueTransformerInput} from '../value/value-transformer-input.js';
+import type {ValueTransformerOutput} from '../value/value-transformer-output.js';
 
 type UnionLiteral =
   | readonly [is: number, value: unknown]

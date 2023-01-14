@@ -1,4 +1,3 @@
-import {ValueTransformer} from '../../base/value-transformer.js';
 import {stringDecoder} from '../../coder/string/string-decoder.js';
 import {stringEncode} from '../../coder/string/string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
@@ -9,6 +8,7 @@ import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {extractEnumValues} from '../../util/extract-enum-values.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isInSet} from '../../util/is-in-set.js';
+import {ValueTransformer} from '../value/value-transformer.js';
 
 export class EnumStringTransformer<V extends string> extends ValueTransformer<
   V,

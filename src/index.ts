@@ -1,7 +1,4 @@
 export * from './base/config.js';
-export * from './base/value-transformer.js';
-export * from './base/value-transformer-input.js';
-export * from './base/value-transformer-output.js';
 export * from './buffer-reader/buffer-source-iterable-reader.js';
 export * from './buffer-reader/buffer-source-stream-reader.js';
 export * from './coder/array/array-decoder.js';
@@ -96,6 +93,9 @@ export * from './transformer/union/as-union.js';
 export * from './transformer/union/union-transformer.js';
 export * from './transformer/uuid-string/as-uuid-string.js';
 export * from './transformer/uuid-string/uuid-string-transformer.js';
+export * from './transformer/value/value-transformer.js';
+export * from './transformer/value/value-transformer-input.js';
+export * from './transformer/value/value-transformer-output.js';
 export * from './type/decoder-generator.js';
 export * from './type/decoder-generator-factory.js';
 export * from './type/encode-factory.js';

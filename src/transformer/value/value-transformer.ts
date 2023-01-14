@@ -1,5 +1,5 @@
-import type {DecoderGenerator} from '../type/decoder-generator.js';
-import type {IterableEncoding} from '../type/iterable-encoding.js';
+import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {IterableEncoding} from '../../type/iterable-encoding.js';
 
 import type {ValueTransformerInput} from './value-transformer-input.js';
 import type {ValueTransformerOutput} from './value-transformer-output.js';
