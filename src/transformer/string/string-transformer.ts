@@ -5,7 +5,7 @@ import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {isString} from '../../util/guard/is-string.js';
-import {isValidUnicode} from '../../util/guard/is-valid-unicode.js';
+import {isUtf8} from '../../util/guard/is-utf8.js';
 import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
@@ -41,7 +41,7 @@ export class StringTransformer extends ValueTransformer<string, string> {
   public toLiteral(data: string): unknown {
     console.assert(isString(data));
 
-    if (!isValidUnicode(data)) {
+    if (!isUtf8(data)) {
       throw new InvalidUnicodeError();
     }
 

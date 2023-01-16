@@ -11,7 +11,11 @@ function isHighSurrogate(code: number): boolean {
   return ((code & SURROGATE_BITS) ^ HIGH_SURROGATE_BITS_VALUE) === 0;
 }
 
-export function isValidUnicode(value: string): boolean {
+/**
+ * Checks that the string does not contain broken surrogate pairs and can be
+ * correctly encoded in UTF-8.
+ */
+export function isUtf8(value: string): boolean {
   const {length} = value;
 
   for (let index = 0; index < length; index++) {
