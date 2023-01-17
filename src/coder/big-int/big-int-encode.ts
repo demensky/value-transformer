@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {config} from '../../base/config.js';
+import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
 
@@ -14,7 +14,7 @@ export function* bigIntEncode(value: bigint): IterableEncoding {
     elements.push(Number(element) | 0b10000000);
     current = current >> 7n;
 
-    if (elements.length - 1 > config.bitIntMaxByteLength) {
+    if (elements.length - 1 > coderConfig.bitIntMaxByteLength) {
       throw new OutOfMaxByteLengthError();
     }
   }

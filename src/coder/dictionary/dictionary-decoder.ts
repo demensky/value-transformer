@@ -1,4 +1,4 @@
-import {config} from '../../base/config.js';
+import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import type {DecoderGeneratorFactory} from '../../type/decoder-generator-factory.js';
@@ -14,7 +14,7 @@ export function* dictionaryDecoder<K, V, D>(
 ): DecoderGenerator<D> {
   const size: number = yield* uintDecoder();
 
-  if (size > config.collectionMaxLength) {
+  if (size > coderConfig.collectionMaxLength) {
     throw new OutOfMaxLengthError();
   }
 

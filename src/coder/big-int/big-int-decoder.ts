@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {config} from '../../base/config.js';
+import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
 import {uint8Decoder} from '../uint8/uint8-decoder.js';
@@ -15,7 +15,7 @@ export function* bigIntDecoder(): DecoderGenerator<bigint> {
     part = BigInt(yield* uint8Decoder());
     result |= (part & 0b0_1111111n) << (7n * byteOffset++);
 
-    if (byteOffset > config.bitIntMaxByteLength) {
+    if (byteOffset > coderConfig.bitIntMaxByteLength) {
       throw new OutOfMaxByteLengthError();
     }
   } while (part >> 7n === 1n);

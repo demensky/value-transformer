@@ -1,4 +1,3 @@
-export * from './base/config.js';
 export * from './buffer-reader/buffer-source-iterable-reader.js';
 export * from './buffer-reader/buffer-source-stream-reader.js';
 export * from './coder/array/array-decoder.js';
@@ -37,6 +36,7 @@ export * from './coder/uint32/uint32-decoder.js';
 export * from './coder/uint32/uint32-encode.js';
 export * from './coder/uuid-string/uuid-string-decoder.js';
 export * from './coder/uuid-string/uuid-string-encode.js';
+export * from './config/coder-config.js';
 export * from './error/buffer-reader-range-error.js';
 export * from './error/busy-buffer-deserializer-error.js';
 export * from './error/corrupted-buffer-reader-error.js';

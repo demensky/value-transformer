@@ -1,4 +1,4 @@
-import {config} from '../../base/config.js';
+import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {EncodeFactory} from '../../type/encode-factory.js';
 import type {IterableEncoding} from '../../type/iterable-encoding.js';
@@ -10,7 +10,7 @@ export function* dictionaryEncode<K, V>(
   keyEncoder: EncodeFactory<K>,
   valueEncoder: EncodeFactory<V>,
 ): IterableEncoding {
-  if (size > config.collectionMaxLength) {
+  if (size > coderConfig.collectionMaxLength) {
     throw new OutOfMaxLengthError();
   }
 

@@ -5,7 +5,7 @@ import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.
 
 import {stringEncode} from './string-encode.js';
 
-vi.mock('../../base/config.ts');
+vi.mock('../../config/coder-config.ts');
 
 test('empty string', () => {
   expect(stringEncode('')).toYieldsReturn(undefined, [
