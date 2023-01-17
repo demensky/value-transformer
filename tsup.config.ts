@@ -3,6 +3,7 @@ import {defineConfig} from 'tsup';
 export default defineConfig([
   {
     entry: ['src/index.ts'],
+    silent: true,
     format: ['esm'],
     sourcemap: true,
     clean: true,
@@ -12,6 +13,7 @@ export default defineConfig([
   },
   {
     entry: ['src/index.ts'],
+    silent: true,
     outExtension: () => ({js: '.dev.js'}),
     format: ['esm'],
     sourcemap: true,
@@ -19,6 +21,7 @@ export default defineConfig([
   },
   {
     entry: ['src/index.ts'],
+    silent: true,
     clean: true,
     dts: {only: true},
   },
