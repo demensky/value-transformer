@@ -4,7 +4,8 @@ import {ValueTransformer} from '../value/value-transformer.js';
 /**
  * Handles no value (any attempt to serialize or deserialize will throw an
  * exception).
- * @see {@link asNever} alias
+ *
+ * @see {@link asNever} alias.
  */
 export class NeverTransformer extends ValueTransformer<never, never> {
   public constructor() {

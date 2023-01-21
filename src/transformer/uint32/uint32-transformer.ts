@@ -8,7 +8,7 @@ import {isUint32} from '../../util/guard/is-uint32.js';
 import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
- * @see {@link asUint32} alias
+ * @see {@link asUint32} alias.
  */
 export class Uint32Transformer extends ValueTransformer<number, number> {
   public constructor() {

@@ -8,7 +8,7 @@ import {isUint8} from '../../util/guard/is-uint8.js';
 import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
- * @see {@link asUint8} alias
+ * @see {@link asUint8} alias.
  */
 export class Uint8Transformer extends ValueTransformer<number, number> {
   public constructor() {

@@ -13,7 +13,7 @@ const FALSE_COMPACT = 0;
 type BooleanLiteral = boolean | typeof FALSE_COMPACT | typeof TRUE_COMPACT;
 
 /**
- * @see {@link asBoolean} alias
+ * @see {@link asBoolean} alias.
  */
 export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
   public constructor() {

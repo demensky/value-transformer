@@ -8,7 +8,7 @@ import {isNumber} from '../../util/guard/is-number.js';
 import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
- * @see {@link asInt16} alias
+ * @see {@link asInt16} alias.
  */
 export class Int16Transformer extends ValueTransformer<number, number> {
   public constructor() {

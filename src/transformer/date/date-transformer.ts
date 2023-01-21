@@ -13,7 +13,8 @@ const INVALID = 'Invalid Date';
 
 /**
  * Handles a {@link Date} object (including "Invalid Date").
- * @see {@link asDate} alias
+ *
+ * @see {@link asDate} alias.
  */
 export class DateTransformer extends ValueTransformer<ReadonlyDate, Date> {
   public constructor() {

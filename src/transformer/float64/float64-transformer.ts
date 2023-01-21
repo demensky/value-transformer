@@ -16,7 +16,8 @@ const NEGATIVE_ZERO_LITERAL_VALUE = '-0';
 
 /**
  * Handles a primitive number (including `NaN`, `Infinity`, `-Infinity`, `-0`).
- * @see {@link asFloat64} alias
+ *
+ * @see {@link asFloat64} alias.
  */
 export class Float64Transformer extends ValueTransformer<number, number> {
   public constructor() {

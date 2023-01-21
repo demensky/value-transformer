@@ -1,5 +1,5 @@
 {
-  "plugins": ["prettier-plugin-packagejson"],
+  "plugins": ["@homer0/prettier-plugin-jsdoc", "prettier-plugin-packagejson"],
   "singleQuote": true,
   "trailingComma": "all",
   "bracketSpacing": false,

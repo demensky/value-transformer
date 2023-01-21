@@ -10,7 +10,8 @@ import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
  * Handles a bigint (value is unlimited in 64 bits).
- * @see {@link asBigInt} alias
+ *
+ * @see {@link asBigInt} alias.
  */
 export class BigIntTransformer extends ValueTransformer<bigint, bigint> {
   public compatibleWith(data: unknown): data is bigint {

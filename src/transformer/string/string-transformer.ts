@@ -9,7 +9,7 @@ import {isUtf8} from '../../util/guard/is-utf8.js';
 import {ValueTransformer} from '../value/value-transformer.js';
 
 /**
- * @see {@link asString} alias
+ * @see {@link asString} alias.
  */
 export class StringTransformer extends ValueTransformer<string, string> {
   public constructor() {
