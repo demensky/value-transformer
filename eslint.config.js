@@ -183,7 +183,18 @@ export default [
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-this-alias': 'error',
-      // TODO typescript/no-type-alias
+      '@typescript-eslint/no-type-alias': [
+        'error',
+        {
+          allowAliases: 'always',
+          allowCallbacks: 'always',
+          allowConditionalTypes: 'always',
+          allowLiterals: "in-unions-and-intersections",
+          allowMappedTypes: 'always',
+          allowTupleTypes: 'always',
+          allowGenerics: 'always',
+        },
+      ],
       '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
       '@typescript-eslint/no-unnecessary-qualifier': 'error',
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
