@@ -1,5 +1,5 @@
 {
-  "ts-node": {"esm": true},
+  "ts-node": {"esm": true, "transpileOnly": true, "preferTsExts": true},
   "compilerOptions": {
     "target": "ES2022",
     "module": "Node16",

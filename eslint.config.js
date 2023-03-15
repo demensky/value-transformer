@@ -5,9 +5,9 @@ import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
 import * as unusedImportsPlugin from 'eslint-plugin-unused-imports';
 
 export default [
-  {ignores: ['coverage/*', 'dist/*']},
+  {ignores: ['coverage/*', 'dist/*', '**/*.js']},
   {
-    files: ['**/*.js', '**/*.ts'],
+    files: ['**/*.ts'],
     languageOptions: {ecmaVersion: 2022},
     linterOptions: {reportUnusedDisableDirectives: true},
     plugins: {
@@ -189,7 +189,7 @@ export default [
           allowAliases: 'always',
           allowCallbacks: 'always',
           allowConditionalTypes: 'always',
-          allowLiterals: "in-unions-and-intersections",
+          allowLiterals: 'in-unions-and-intersections',
           allowMappedTypes: 'always',
           allowTupleTypes: 'always',
           allowGenerics: 'always',
