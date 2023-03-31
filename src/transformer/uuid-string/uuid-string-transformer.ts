@@ -2,7 +2,7 @@ import {uuidStringDecoder} from '../../coder/uuid-string/uuid-string-decoder.js'
 import {uuidStringEncode} from '../../coder/uuid-string/uuid-string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import type {UuidString} from '../../type/uuid-string.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isUuidString} from '../../util/guard/is-uuid-string.js';
@@ -19,10 +19,10 @@ export class UuidStringTransformer<
     return uuidStringDecoder();
   }
 
-  public *encode(data: T): IterableEncoding {
+  public encode(data: T): Encoding {
     console.assert(isString(data));
 
-    yield uuidStringEncode(data);
+    return uuidStringEncode(data);
   }
 
   public fromLiteral(literal: unknown): T {

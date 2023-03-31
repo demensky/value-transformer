@@ -2,7 +2,7 @@
 
 import {ValueTransformer} from '../src/transformer/value/value-transformer.js';
 import type {DecoderGenerator} from '../src/type/decoder-generator.js';
-import type {IterableEncoding} from '../src/type/iterable-encoding.js';
+import type {Encoding} from '../src/type/encoding.js';
 
 export class MockTransformer<T> extends ValueTransformer<T, T> {
   readonly #buffer: Uint8Array;
@@ -40,8 +40,10 @@ export class MockTransformer<T> extends ValueTransformer<T, T> {
     return this.#data;
   }
 
-  public *encode(_data: T): IterableEncoding {
-    yield this.#buffer;
+  public *encode(_data: T): Encoding {
+    (yield this.#buffer.byteLength).setView(() => {
+      throw new Error('Not implemented'); // TODO
+    });
   }
 
   public fromLiteral(_literal: unknown): T {

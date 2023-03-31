@@ -1,43 +1,49 @@
 import {expect, test} from 'vitest';
 
+import {hexUint8} from '../../../test-util/hex-uint8.js';
+import {DataViewChunk} from '../../data-view-chunk/data-view-chunk.js';
+
 import {bigIntEncode} from './big-int-encode.js';
 
+function encode(value: bigint): Iterable<Uint8Array> {
+  return DataViewChunk.encode(
+    () => new ArrayBuffer(0x10000),
+    bigIntEncode(value),
+  );
+}
+
 test('1 byte 0', () => {
-  expect([...bigIntEncode(0n)]).toStrictEqual([new Uint8Array([0x00])]);
+  expect(encode(0n)).toIterator([hexUint8('00')]);
 });
 
 test('1 byte biggest positive', () => {
-  expect([...bigIntEncode(63n)]).toStrictEqual([new Uint8Array([0x3f])]);
+  expect(encode(63n)).toIterator([hexUint8('3f')]);
 });
 
 test('1 byte smallest positive', () => {
-  expect([...bigIntEncode(1n)]).toStrictEqual([new Uint8Array([0x01])]);
+  expect(encode(1n)).toIterator([hexUint8('01')]);
 });
 
 test('1 byte biggest negative', () => {
-  expect([...bigIntEncode(-64n)]).toStrictEqual([new Uint8Array([0x40])]);
+  expect(encode(-64n)).toIterator([hexUint8('40')]);
 });
 
 test('1 byte smallest negative', () => {
-  expect([...bigIntEncode(-1n)]).toStrictEqual([new Uint8Array([0x7f])]);
+  expect(encode(-1n)).toIterator([hexUint8('7f')]);
 });
 
 test('2 bytes biggest positive', () => {
-  expect([...bigIntEncode(8191n)]).toStrictEqual([
-    new Uint8Array([0xff, 0x3f]),
-  ]);
+  expect(encode(8191n)).toIterator([hexUint8('ff 3f')]);
 });
 
 test('2 bytes smallest positive', () => {
-  expect([...bigIntEncode(128n)]).toStrictEqual([new Uint8Array([0x80, 0x01])]);
+  expect(encode(128n)).toIterator([hexUint8('80 01')]);
 });
 
 test('2 bytes biggest negative', () => {
-  expect([...bigIntEncode(-8192n)]).toStrictEqual([
-    new Uint8Array([0x80, 0x40]),
-  ]);
+  expect(encode(-8192n)).toIterator([hexUint8('80 40')]);
 });
 
 test('2 bytes smallest negative', () => {
-  expect([...bigIntEncode(-65n)]).toStrictEqual([new Uint8Array([0xbf, 0x7f])]);
+  expect(encode(-65n)).toIterator([hexUint8('bf 7f')]);
 });

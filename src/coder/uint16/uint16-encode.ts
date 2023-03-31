@@ -1,8 +1,10 @@
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {isUint16} from '../../util/guard/is-uint16.js';
 
-export function* uint16Encode(value: number): IterableEncoding {
+export function* uint16Encode(value: number): Encoding {
   console.assert(isUint16(value));
 
-  yield new Uint16Array([value]);
+  (yield Uint16Array.BYTES_PER_ELEMENT).setView((view, offset) => {
+    view.setUint16(offset, value, true);
+  });
 }

@@ -2,7 +2,7 @@ import {setDecoder} from '../../coder/set/set-decoder.js';
 import {setEncode} from '../../coder/set/set-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {every} from '../../util/every.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isSet} from '../../util/guard/is-set.js';
@@ -33,7 +33,7 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
     return setDecoder<O>(() => this.#transformer.decoder());
   }
 
-  public encode(data: ReadonlySet<I>): IterableEncoding {
+  public encode(data: ReadonlySet<I>): Encoding {
     console.assert(isSet(data));
 
     return setEncode<I>(data, (item) => this.#transformer.encode(item));

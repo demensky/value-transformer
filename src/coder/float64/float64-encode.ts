@@ -1,5 +1,7 @@
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 
-export function* float64Encode(value: number): IterableEncoding {
-  yield new Float64Array([value]);
+export function* float64Encode(value: number): Encoding {
+  (yield Float64Array.BYTES_PER_ELEMENT).setView((view, offset) => {
+    view.setFloat64(offset, value, true);
+  });
 }

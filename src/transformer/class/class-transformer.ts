@@ -1,6 +1,6 @@
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isObject} from '../../util/guard/is-object.js';
@@ -57,7 +57,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     return instance;
   }
 
-  public *encode(data: Readonly<T>): IterableEncoding {
+  public *encode(data: Readonly<T>): Encoding {
     console.assert(data instanceof this.#ctor);
 
     for (const [key, transformer] of this.#getFieldsInfo()) {

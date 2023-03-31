@@ -2,7 +2,7 @@ import {arrayDecoder} from '../../coder/array/array-decoder.js';
 import {arrayEncode} from '../../coder/array/array-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {denseArrayLike} from '../../util/dense-array-like.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {ValueTransformer} from '../value/value-transformer.js';
@@ -31,7 +31,7 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
     return arrayDecoder<O>(() => this.#transformer.decoder());
   }
 
-  public encode(data: readonly I[]): IterableEncoding {
+  public encode(data: readonly I[]): Encoding {
     console.assert(isArray(data));
 
     return arrayEncode<I>(data, (item) => this.#transformer.encode(item));

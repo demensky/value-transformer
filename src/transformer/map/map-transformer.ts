@@ -2,7 +2,7 @@ import {mapDecoder} from '../../coder/map/map-decoder.js';
 import {mapEncode} from '../../coder/map/map-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {every} from '../../util/every.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isEntry} from '../../util/guard/is-entry.js';
@@ -49,7 +49,7 @@ export class MapTransformer<
     );
   }
 
-  public encode(data: ReadonlyMap<KI, VI>): IterableEncoding {
+  public encode(data: ReadonlyMap<KI, VI>): Encoding {
     console.assert(isMap(data));
 
     return mapEncode<KI, VI>(

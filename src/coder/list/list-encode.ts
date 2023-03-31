@@ -1,14 +1,14 @@
 import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
-import type {EncodeFactory} from '../../type/encode-factory.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoder} from '../../type/encoder.js';
+import type {Encoding} from '../../type/encoding.js';
 import {uintEncode} from '../uint/uint-encode.js';
 
 export function* listEncode<T>(
   collection: Iterable<T>,
   size: number,
-  encoder: EncodeFactory<T>,
-): IterableEncoding {
+  encoder: Encoder<T>,
+): Encoding {
   if (size > coderConfig.collectionMaxLength) {
     throw new OutOfMaxLengthError();
   }

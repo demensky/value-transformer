@@ -3,7 +3,7 @@ import {stringEncode} from '../../coder/string/string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isUtf8} from '../../util/guard/is-utf8.js';
 import {ValueTransformer} from '../value/value-transformer.js';
@@ -24,7 +24,7 @@ export class StringTransformer extends ValueTransformer<string, string> {
     return stringDecoder();
   }
 
-  public encode(data: string): IterableEncoding {
+  public encode(data: string): Encoding {
     console.assert(isString(data));
 
     return stringEncode(data);

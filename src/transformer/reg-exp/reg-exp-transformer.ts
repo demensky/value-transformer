@@ -3,7 +3,7 @@ import {regExpEncode} from '../../coder/reg-exp/reg-exp-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
 import {isNumber} from '../../util/guard/is-number.js';
@@ -27,7 +27,7 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
     return regExpDecoder();
   }
 
-  public encode(data: RegExp): IterableEncoding {
+  public encode(data: RegExp): Encoding {
     console.assert(isRegExp(data));
 
     return regExpEncode(data);

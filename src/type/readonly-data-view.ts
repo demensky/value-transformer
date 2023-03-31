@@ -1,22 +1,26 @@
 /**
  * @see {@linkcode LittleEndianDataView}
+ * @see {@linkcode WriteonlyDataView}
  * @see {@linkcode DataView}
  */
 export interface ReadonlyDataView {
   /**
    * @see {@linkcode LittleEndianDataView#buffer}
+   * @see {@linkcode WriteonlyDataView#buffer}
    * @see {@linkcode DataView#buffer}
    */
   readonly buffer: ArrayBuffer;
 
   /**
    * @see {@linkcode LittleEndianDataView#byteLength}
+   * @see {@linkcode WriteonlyDataView#byteLength}
    * @see {@linkcode DataView#byteLength}
    */
   readonly byteLength: number;
 
   /**
    * @see {@linkcode LittleEndianDataView#byteOffset}
+   * @see {@linkcode WriteonlyDataView#byteOffset}
    * @see {@linkcode DataView#byteOffset}
    */
   readonly byteOffset: number;

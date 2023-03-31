@@ -2,7 +2,7 @@ import {uint32Decoder} from '../../coder/uint32/uint32-decoder.js';
 import {uint32Encode} from '../../coder/uint32/uint32-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isUint32} from '../../util/guard/is-uint32.js';
 import {ValueTransformer} from '../value/value-transformer.js';
@@ -23,7 +23,7 @@ export class Uint32Transformer extends ValueTransformer<number, number> {
     return uint32Decoder();
   }
 
-  public encode(data: number): IterableEncoding {
+  public encode(data: number): Encoding {
     console.assert(isNumber(data));
 
     return uint32Encode(data);

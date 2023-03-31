@@ -1,5 +1,7 @@
 import {expect, test, vi} from 'vitest';
 
+import {hexUint8} from '../../../test-util/hex-uint8.js';
+import {DataViewChunk} from '../../data-view-chunk/data-view-chunk.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 
@@ -7,33 +9,31 @@ import {stringEncode} from './string-encode.js';
 
 vi.mock('../../config/coder-config.ts');
 
+function encode(value: string): Iterable<Uint8Array> {
+  return DataViewChunk.encode(
+    () => new ArrayBuffer(0x10000),
+    stringEncode(value),
+  );
+}
+
 test('empty string', () => {
-  expect(stringEncode('')).toYieldsReturn(undefined, [
-    [new Uint8Array([0x00]), undefined],
-    [new Uint8Array([]), undefined],
-  ]);
+  expect(encode('')).toIterator([hexUint8('00')]);
 });
 
 test('simple string', () => {
-  expect(stringEncode('foo')).toYieldsReturn(undefined, [
-    [new Uint8Array([0x03]), undefined],
-    [new Uint8Array([0x66, 0x6f, 0x6f]), undefined],
-  ]);
+  expect(encode('foo')).toIterator([hexUint8('03 66 6f 6f')]);
 });
 
 test('broken unicode', () => {
-  expect(stringEncode('\ud83d')).toYieldsThrow(InvalidUnicodeError, []);
+  expect(encode('\ud83d')).toYieldsThrow(InvalidUnicodeError, []);
 });
 
 test('break line', () => {
-  expect(stringEncode('\r\n')).toYieldsReturn(undefined, [
-    [new Uint8Array([0x02]), undefined],
-    [new Uint8Array([0x0d, 0x0a]), undefined],
-  ]);
+  expect(encode('\r\n')).toIterator([hexUint8('02 0d 0a')]);
 });
 
 test('too long string', () => {
-  expect(stringEncode('01234567890123456789!')).toYieldsThrow(
+  expect(encode('01234567890123456789!')).toYieldsThrow(
     OutOfMaxByteLengthError,
     [],
   );

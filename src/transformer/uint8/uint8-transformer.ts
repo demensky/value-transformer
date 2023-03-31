@@ -2,7 +2,7 @@ import {uint8Decoder} from '../../coder/uint8/uint8-decoder.js';
 import {uint8Encode} from '../../coder/uint8/uint8-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isUint8} from '../../util/guard/is-uint8.js';
 import {ValueTransformer} from '../value/value-transformer.js';
@@ -23,7 +23,7 @@ export class Uint8Transformer extends ValueTransformer<number, number> {
     return uint8Decoder();
   }
 
-  public encode(data: number): IterableEncoding {
+  public encode(data: number): Encoding {
     console.assert(isNumber(data));
 
     return uint8Encode(data);

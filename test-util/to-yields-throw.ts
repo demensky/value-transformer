@@ -25,7 +25,9 @@ expect.extend({
         if (index >= expectedYields.length) {
           return {
             pass: false,
-            message: () => `expected requests ${expectedYields.length}`,
+            message: () => `requests count`,
+            expected: expectedYields.length,
+            actual: index + 1,
           };
         }
 

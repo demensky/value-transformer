@@ -3,8 +3,8 @@ import {float64Encode} from '../../coder/float64/float64-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Encoding} from '../../type/encoding.js';
 import type {EnumDefinition} from '../../type/enum-definition.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
 import {extractEnumValues} from '../../util/extract-enum-values.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isInSet} from '../../util/is-in-set.js';
@@ -42,7 +42,7 @@ export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
     return value;
   }
 
-  public encode(data: V): IterableEncoding {
+  public encode(data: V): Encoding {
     console.assert(isNumber(data) && isInSet<V>(data, this.#values));
 
     return float64Encode(data);

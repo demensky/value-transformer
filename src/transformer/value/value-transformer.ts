@@ -1,5 +1,5 @@
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 
 import type {ValueTransformerInput} from './value-transformer-input.js';
 import type {ValueTransformerOutput} from './value-transformer-output.js';
@@ -11,7 +11,7 @@ export abstract class ValueTransformer<I, O extends I>
 
   public abstract decoder(): DecoderGenerator<O>;
 
-  public abstract encode(data: I): IterableEncoding;
+  public abstract encode(data: I): Encoding;
 
   public abstract fromLiteral(literal: unknown): O;
 

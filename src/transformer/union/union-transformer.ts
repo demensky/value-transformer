@@ -3,7 +3,7 @@ import {uintEncode} from '../../coder/uint/uint-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error.js';
 import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import type {ValueTransformersTuple} from '../../type/value-transformers-tuple.js';
 import {isArray} from '../../util/guard/is-array.js';
@@ -76,7 +76,7 @@ export class UnionTransformer<
     return yield* this.#findOutputByIs(yield* uintDecoder()).decoder();
   }
 
-  public *encode(data: I[number]): IterableEncoding {
+  public *encode(data: I[number]): Encoding {
     const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
 
     yield* uintEncode(is);

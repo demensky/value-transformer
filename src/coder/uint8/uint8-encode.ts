@@ -1,8 +1,10 @@
-import type {IterableEncoding} from '../../type/iterable-encoding.js';
+import type {Encoding} from '../../type/encoding.js';
 import {isUint8} from '../../util/guard/is-uint8.js';
 
-export function* uint8Encode(value: number): IterableEncoding {
+export function* uint8Encode(value: number): Encoding {
   console.assert(isUint8(value));
 
-  yield new Uint8Array([value]);
+  (yield Uint8Array.BYTES_PER_ELEMENT).setView((view, offset) => {
+    view.setUint8(offset, value);
+  });
 }
