@@ -60,11 +60,11 @@ export class DataViewChunk {
       return true;
     }
 
-    if (size > this.#buffer.byteLength && this.#cursor === 0) {
-      throw new Error('Data is too big');
-    }
+    if (this.#cursor + Math.abs(size) > this.#buffer.byteLength) {
+      if (this.#cursor === 0) {
+        throw new Error('Data is too big');
+      }
 
-    if (this.#cursor + Math.abs(size) >= this.#buffer.byteLength) {
       return false;
     }
 
