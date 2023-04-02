@@ -1,5 +1,5 @@
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 
-export function* int16Decoder(): DecoderGenerator<number> {
+export function* int16Decoder(): Decoding<number> {
   return (yield Int16Array.BYTES_PER_ELEMENT).getInt16(0, true);
 }

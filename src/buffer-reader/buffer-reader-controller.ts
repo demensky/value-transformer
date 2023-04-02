@@ -1,6 +1,6 @@
 import {BufferReaderRangeError} from '../error/buffer-reader-range-error.js';
 import {CorruptedBufferReaderError} from '../error/corrupted-buffer-reader-error.js';
-import type {DecoderGenerator} from '../type/decoder-generator.js';
+import type {Decoding} from '../type/decoding.js';
 import type {RestrictedDataView} from '../type/restricted-data-view.js';
 import {narrowToArrayBufferView} from '../util/narrow-to-array-buffer-view.js';
 
@@ -66,19 +66,19 @@ export class BufferReaderController {
     }
   }
 
-  public *read<T>(decoder: DecoderGenerator<T>): BufferReaderGenerator<T> {
+  public *read<T>(decoding: Decoding<T>): BufferReaderGenerator<T> {
     if (this.#corrupted !== null) {
       throw new CorruptedBufferReaderError('', this.#corrupted);
     }
 
     try {
-      let request: IteratorResult<number, T> = decoder.next();
+      let request: IteratorResult<number, T> = decoding.next();
 
       while (request.done !== true) {
         const byteLength: number = request.value;
 
         if (byteLength === 0) {
-          request = decoder.next(new DataView(new Uint8Array(0).buffer));
+          request = decoding.next(new DataView(new Uint8Array(0).buffer));
           continue;
         }
 
@@ -146,7 +146,7 @@ export class BufferReaderController {
           this.#cursor = cursor;
         }
 
-        request = decoder.next(response);
+        request = decoding.next(response);
       }
 
       return request.value;

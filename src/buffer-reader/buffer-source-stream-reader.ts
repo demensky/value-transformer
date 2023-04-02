@@ -1,5 +1,5 @@
 import {BusyBufferDeserializerError} from '../error/busy-buffer-deserializer-error.js';
-import type {DecoderGenerator} from '../type/decoder-generator.js';
+import type {Decoding} from '../type/decoding.js';
 
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
@@ -48,17 +48,17 @@ export class BufferSourceStreamReader {
   }
 
   public async finalRead<T>(
-    decoder: DecoderGenerator<T>,
+    decoding: Decoding<T>,
     flush: BufferSourceReaderFlush<T> = () => false,
   ): Promise<T> {
-    const result: T = await this.read(decoder);
+    const result: T = await this.read(decoding);
 
     await this.final(flush(result));
 
     return result;
   }
 
-  public read<T>(decoder: DecoderGenerator<T>): Promise<T> {
-    return this.#handle<T>(this.#controller.read(decoder));
+  public read<T>(decoding: Decoding<T>): Promise<T> {
+    return this.#handle<T>(this.#controller.read(decoding));
   }
 }

@@ -2,7 +2,7 @@ import {stringDecoder} from '../../coder/string/string-decoder.js';
 import {stringEncode} from '../../coder/string/string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isString} from '../../util/guard/is-string.js';
 import {isUtf8} from '../../util/guard/is-utf8.js';
@@ -20,7 +20,7 @@ export class StringTransformer extends ValueTransformer<string, string> {
     return isString(data);
   }
 
-  public decoder(): DecoderGenerator<string> {
+  public decoder(): Decoding<string> {
     return stringDecoder();
   }
 

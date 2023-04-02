@@ -1,9 +1,9 @@
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import {float64Decoder} from '../float64/float64-decoder.js';
 import {stringDecoder} from '../string/string-decoder.js';
 
-export function* regExpDecoder(): DecoderGenerator<RegExp> {
+export function* regExpDecoder(): Decoding<RegExp> {
   const source = yield* stringDecoder();
   const flags = yield* stringDecoder();
 

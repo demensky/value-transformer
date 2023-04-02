@@ -1,7 +1,7 @@
 import {int16Decoder} from '../../coder/int16/int16-decoder.js';
 import {int16Encode} from '../../coder/int16/int16-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isInt16} from '../../util/guard/is-int16.js';
 import {isNumber} from '../../util/guard/is-number.js';
@@ -19,7 +19,7 @@ export class Int16Transformer extends ValueTransformer<number, number> {
     return isNumber(data) && isInt16(data);
   }
 
-  public decoder(): DecoderGenerator<number> {
+  public decoder(): Decoding<number> {
     return int16Decoder();
   }
 

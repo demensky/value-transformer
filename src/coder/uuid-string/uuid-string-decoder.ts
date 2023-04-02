@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
 import {BYTES_PER_UUID} from '../../const/bytes-per-uuid.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {RestrictedDataView} from '../../type/restricted-data-view.js';
 import type {UuidString} from '../../type/uuid-string.js';
 import {getByteHexString} from '../../util/get-byte-hex-string.js';
 
-export function* uuidStringDecoder<
-  T extends UuidString,
->(): DecoderGenerator<T> {
+export function* uuidStringDecoder<T extends UuidString>(): Decoding<T> {
   const view: RestrictedDataView = yield BYTES_PER_UUID;
 
   const result: string[] = [

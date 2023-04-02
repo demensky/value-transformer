@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 import {ValueTransformer} from '../src/transformer/value/value-transformer.js';
-import type {DecoderGenerator} from '../src/type/decoder-generator.js';
+import type {Decoding} from '../src/type/decoding.js';
 import type {Encoding} from '../src/type/encoding.js';
 
 export class MockTransformer<T> extends ValueTransformer<T, T> {
@@ -34,7 +34,7 @@ export class MockTransformer<T> extends ValueTransformer<T, T> {
     return this.#compatible;
   }
 
-  public *decoder(): DecoderGenerator<T> {
+  public *decoder(): Decoding<T> {
     yield this.#buffer.length;
 
     return this.#data;

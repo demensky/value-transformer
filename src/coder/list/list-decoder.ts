@@ -1,16 +1,16 @@
 import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
-import type {DecoderGeneratorFactory} from '../../type/decoder-generator-factory.js';
+import type {Decoder} from '../../type/decoder.js';
+import type {Decoding} from '../../type/decoding.js';
 import {uintDecoder} from '../uint/uint-decoder.js';
 
 import type {ListAppend} from './list-append.js';
 
 export function* listDecoder<T, C>(
   collection: C,
-  decoder: DecoderGeneratorFactory<T>,
+  decoder: Decoder<T>,
   append: ListAppend<T, C>,
-): DecoderGenerator<C> {
+): Decoding<C> {
   const size: number = yield* uintDecoder();
 
   if (size > coderConfig.collectionMaxLength) {

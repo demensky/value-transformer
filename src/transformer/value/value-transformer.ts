@@ -1,4 +1,4 @@
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 
 import type {ValueTransformerInput} from './value-transformer-input.js';
@@ -9,7 +9,7 @@ export abstract class ValueTransformer<I, O extends I>
 {
   public abstract compatibleWith(data: unknown): data is I;
 
-  public abstract decoder(): DecoderGenerator<O>;
+  public abstract decoder(): Decoding<O>;
 
   public abstract encode(data: I): Encoding;
 

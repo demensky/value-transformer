@@ -1,5 +1,5 @@
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import {isArray} from '../../util/guard/is-array.js';
@@ -46,7 +46,7 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     return data instanceof this.#ctor;
   }
 
-  public *decoder(): DecoderGenerator<T> {
+  public *decoder(): Decoding<T> {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const instance: T = Object.create(this.#ctor.prototype as T) as T;
 

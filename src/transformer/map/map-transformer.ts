@@ -1,7 +1,7 @@
 import {mapDecoder} from '../../coder/map/map-decoder.js';
 import {mapEncode} from '../../coder/map/map-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {every} from '../../util/every.js';
 import {isArray} from '../../util/guard/is-array.js';
@@ -42,7 +42,7 @@ export class MapTransformer<
     );
   }
 
-  public decoder(): DecoderGenerator<Map<KO, VO>> {
+  public decoder(): Decoding<Map<KO, VO>> {
     return mapDecoder<KO, VO>(
       () => this.#keyTransformer.decoder(),
       () => this.#valueTransformer.decoder(),

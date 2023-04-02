@@ -2,7 +2,7 @@ import {float64Decoder} from '../../coder/float64/float64-decoder.js';
 import {float64Encode} from '../../coder/float64/float64-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {EnumDefinition} from '../../type/enum-definition.js';
 import {extractEnumValues} from '../../util/extract-enum-values.js';
@@ -32,7 +32,7 @@ export class EnumFloat64Transformer<V extends number> extends ValueTransformer<
     return isNumber(data) && isInSet<V>(data, this.#values);
   }
 
-  public *decoder(): DecoderGenerator<V> {
+  public *decoder(): Decoding<V> {
     const value: number = yield* float64Decoder();
 
     if (!isInSet<V>(value, this.#values)) {

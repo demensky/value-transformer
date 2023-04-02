@@ -2,26 +2,26 @@ import {beforeEach, expect, test} from 'vitest';
 
 import {hexDataView} from '../../../test-util/hex-data-view.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 
 import {booleanDecoder} from './boolean-decoder.js';
 
-let generator: DecoderGenerator<boolean>;
+let decoding: Decoding<boolean>;
 
 beforeEach(() => {
-  generator = booleanDecoder();
+  decoding = booleanDecoder();
 });
 
 test('false', () => {
-  expect(generator).toDecode(false, ['00']);
+  expect(decoding).toDecode(false, ['00']);
 });
 
 test('true', () => {
-  expect(generator).toDecode(true, ['01']);
+  expect(decoding).toDecode(true, ['01']);
 });
 
 test('42', () => {
-  expect(generator).toYieldsThrow(InvalidBufferValueError, [
+  expect(decoding).toYieldsThrow(InvalidBufferValueError, [
     [1, hexDataView('2a')],
   ]);
 });

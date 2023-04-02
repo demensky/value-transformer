@@ -1,4 +1,4 @@
-import type {DecoderGenerator} from '../type/decoder-generator.js';
+import type {Decoding} from '../type/decoding.js';
 
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
@@ -35,17 +35,17 @@ export class BufferSourceIterableReader {
   }
 
   public finalRead<T>(
-    decoder: DecoderGenerator<T>,
+    decoding: Decoding<T>,
     flush: BufferSourceReaderFlush<T> = () => false,
   ): T {
-    const result: T = this.read(decoder);
+    const result: T = this.read(decoding);
 
     this.final(flush(result));
 
     return result;
   }
 
-  public read<T>(decoder: DecoderGenerator<T>): T {
-    return this.#handle<T>(this.#controller.read(decoder));
+  public read<T>(decoding: Decoding<T>): T {
+    return this.#handle<T>(this.#controller.read(decoding));
   }
 }

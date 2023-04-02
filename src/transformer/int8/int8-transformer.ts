@@ -1,7 +1,7 @@
 import {int8Decoder} from '../../coder/int8/int8-decoder.js';
 import {int8Encode} from '../../coder/int8/int8-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isInt8} from '../../util/guard/is-int8.js';
 import {isNumber} from '../../util/guard/is-number.js';
@@ -19,7 +19,7 @@ export class Int8Transformer extends ValueTransformer<number, number> {
     return isNumber(data) && isInt8(data);
   }
 
-  public decoder(): DecoderGenerator<number> {
+  public decoder(): Decoding<number> {
     return int8Decoder();
   }
 

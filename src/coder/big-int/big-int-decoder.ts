@@ -2,10 +2,10 @@
 
 import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import {uint8Decoder} from '../uint8/uint8-decoder.js';
 
-export function* bigIntDecoder(): DecoderGenerator<bigint> {
+export function* bigIntDecoder(): Decoding<bigint> {
   let result = 0n;
 
   let part: bigint;

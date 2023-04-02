@@ -1,7 +1,7 @@
 import {uuidStringDecoder} from '../../coder/uuid-string/uuid-string-decoder.js';
 import {uuidStringEncode} from '../../coder/uuid-string/uuid-string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {UuidString} from '../../type/uuid-string.js';
 import {isString} from '../../util/guard/is-string.js';
@@ -15,7 +15,7 @@ export class UuidStringTransformer<
     return isString(data) && isUuidString<T>(data);
   }
 
-  public decoder(): DecoderGenerator<T> {
+  public decoder(): Decoding<T> {
     return uuidStringDecoder();
   }
 

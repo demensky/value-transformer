@@ -1,7 +1,7 @@
 import {float64Decoder} from '../../coder/float64/float64-decoder.js';
 import {float64Encode} from '../../coder/float64/float64-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {ValueTransformer} from '../value/value-transformer.js';
@@ -28,7 +28,7 @@ export class Float64Transformer extends ValueTransformer<number, number> {
     return isNumber(data);
   }
 
-  public decoder(): DecoderGenerator<number> {
+  public decoder(): Decoding<number> {
     return float64Decoder();
   }
 

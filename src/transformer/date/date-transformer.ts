@@ -1,7 +1,7 @@
 import {dateDecoder} from '../../coder/date/date-decoder.js';
 import {dateEncode} from '../../coder/date/date-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {ReadonlyDate} from '../../type/readonly-date.js';
 import {isDate} from '../../util/guard/is-date.js';
@@ -25,7 +25,7 @@ export class DateTransformer extends ValueTransformer<ReadonlyDate, Date> {
     return isDate(data);
   }
 
-  public decoder(): DecoderGenerator<Date> {
+  public decoder(): Decoding<Date> {
     return dateDecoder();
   }
 

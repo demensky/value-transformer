@@ -2,7 +2,7 @@ import {uintDecoder} from '../../coder/uint/uint-decoder.js';
 import {uintEncode} from '../../coder/uint/uint-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {Unverified} from '../../type/unverified.js';
 import type {ValueTransformersTuple} from '../../type/value-transformers-tuple.js';
@@ -72,7 +72,7 @@ export class UnionTransformer<
     );
   }
 
-  public *decoder(): DecoderGenerator<O[number]> {
+  public *decoder(): Decoding<O[number]> {
     return yield* this.#findOutputByIs(yield* uintDecoder()).decoder();
   }
 

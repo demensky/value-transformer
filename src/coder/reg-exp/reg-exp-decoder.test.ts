@@ -2,18 +2,18 @@ import {beforeEach, expect, test} from 'vitest';
 
 import {hexDataView} from '../../../test-util/hex-data-view.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 
 import {regExpDecoder} from './reg-exp-decoder.js';
 
-let generator: DecoderGenerator<RegExp>;
+let decoding: Decoding<RegExp>;
 
 beforeEach(() => {
-  generator = regExpDecoder();
+  decoding = regExpDecoder();
 });
 
 test('empty', () => {
-  expect(generator).toYieldsThrow(InvalidBufferValueError, [
+  expect(decoding).toYieldsThrow(InvalidBufferValueError, [
     [1, hexDataView('00')],
     [0, hexDataView('')],
     [0, hexDataView('00')],
@@ -22,7 +22,7 @@ test('empty', () => {
 });
 
 test('empty group', () => {
-  expect(generator).toDecode(/(?:)/, [
+  expect(decoding).toDecode(/(?:)/, [
     '04',
     '28 3f 3a 29',
     '00',
@@ -32,7 +32,7 @@ test('empty group', () => {
 });
 
 test('no flags', () => {
-  expect(generator).toDecode(/a/, [
+  expect(decoding).toDecode(/a/, [
     '01',
     '61',
     '00',
@@ -42,7 +42,7 @@ test('no flags', () => {
 });
 
 test('all flags', () => {
-  expect(generator).toDecode(/a/dgimsuy, [
+  expect(decoding).toDecode(/a/dgimsuy, [
     '01',
     '61',
     '07',
@@ -52,7 +52,7 @@ test('all flags', () => {
 });
 
 test('invalid regexp', () => {
-  expect(generator).toYieldsThrow(InvalidBufferValueError, [
+  expect(decoding).toYieldsThrow(InvalidBufferValueError, [
     [1, hexDataView('02')],
     [2, hexDataView('61 5b')],
     [1, hexDataView('00')],

@@ -2,7 +2,7 @@ import {stringDecoder} from '../../coder/string/string-decoder.js';
 import {stringEncode} from '../../coder/string/string-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {EnumDefinition} from '../../type/enum-definition.js';
 import {extractEnumValues} from '../../util/extract-enum-values.js';
@@ -32,7 +32,7 @@ export class EnumStringTransformer<V extends string> extends ValueTransformer<
     return isString(data) && isInSet<V>(data, this.#values);
   }
 
-  public *decoder(): DecoderGenerator<V> {
+  public *decoder(): Decoding<V> {
     const value: string = yield* stringDecoder();
 
     if (!isInSet<V>(value, this.#values)) {

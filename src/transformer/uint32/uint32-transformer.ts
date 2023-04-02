@@ -1,7 +1,7 @@
 import {uint32Decoder} from '../../coder/uint32/uint32-decoder.js';
 import {uint32Encode} from '../../coder/uint32/uint32-encode.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
-import type {DecoderGenerator} from '../../type/decoder-generator.js';
+import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isNumber} from '../../util/guard/is-number.js';
 import {isUint32} from '../../util/guard/is-uint32.js';
@@ -19,7 +19,7 @@ export class Uint32Transformer extends ValueTransformer<number, number> {
     return isNumber(data) && isUint32(data);
   }
 
-  public decoder(): DecoderGenerator<number> {
+  public decoder(): Decoding<number> {
     return uint32Decoder();
   }
 
