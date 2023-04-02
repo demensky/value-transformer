@@ -1,5 +1,5 @@
 import {setDecoder} from '../../coder/set/set-decoder.js';
-import {setEncode} from '../../coder/set/set-encode.js';
+import {setEncoder} from '../../coder/set/set-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -33,10 +33,10 @@ export class SetTransformer<I, O extends I> extends ValueTransformer<
     return setDecoder<O>(() => this.#transformer.decoder());
   }
 
-  public encode(data: ReadonlySet<I>): Encoding {
+  public encoder(data: ReadonlySet<I>): Encoding {
     console.assert(isSet(data));
 
-    return setEncode<I>(data, (item) => this.#transformer.encode(item));
+    return setEncoder<I>(data, (item) => this.#transformer.encoder(item));
   }
 
   public fromLiteral(literal: unknown): Set<O> {

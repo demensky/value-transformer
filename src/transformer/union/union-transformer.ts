@@ -1,5 +1,5 @@
 import {uintDecoder} from '../../coder/uint/uint-decoder.js';
-import {uintEncode} from '../../coder/uint/uint-encode.js';
+import {uintEncoder} from '../../coder/uint/uint-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {TransformerNotFoundError} from '../../error/transformer-not-found-error.js';
 import type {Decoding} from '../../type/decoding.js';
@@ -76,11 +76,11 @@ export class UnionTransformer<
     return yield* this.#findOutputByIs(yield* uintDecoder()).decoder();
   }
 
-  public *encode(data: I[number]): Encoding {
+  public *encoder(data: I[number]): Encoding {
     const [is, transformer]: InputEntry<I[number]> = this.#findInputEntry(data);
 
-    yield* uintEncode(is);
-    yield* transformer.encode(data);
+    yield* uintEncoder(is);
+    yield* transformer.encoder(data);
   }
 
   public fromLiteral(literal: unknown): O[number] {

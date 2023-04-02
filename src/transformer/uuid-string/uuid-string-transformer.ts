@@ -1,5 +1,5 @@
 import {uuidStringDecoder} from '../../coder/uuid-string/uuid-string-decoder.js';
-import {uuidStringEncode} from '../../coder/uuid-string/uuid-string-encode.js';
+import {uuidStringEncoder} from '../../coder/uuid-string/uuid-string-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -19,10 +19,10 @@ export class UuidStringTransformer<
     return uuidStringDecoder();
   }
 
-  public encode(data: T): Encoding {
+  public encoder(data: T): Encoding {
     console.assert(isString(data));
 
-    return uuidStringEncode(data);
+    return uuidStringEncoder(data);
   }
 
   public fromLiteral(literal: unknown): T {

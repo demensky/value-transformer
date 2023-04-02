@@ -1,10 +1,10 @@
 import {expect, test} from 'vitest';
 
 import {uintDecoder} from '../src/coder/uint/uint-decoder.js';
-import {uintEncode} from '../src/coder/uint/uint-encode.js';
+import {uintEncoder} from '../src/coder/uint/uint-encoder.js';
 import {createEncoderDecoder} from '../test-util/create-encoder-decoder.js';
 
-const uintEncodeDecode = createEncoderDecoder(uintEncode, uintDecoder);
+const uintEncodeDecode = createEncoderDecoder(uintEncoder, uintDecoder);
 
 test('smallest in one byte', () => {
   expect(uintEncodeDecode(0)).toBe(0);

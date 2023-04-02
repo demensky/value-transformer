@@ -1,5 +1,5 @@
 import {uint8Decoder} from '../../coder/uint8/uint8-decoder.js';
-import {uint8Encode} from '../../coder/uint8/uint8-encode.js';
+import {uint8Encoder} from '../../coder/uint8/uint8-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -23,10 +23,10 @@ export class Uint8Transformer extends ValueTransformer<number, number> {
     return uint8Decoder();
   }
 
-  public encode(data: number): Encoding {
+  public encoder(data: number): Encoding {
     console.assert(isNumber(data));
 
-    return uint8Encode(data);
+    return uint8Encoder(data);
   }
 
   public fromLiteral(literal: unknown): number {

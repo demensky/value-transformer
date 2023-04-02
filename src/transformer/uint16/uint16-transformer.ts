@@ -1,5 +1,5 @@
 import {uint16Decoder} from '../../coder/uint16/uint16-decoder.js';
-import {uint16Encode} from '../../coder/uint16/uint16-encode.js';
+import {uint16Encoder} from '../../coder/uint16/uint16-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -23,10 +23,10 @@ export class Uint16Transformer extends ValueTransformer<number, number> {
     return uint16Decoder();
   }
 
-  public encode(data: number): Encoding {
+  public encoder(data: number): Encoding {
     console.assert(isNumber(data));
 
-    return uint16Encode(data);
+    return uint16Encoder(data);
   }
 
   public fromLiteral(literal: unknown): number {

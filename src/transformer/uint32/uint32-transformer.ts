@@ -1,5 +1,5 @@
 import {uint32Decoder} from '../../coder/uint32/uint32-decoder.js';
-import {uint32Encode} from '../../coder/uint32/uint32-encode.js';
+import {uint32Encoder} from '../../coder/uint32/uint32-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -23,10 +23,10 @@ export class Uint32Transformer extends ValueTransformer<number, number> {
     return uint32Decoder();
   }
 
-  public encode(data: number): Encoding {
+  public encoder(data: number): Encoding {
     console.assert(isNumber(data));
 
-    return uint32Encode(data);
+    return uint32Encoder(data);
   }
 
   public fromLiteral(literal: unknown): number {

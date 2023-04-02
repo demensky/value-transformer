@@ -40,7 +40,7 @@ export class MockTransformer<T> extends ValueTransformer<T, T> {
     return this.#data;
   }
 
-  public *encode(_data: T): Encoding {
+  public *encoder(_data: T): Encoding {
     (yield this.#buffer.byteLength).setView(() => {
       throw new Error('Not implemented'); // TODO
     });

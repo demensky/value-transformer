@@ -1,5 +1,5 @@
 import {stringDecoder} from '../../coder/string/string-decoder.js';
-import {stringEncode} from '../../coder/string/string-encode.js';
+import {stringEncoder} from '../../coder/string/string-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidBufferValueError} from '../../error/invalid-buffer-value-error.js';
 import type {Decoding} from '../../type/decoding.js';
@@ -42,10 +42,10 @@ export class EnumStringTransformer<V extends string> extends ValueTransformer<
     return value;
   }
 
-  public encode(data: V): Encoding {
+  public encoder(data: V): Encoding {
     console.assert(isString(data) && isInSet<V>(data, this.#values));
 
-    return stringEncode(data);
+    return stringEncoder(data);
   }
 
   public fromLiteral(literal: unknown): V {

@@ -3,12 +3,12 @@ import {expect, test} from 'vitest';
 import {hexUint8} from '../../../test-util/hex-uint8.js';
 import {DataViewChunk} from '../../data-view-chunk/data-view-chunk.js';
 
-import {bigIntEncode} from './big-int-encode.js';
+import {bigIntEncoder} from './big-int-encoder.js';
 
 function encode(value: bigint): Iterable<Uint8Array> {
   return DataViewChunk.encode(
     () => new ArrayBuffer(0x10000),
-    bigIntEncode(value),
+    bigIntEncoder(value),
   );
 }
 

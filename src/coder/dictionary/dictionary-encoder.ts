@@ -2,9 +2,9 @@ import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {Encoder} from '../../type/encoder.js';
 import type {Encoding} from '../../type/encoding.js';
-import {uintEncode} from '../uint/uint-encode.js';
+import {uintEncoder} from '../uint/uint-encoder.js';
 
-export function* dictionaryEncode<K, V>(
+export function* dictionaryEncoder<K, V>(
   dictionary: Iterable<readonly [K, V]>,
   size: number,
   keyEncoder: Encoder<K>,
@@ -14,7 +14,7 @@ export function* dictionaryEncode<K, V>(
     throw new OutOfMaxLengthError();
   }
 
-  yield* uintEncode(size);
+  yield* uintEncoder(size);
 
   let count = 0;
 

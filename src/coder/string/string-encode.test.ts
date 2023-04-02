@@ -5,14 +5,14 @@ import {DataViewChunk} from '../../data-view-chunk/data-view-chunk.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 
-import {stringEncode} from './string-encode.js';
+import {stringEncoder} from './string-encoder.js';
 
 vi.mock('../../config/coder-config.ts');
 
 function encode(value: string): Iterable<Uint8Array> {
   return DataViewChunk.encode(
     () => new ArrayBuffer(0x10000),
-    stringEncode(value),
+    stringEncoder(value),
   );
 }
 

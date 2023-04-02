@@ -1,5 +1,5 @@
 import {booleanDecoder} from '../../coder/boolean/boolean-decoder.js';
-import {booleanEncode} from '../../coder/boolean/boolean-encode.js';
+import {booleanEncoder} from '../../coder/boolean/boolean-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -28,10 +28,10 @@ export class BooleanTransformer extends ValueTransformer<boolean, boolean> {
     return booleanDecoder();
   }
 
-  public encode(data: boolean): Encoding {
+  public encoder(data: boolean): Encoding {
     console.assert(isBoolean(data));
 
-    return booleanEncode(data);
+    return booleanEncoder(data);
   }
 
   public fromLiteral(literal: unknown): boolean {

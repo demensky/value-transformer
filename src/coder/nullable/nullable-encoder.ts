@@ -1,17 +1,17 @@
 import type {Encoder} from '../../type/encoder.js';
 import type {Encoding} from '../../type/encoding.js';
-import {booleanEncode} from '../boolean/boolean-encode.js';
+import {booleanEncoder} from '../boolean/boolean-encoder.js';
 
-export function* nullableEncode<T>(
+export function* nullableEncoder<T>(
   value: T | null,
   encoder: Encoder<T>,
 ): Encoding {
   if (value === null) {
-    yield* booleanEncode(false);
+    yield* booleanEncoder(false);
 
     return;
   }
 
-  yield* booleanEncode(true);
+  yield* booleanEncoder(true);
   yield* encoder(value);
 }

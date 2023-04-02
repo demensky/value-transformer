@@ -1,5 +1,5 @@
 import {float64Decoder} from '../../coder/float64/float64-decoder.js';
-import {float64Encode} from '../../coder/float64/float64-encode.js';
+import {float64Encoder} from '../../coder/float64/float64-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -32,10 +32,10 @@ export class Float64Transformer extends ValueTransformer<number, number> {
     return float64Decoder();
   }
 
-  public encode(data: number): Encoding {
+  public encoder(data: number): Encoding {
     console.assert(isNumber(data));
 
-    return float64Encode(data);
+    return float64Encoder(data);
   }
 
   public fromLiteral(literal: unknown): number {

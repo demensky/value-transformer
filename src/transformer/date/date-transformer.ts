@@ -1,5 +1,5 @@
 import {dateDecoder} from '../../coder/date/date-decoder.js';
-import {dateEncode} from '../../coder/date/date-encode.js';
+import {dateEncoder} from '../../coder/date/date-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -29,10 +29,10 @@ export class DateTransformer extends ValueTransformer<ReadonlyDate, Date> {
     return dateDecoder();
   }
 
-  public encode(data: ReadonlyDate): Encoding {
+  public encoder(data: ReadonlyDate): Encoding {
     console.assert(isDate(data));
 
-    return dateEncode(data);
+    return dateEncoder(data);
   }
 
   public fromLiteral(literal: unknown): Date {

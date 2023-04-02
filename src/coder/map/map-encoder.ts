@@ -1,11 +1,11 @@
 import type {Encoder} from '../../type/encoder.js';
 import type {Encoding} from '../../type/encoding.js';
-import {dictionaryEncode} from '../dictionary/dictionary-encode.js';
+import {dictionaryEncoder} from '../dictionary/dictionary-encoder.js';
 
-export function mapEncode<K, V>(
+export function mapEncoder<K, V>(
   map: ReadonlyMap<K, V>,
   keyEncoder: Encoder<K>,
   valueEncoder: Encoder<V>,
 ): Encoding {
-  return dictionaryEncode<K, V>(map, map.size, keyEncoder, valueEncoder);
+  return dictionaryEncoder<K, V>(map, map.size, keyEncoder, valueEncoder);
 }

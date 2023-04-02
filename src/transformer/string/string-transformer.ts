@@ -1,5 +1,5 @@
 import {stringDecoder} from '../../coder/string/string-decoder.js';
-import {stringEncode} from '../../coder/string/string-encode.js';
+import {stringEncoder} from '../../coder/string/string-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import type {Decoding} from '../../type/decoding.js';
@@ -24,10 +24,10 @@ export class StringTransformer extends ValueTransformer<string, string> {
     return stringDecoder();
   }
 
-  public encode(data: string): Encoding {
+  public encoder(data: string): Encoding {
     console.assert(isString(data));
 
-    return stringEncode(data);
+    return stringEncoder(data);
   }
 
   public fromLiteral(literal: unknown): string {

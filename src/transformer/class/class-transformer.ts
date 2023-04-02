@@ -57,11 +57,11 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
     return instance;
   }
 
-  public *encode(data: Readonly<T>): Encoding {
+  public *encoder(data: Readonly<T>): Encoding {
     console.assert(data instanceof this.#ctor);
 
     for (const [key, transformer] of this.#getFieldsInfo()) {
-      yield* transformer.encode(data[key]);
+      yield* transformer.encoder(data[key]);
     }
   }
 

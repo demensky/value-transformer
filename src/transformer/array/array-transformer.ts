@@ -1,5 +1,5 @@
 import {arrayDecoder} from '../../coder/array/array-decoder.js';
-import {arrayEncode} from '../../coder/array/array-encode.js';
+import {arrayEncoder} from '../../coder/array/array-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -31,10 +31,10 @@ export class ArrayTransformer<I, O extends I> extends ValueTransformer<
     return arrayDecoder<O>(() => this.#transformer.decoder());
   }
 
-  public encode(data: readonly I[]): Encoding {
+  public encoder(data: readonly I[]): Encoding {
     console.assert(isArray(data));
 
-    return arrayEncode<I>(data, (item) => this.#transformer.encode(item));
+    return arrayEncoder<I>(data, (item) => this.#transformer.encoder(item));
   }
 
   public fromLiteral(literal: unknown): O[] {

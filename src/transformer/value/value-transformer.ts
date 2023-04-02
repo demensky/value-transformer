@@ -11,7 +11,7 @@ export abstract class ValueTransformer<I, O extends I>
 
   public abstract decoder(): Decoding<O>;
 
-  public abstract encode(data: I): Encoding;
+  public abstract encoder(data: I): Encoding;
 
   public abstract fromLiteral(literal: unknown): O;
 

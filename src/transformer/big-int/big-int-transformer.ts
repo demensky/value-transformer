@@ -1,5 +1,5 @@
 import {bigIntDecoder} from '../../coder/big-int/big-int-decoder.js';
-import {bigIntEncode} from '../../coder/big-int/big-int-encode.js';
+import {bigIntEncoder} from '../../coder/big-int/big-int-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -22,10 +22,10 @@ export class BigIntTransformer extends ValueTransformer<bigint, bigint> {
     return bigIntDecoder();
   }
 
-  public encode(data: bigint): Encoding {
+  public encoder(data: bigint): Encoding {
     console.assert(isBigInt(data));
 
-    return bigIntEncode(data);
+    return bigIntEncoder(data);
   }
 
   public fromLiteral(literal: unknown): bigint {

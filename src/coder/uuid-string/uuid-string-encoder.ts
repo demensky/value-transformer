@@ -5,7 +5,7 @@ import type {UuidString} from '../../type/uuid-string.js';
 import {isUuidString} from '../../util/guard/is-uuid-string.js';
 import {parseHexInt} from '../../util/parse-hex-int.js';
 
-export function* uuidStringEncode(value: UuidString): Encoding {
+export function* uuidStringEncoder(value: UuidString): Encoding {
   console.assert(isUuidString<UuidString>(value));
 
   (yield 16).setView((view, offset) => {

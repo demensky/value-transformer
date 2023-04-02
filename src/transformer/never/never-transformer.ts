@@ -20,7 +20,7 @@ export class NeverTransformer extends ValueTransformer<never, never> {
     throw new NeverTransformerError();
   }
 
-  public encode(): never {
+  public encoder(): never {
     throw new NeverTransformerError();
   }
 

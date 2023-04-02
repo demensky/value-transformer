@@ -5,7 +5,7 @@ import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isUtf8} from '../../util/guard/is-utf8.js';
-import {uintEncode} from '../uint/uint-encode.js';
+import {uintEncoder} from '../uint/uint-encoder.js';
 
 // https://stackoverflow.com/a/39488643
 // TODO test
@@ -33,7 +33,7 @@ function fastBytesInString(value: string): number {
   return bytes;
 }
 
-export function* stringEncode(value: string): Encoding {
+export function* stringEncoder(value: string): Encoding {
   if (!isUtf8(value)) {
     throw new InvalidUnicodeError();
   }
@@ -47,7 +47,7 @@ export function* stringEncode(value: string): Encoding {
     throw new OutOfMaxByteLengthError();
   }
 
-  yield* uintEncode(fastBytesInString(value)); // TODO length
+  yield* uintEncoder(fastBytesInString(value)); // TODO length
 
   while (part.length > 0) {
     (yield -2).setInto((dest) => {

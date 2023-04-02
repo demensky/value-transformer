@@ -1,5 +1,5 @@
 import {nullableDecoder} from '../../coder/nullable/nullable-decoder.js';
-import {nullableEncode} from '../../coder/nullable/nullable-encode.js';
+import {nullableEncoder} from '../../coder/nullable/nullable-encoder.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
 import {isNull} from '../../util/guard/is-null.js';
@@ -25,8 +25,8 @@ export class NullableTransformer<I, O extends I> extends ValueTransformer<
     return nullableDecoder<O>(() => this.#transformer.decoder());
   }
 
-  public encode(data: I | null): Encoding {
-    return nullableEncode<I>(data, (item) => this.#transformer.encode(item));
+  public encoder(data: I | null): Encoding {
+    return nullableEncoder<I>(data, (item) => this.#transformer.encoder(item));
   }
 
   public fromLiteral(literal: unknown): O | null {

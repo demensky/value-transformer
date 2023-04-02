@@ -1,5 +1,5 @@
 import {regExpDecoder} from '../../coder/reg-exp/reg-exp-decoder.js';
-import {regExpEncode} from '../../coder/reg-exp/reg-exp-encode.js';
+import {regExpEncoder} from '../../coder/reg-exp/reg-exp-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import type {Decoding} from '../../type/decoding.js';
@@ -27,10 +27,10 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
     return regExpDecoder();
   }
 
-  public encode(data: RegExp): Encoding {
+  public encoder(data: RegExp): Encoding {
     console.assert(isRegExp(data));
 
-    return regExpEncode(data);
+    return regExpEncoder(data);
   }
 
   public fromLiteral(literal: unknown): RegExp {

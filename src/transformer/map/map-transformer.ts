@@ -1,5 +1,5 @@
 import {mapDecoder} from '../../coder/map/map-decoder.js';
-import {mapEncode} from '../../coder/map/map-encode.js';
+import {mapEncoder} from '../../coder/map/map-encoder.js';
 import {IncompatibleLiteralError} from '../../error/incompatible-literal-error.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {Encoding} from '../../type/encoding.js';
@@ -49,13 +49,13 @@ export class MapTransformer<
     );
   }
 
-  public encode(data: ReadonlyMap<KI, VI>): Encoding {
+  public encoder(data: ReadonlyMap<KI, VI>): Encoding {
     console.assert(isMap(data));
 
-    return mapEncode<KI, VI>(
+    return mapEncoder<KI, VI>(
       data,
-      (key) => this.#keyTransformer.encode(key),
-      (value) => this.#valueTransformer.encode(value),
+      (key) => this.#keyTransformer.encoder(key),
+      (value) => this.#valueTransformer.encoder(value),
     );
   }
 

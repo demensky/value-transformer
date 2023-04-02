@@ -2,9 +2,9 @@ import {coderConfig} from '../../config/coder-config.js';
 import {OutOfMaxLengthError} from '../../error/out-of-max-length-error.js';
 import type {Encoder} from '../../type/encoder.js';
 import type {Encoding} from '../../type/encoding.js';
-import {uintEncode} from '../uint/uint-encode.js';
+import {uintEncoder} from '../uint/uint-encoder.js';
 
-export function* listEncode<T>(
+export function* listEncoder<T>(
   collection: Iterable<T>,
   size: number,
   encoder: Encoder<T>,
@@ -13,7 +13,7 @@ export function* listEncode<T>(
     throw new OutOfMaxLengthError();
   }
 
-  yield* uintEncode(size);
+  yield* uintEncoder(size);
 
   let count = 0;
 
