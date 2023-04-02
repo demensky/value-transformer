@@ -3,6 +3,7 @@ import type {DecoderGenerator} from '../type/decoder-generator.js';
 
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
+import type {BufferSourceReaderFlush} from './buffer-source-reader-flush.js';
 
 export class BufferSourceStreamReader {
   public static from(
@@ -39,17 +40,20 @@ export class BufferSourceStreamReader {
     return result.value;
   }
 
-  public async final(): Promise<void> {
+  public async final(flush?: boolean): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    await this.#handle<void>(this.#controller.final());
+    await this.#handle<void>(this.#controller.final(flush));
 
     this.#reader.releaseLock();
   }
 
-  public async finalRead<T>(decoder: DecoderGenerator<T>): Promise<T> {
+  public async finalRead<T>(
+    decoder: DecoderGenerator<T>,
+    flush: BufferSourceReaderFlush<T> = () => false,
+  ): Promise<T> {
     const result: T = await this.read(decoder);
 
-    await this.final();
+    await this.final(flush(result));
 
     return result;
   }

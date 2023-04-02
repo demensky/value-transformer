@@ -2,6 +2,7 @@ import type {DecoderGenerator} from '../type/decoder-generator.js';
 
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
+import type {BufferSourceReaderFlush} from './buffer-source-reader-flush.js';
 
 export class BufferSourceIterableReader {
   public static from(
@@ -28,15 +29,18 @@ export class BufferSourceIterableReader {
     return result.value;
   }
 
-  public final(): void {
+  public final(flush?: boolean): void {
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    this.#handle<void>(this.#controller.final());
+    this.#handle<void>(this.#controller.final(flush));
   }
 
-  public finalRead<T>(decoder: DecoderGenerator<T>): T {
+  public finalRead<T>(
+    decoder: DecoderGenerator<T>,
+    flush: BufferSourceReaderFlush<T> = () => false,
+  ): T {
     const result: T = this.read(decoder);
 
-    this.final();
+    this.final(flush(result));
 
     return result;
   }

@@ -28,9 +28,17 @@ export class BufferReaderController {
 
   #cursor = 0;
 
-  public *final(): BufferReaderGenerator<void> {
+  public *final(flush = false): BufferReaderGenerator<void> {
     if (this.#corrupted !== null) {
       throw new CorruptedBufferReaderError('', this.#corrupted);
+    }
+
+    if (flush) {
+      while (true) {
+        if ((yield null).done === true) {
+          return;
+        }
+      }
     }
 
     if (this.#chunk !== null) {
