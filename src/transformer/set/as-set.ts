@@ -1,9 +1,14 @@
-import type {ValueTransformer} from '../value/value-transformer.js';
+import {createValueTransformerDecorator} from '../value/create-value-transformer-decorator.js';
+import {normalizeValueTransformer} from '../value/normalize-value-transformer.js';
+import type {ValueTransformerDecorator} from '../value/value-transformer-decorator.js';
+import type {ValueTransformerLike} from '../value/value-transformer-like.js';
 
 import {SetTransformer} from './set-transformer.js';
 
 export function asSet<I, O extends I>(
-  transformer: ValueTransformer<I, O>,
-): SetTransformer<I, O> {
-  return new SetTransformer<I, O>(transformer);
+  transformer: ValueTransformerLike<I, O>,
+): ValueTransformerDecorator<ReadonlySet<I>, Set<O>> {
+  return createValueTransformerDecorator<ReadonlySet<I>, Set<O>>(
+    new SetTransformer<I, O>(normalizeValueTransformer(transformer)),
+  );
 }
