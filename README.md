@@ -14,7 +14,7 @@ encapsulated.
 
 ```ts
 export class VectorPictureDto {
-  @transform(asString())
+  @asString()
   public readonly url: string;
 
   public constructor(url: VectorPictureDto['url']) {
@@ -23,7 +23,7 @@ export class VectorPictureDto {
 }
 
 export class BitmapPictureDto {
-  @transform(asMap(asString(), asString()))
+  @asMap(asString(), asString())
   public readonly urls: ReadonlyMap<string, string>;
 
   public constructor(urls: BitmapPictureDto['urls']) {
@@ -32,16 +32,16 @@ export class BitmapPictureDto {
 }
 
 export class PictureDto {
-  @transform(asDate())
+  @asDate()
   public readonly createAt: ReadonlyDate;
 
-  @transform(asFloat64())
+  @asFloat64()
   public readonly rating: number;
 
-  @transform(asSet(asString()))
+  @asSet(asString())
   public readonly tags: ReadonlySet<string>;
 
-  @transform(asUnion([asClass(BitmapPictureDto), asClass(VectorPictureDto)]))
+  @asUnion([asClass(BitmapPictureDto), asClass(VectorPictureDto)])
   public readonly type: BitmapPictureDto | VectorPictureDto;
 
   public constructor(
@@ -216,8 +216,8 @@ const transformer = asNullable(asString());
 
 ### `asClass`
 
-Transforms the fields of the passed [class][class] that have the
-[`@transform`](#transform) [decorator][decorators].
+Transforms the fields of the passed [class][class] that have
+[decorators][decorators].
 
 <details>
 <summary>Usage</summary>
@@ -228,31 +228,6 @@ Empty class
 class Foo {}
 
 const transformer = asClass(Foo);
-```
-
-</details>
-
-#### `@transform`
-
-The decorator adds the passed transformer to the metadata which is later used by
-the [`asClass`](#asclass) transformer.
-
-<details>
-<summary>Usage</summary>
-
-```ts
-import {asClass} from './as-class.js';
-
-class UserDto {
-  @transform(asString())
-  public readonly nickname: string;
-
-  public constructor(nickname: UserDto['nickname']) {
-    this.nickname = nickname;
-  }
-}
-
-const transformer = asClass(UserDto);
 ```
 
 </details>
