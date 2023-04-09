@@ -60,6 +60,7 @@ export * from './transformer/boolean/as-boolean.js';
 export * from './transformer/boolean/boolean-transformer.js';
 export * from './transformer/class/as-class.js';
 export * from './transformer/class/class-transformer.js';
+export * from './transformer/class/decorator/extract-transformable-fields.js';
 export * from './transformer/date/as-date.js';
 export * from './transformer/date/date-transformer.js';
 export * from './transformer/enum-float64/as-enum-float64.js';
