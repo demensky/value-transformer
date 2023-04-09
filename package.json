@@ -1,6 +1,6 @@
 {
   "name": "value-transformer",
-  "version": "0.11.0-next.4",
+  "version": "0.11.0-next.5",
   "description": "This library allows you to serialize/deserialize complex data using transformers. There is no need to interact with the raw representation: the signature of JSON literals and ArrayBuffers is encapsulated.\n",
   "homepage": "https://github.com/demensky/value-transformer#readme",
   "bugs": {
