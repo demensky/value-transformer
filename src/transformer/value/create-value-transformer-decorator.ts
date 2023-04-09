@@ -16,6 +16,8 @@ export function createValueTransformerDecorator<I, O extends I>(
       return transformer;
     }
 
+    console.assert(isNotOccupiedByTransformableField<any>(prototype, key));
+
     let transformers: OneOfTransformableField<any>[] | undefined =
       transformableFieldsMap.get<any>(prototype);
 
@@ -23,8 +25,6 @@ export function createValueTransformerDecorator<I, O extends I>(
       transformers = [];
       transformableFieldsMap.set<any>(prototype, transformers);
     }
-
-    console.assert(isNotOccupiedByTransformableField<any>(prototype, key));
 
     transformers.push([key, transformer]);
   };

@@ -30,14 +30,10 @@ export class ClassTransformer<T extends object> extends ValueTransformer<
   }
 
   #getFieldsInfo(): readonly OneOfTransformableField<T>[] {
-    if (this.#fieldsInfo !== null) {
-      return this.#fieldsInfo;
-    }
-
-    this.#fieldsInfo = [
+    this.#fieldsInfo ??= extractTransformableFields<T>(
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      ...extractTransformableFields<T>(this.#ctor.prototype as T),
-    ];
+      this.#ctor.prototype as T,
+    );
 
     return this.#fieldsInfo;
   }
