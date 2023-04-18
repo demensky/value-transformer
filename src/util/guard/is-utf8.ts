@@ -11,6 +11,7 @@ function isHighSurrogate(code: number): boolean {
   return ((code & SURROGATE_BITS) ^ HIGH_SURROGATE_BITS_VALUE) === 0;
 }
 
+// TODO replace to String#isWellFormed
 /**
  * Checks that the string does not contain broken surrogate pairs and can be
  * correctly encoded in UTF-8.
