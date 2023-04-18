@@ -27,7 +27,7 @@
   "scripts": {
     "build": "ts-node build.ts",
     "lint": "eslint .",
-    "prepare": "is-ci || husky install && npm run build",
+    "prepare": "is-ci || (husky install && npm run build)",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
