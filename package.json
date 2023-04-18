@@ -27,7 +27,7 @@
   "scripts": {
     "build": "ts-node build.ts",
     "lint": "eslint .",
-    "prepare": "husky install && npm run build",
+    "prepare": "is-ci || husky install && npm run build",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
@@ -45,6 +45,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
+    "is-ci": "^3.0.1",
     "lint-staged": "^13.2.1",
     "prettier": "^2.8.7",
     "prettier-plugin-packagejson": "^2.4.3",
