@@ -1,4 +1,4 @@
 /coverage/
 /src/**/*.js
 /src/**/*.js.map
-/pnpm-lock.yaml
+/package-lock.json
