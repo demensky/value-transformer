@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
-import {BYTES_PER_UUID} from '../../const/bytes-per-uuid.js';
+import {BYTES_PER_UUID} from '../../const/bytes/bytes-per-uuid.js';
 import type {Decoding} from '../../type/decoding.js';
 import type {RestrictedDataView} from '../../type/restricted-data-view.js';
 import type {UuidString} from '../../type/uuid-string.js';
