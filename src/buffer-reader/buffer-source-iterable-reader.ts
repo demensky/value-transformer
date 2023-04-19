@@ -1,4 +1,5 @@
 import type {Decoding} from '../type/decoding.js';
+import {isYield} from '../util/guard/is-yield.js';
 
 import {BufferReaderController} from './buffer-reader-controller.js';
 import type {BufferReaderGenerator} from './buffer-reader-generator.js';
@@ -22,7 +23,7 @@ export class BufferSourceIterableReader {
   #handle<T>(generator: BufferReaderGenerator<T>): T {
     let result: IteratorResult<null, T> = generator.next();
 
-    while (result.done !== true) {
+    while (isYield(result)) {
       result = generator.next(this.#iterator.next());
     }
 

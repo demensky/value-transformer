@@ -1,6 +1,8 @@
 import type {Encoding} from '../type/encoding.js';
 import type {LittleEndianDataView} from '../type/little-endian-data-view.js';
 import type {WriteonlyDataView} from '../type/writeonly-data-view.js';
+import {isReturn} from '../util/guard/is-return.js';
+import {isYield} from '../util/guard/is-yield.js';
 
 import type {DataViewChunkIntoHandler} from './data-view-chunk-into-handler.js';
 import type {DataViewChunkViewHandler} from './data-view-chunk-view-handler.js';
@@ -12,7 +14,7 @@ export class DataViewChunk {
   ): Iterable<Uint8Array> {
     let request: IteratorResult<number, void> = encoding.next();
 
-    if (request.done === true) {
+    if (isReturn(request)) {
       return;
     }
 
@@ -25,7 +27,7 @@ export class DataViewChunk {
         yield chunk.#toUint8Array();
         chunk = new DataViewChunk(bufferFactory());
       }
-    } while (request.done !== true);
+    } while (isYield(request));
 
     if (chunk.#cursor === 0) {
       return;

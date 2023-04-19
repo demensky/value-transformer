@@ -2,6 +2,7 @@
 
 import {expect} from 'vitest';
 
+import {isYield} from '../src/util/guard/is-yield.js';
 import {isGenerator} from '../src/util/is-generator.js';
 
 import type {TestYield} from './test-yield.js';
@@ -21,7 +22,7 @@ expect.extend({
       const receivedRequests: unknown[] = [];
       let index = 0;
 
-      while (request.done !== true) {
+      while (isYield(request)) {
         if (index >= expectedYields.length) {
           return {
             pass: false,
