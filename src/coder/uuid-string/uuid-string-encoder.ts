@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
+import {BYTES_PER_UUID} from '../../const/bytes-per-uuid.js';
 import type {Encoding} from '../../type/encoding.js';
 import type {UuidString} from '../../type/uuid-string.js';
 import {isUuidString} from '../../util/guard/is-uuid-string.js';
@@ -8,7 +9,7 @@ import {parseHexInt} from '../../util/parse-hex-int.js';
 export function* uuidStringEncoder(value: UuidString): Encoding {
   console.assert(isUuidString<UuidString>(value));
 
-  (yield 16).setView((view, offset) => {
+  (yield BYTES_PER_UUID).setView((view, offset) => {
     view.setUint8(offset + 0, parseHexInt(value.slice(0, 2)));
     view.setUint8(offset + 1, parseHexInt(value.slice(2, 4)));
     view.setUint8(offset + 2, parseHexInt(value.slice(4, 6)));
