@@ -10,7 +10,7 @@ import {isNumber} from '../../util/guard/is-number.js';
 import {isObject} from '../../util/guard/is-object.js';
 import {isRegExp} from '../../util/guard/is-reg-exp.js';
 import {isString} from '../../util/guard/is-string.js';
-import {isUtf8} from '../../util/guard/is-utf8.js';
+import {isWellFormed} from '../../util/is-well-formed.js';
 import {ValueTransformer} from '../value/value-transformer.js';
 
 type RegExpLiteral =
@@ -75,11 +75,11 @@ export class RegExpTransformer extends ValueTransformer<RegExp, RegExp> {
 
     const {flags, source, lastIndex}: RegExp = data;
 
-    if (!isUtf8(source)) {
+    if (!isWellFormed(source)) {
       throw new InvalidUnicodeError('source');
     }
 
-    if (!isUtf8(flags)) {
+    if (!isWellFormed(flags)) {
       throw new InvalidUnicodeError('flags');
     }
 
