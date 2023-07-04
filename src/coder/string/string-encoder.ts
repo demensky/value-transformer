@@ -4,19 +4,19 @@ import {coderConfig} from '../../config/coder-config.js';
 import {InvalidUnicodeError} from '../../error/invalid-unicode-error.js';
 import {OutOfMaxByteLengthError} from '../../error/out-of-max-byte-length-error.js';
 import type {Encoding} from '../../type/encoding.js';
-import {getStringSizeInBytes} from '../../util/get-string-size-in-bytes.js';
-import {isUtf8} from '../../util/guard/is-utf8.js';
+import {isWellFormed} from '../../util/is-well-formed.js';
+import {utf8ByteLength} from '../../util/utf8-byte-length.js';
 import {uintEncoder} from '../uint/uint-encoder.js';
 
 export function* stringEncoder(value: string): Encoding {
-  if (!isUtf8(value)) {
+  if (!isWellFormed(value)) {
     throw new InvalidUnicodeError();
   }
 
   let part: string = value;
   const encoder = new TextEncoder();
 
-  const byteLength: number = getStringSizeInBytes(value);
+  const byteLength: number = utf8ByteLength(value);
 
   if (byteLength > coderConfig.stringMaxByteLength) {
     throw new OutOfMaxByteLengthError();

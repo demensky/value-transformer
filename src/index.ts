@@ -119,4 +119,3 @@ export * from './type/restricted-data-view.js';
 export * from './type/transformable-field-decorator.js';
 export * from './type/uuid-string.js';
 export * from './type/value-transformers-tuple.js';
-export * from './util/get-string-size-in-bytes.js';
